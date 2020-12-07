@@ -1,0 +1,1 @@
+Some confusion between the Django installation in Windows, between versions in the video resources. Resolved through further reading.

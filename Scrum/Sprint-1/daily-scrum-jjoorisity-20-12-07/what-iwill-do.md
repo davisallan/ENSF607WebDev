@@ -1,0 +1,2 @@
+- Organize epics and stories for pre-project exercise on REACT and Django.
+- Complete React training.
