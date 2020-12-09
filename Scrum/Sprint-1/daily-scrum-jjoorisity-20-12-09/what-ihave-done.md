@@ -1,5 +1,7 @@
 - Completed React Tutorial: https://reactjs.org/tutorial/tutorial.html#overview to create an intro tic-tac-toe game.
 - Completed Rest API's.
+- Completed REACT videos and documentation.
 - Set up Django virtual environments/software.
 - Completed Django tutorials and documentation.
 - Javascript syntax and data structures.
+- 607 Workshop on REACT.
