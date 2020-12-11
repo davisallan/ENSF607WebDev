@@ -1,0 +1,3 @@
+- 607 REACT workshop to finish the counter for the pre-project scope.
+- team programming session to build REST API for Django portion of pre-project.
+- Set up the next epic and stories for milestone 1.

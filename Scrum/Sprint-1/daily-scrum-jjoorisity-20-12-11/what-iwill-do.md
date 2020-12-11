@@ -1,0 +1,2 @@
+- Split up the next REACT requirements for milestone 1.
+- Start working on my portion of the code.
