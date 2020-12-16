@@ -1,4 +1,3 @@
-import "./App.css";
 import LearningOutcomeList from "./components/LearningOutcomeList";
 import GradeTable from "./components/GradeTable";
 
