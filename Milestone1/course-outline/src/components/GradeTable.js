@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 function GradeTitle() {
     return (
         <Typography variant="h4" color='textprimary'>
-            Final Grade Determination
+            3. Final Grade Determination
         </Typography>
     )
 }
