@@ -8,7 +8,6 @@ export default function LearningOutcomeList() {
   let outcomeNumber = 1;
 
   function handleAddOutcome() {
-    outcomeNumber++;
     setOutcomes((prevLearningOutcomes) => {
       return [...prevLearningOutcomes, { id: uuidv4() }];
     });
@@ -32,7 +31,7 @@ export default function LearningOutcomeList() {
       <Button onClick={handleAddOutcome} variant="contained" color="primary">
         Add Learning Outcome
       </Button>
-
+      <p>After taking this course you will learn:</p>
       {learningOutcomes.map((outcome) => {
         return (
           <Outcome
