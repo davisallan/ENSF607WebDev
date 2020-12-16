@@ -3,9 +3,18 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-export default function Outcome({ outcome, outcomeNumber, deleteOutcome }) {
+export default function Outcome({
+  outcome,
+  outcomeNumber,
+  deleteOutcome,
+  description,
+}) {
   function handleDeleteOutcome() {
     deleteOutcome(outcome.id);
+  }
+
+  function updateDescription(e) {
+    description(e, outcome.id);
   }
 
   return (
@@ -19,10 +28,9 @@ export default function Outcome({ outcome, outcomeNumber, deleteOutcome }) {
           label="Description"
           multiline
           fullWidth
-          rowsMax={4}
+          onChange={updateDescription}
         />
       </Grid>
-
       <Grid item>
         <Button
           onClick={handleDeleteOutcome}

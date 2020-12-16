@@ -19,6 +19,13 @@ export default function LearningOutcomeList() {
     setOutcomes(newOutcomes);
   }
 
+  function updateDescription(e, id) {
+    const newOutcomes = [...learningOutcomes];
+    const updatedOutcome = newOutcomes.find((outcome) => outcome.id === id);
+    updatedOutcome.description = e.target.value;
+    setOutcomes(newOutcomes);
+  }
+
   return (
     <div>
       <h4>2. Learning Outcomes</h4>
@@ -33,6 +40,7 @@ export default function LearningOutcomeList() {
             outcome={outcome}
             outcomeNumber={outcomeNumber++}
             deleteOutcome={deleteOutcome}
+            description={updateDescription}
           />
         );
       })}
