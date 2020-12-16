@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Outcome from "./Outcome";
 import { v4 as uuidv4 } from "uuid";
 
 export default function LearningOutcomeList() {
   const [learningOutcomes, setOutcomes] = useState([]);
+  let outcomeNumber = 1;
 
   function handleAddOutcome() {
+    outcomeNumber++;
     setOutcomes((prevLearningOutcomes) => {
       return [...prevLearningOutcomes, { id: uuidv4() }];
     });
@@ -20,20 +21,21 @@ export default function LearningOutcomeList() {
 
   return (
     <div>
+      <h4>2. Learning Outcomes</h4>
       <Button onClick={handleAddOutcome} variant="contained" color="primary">
         Add Learning Outcome
       </Button>
-      <Grid>
-        {learningOutcomes.map((outcome) => {
-          return (
-            <Outcome
-              key={outcome.id}
-              outcome={outcome}
-              deleteOutcome={deleteOutcome}
-            />
-          );
-        })}
-      </Grid>
+
+      {learningOutcomes.map((outcome) => {
+        return (
+          <Outcome
+            key={outcome.id}
+            outcome={outcome}
+            outcomeNumber={outcomeNumber++}
+            deleteOutcome={deleteOutcome}
+          />
+        );
+      })}
     </div>
   );
 }
