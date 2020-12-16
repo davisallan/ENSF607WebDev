@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+//import PropTypes from 'prop-types';
+//import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles'; //lighten
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,12 +11,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
-import Checkbox from '@material-ui/core/Checkbox'
-import DeleteIcon from '@material-ui/icons/Delete'
+//import Checkbox from '@material-ui/core/Checkbox'
+//import DeleteIcon from '@material-ui/icons/Delete'
 
-function createData() {
-    return { name, outcomes, weight };
-}
+// function createData() {
+//     return { name, outcomes, weight };
+// }
 
 const columns = [
     {id: 'component', label: 'Component', minWidth: 300},
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 function GradeTitle() {
     return (
         <Typography variant="h4" color='textprimary'>
-            Final Grades
+            Final Grade Determination
         </Typography>
     )
 }
