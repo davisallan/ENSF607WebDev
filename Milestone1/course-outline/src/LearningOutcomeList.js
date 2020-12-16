@@ -13,6 +13,11 @@ export default function LearningOutcomeList() {
     });
   }
 
+  function deleteOutcome(id) {
+    const newOutcomes = learningOutcomes.filter((outcome) => outcome.id !== id);
+    setOutcomes(newOutcomes);
+  }
+
   return (
     <div>
       <Button onClick={handleAddOutcome} variant="contained" color="primary">
@@ -20,7 +25,13 @@ export default function LearningOutcomeList() {
       </Button>
       <Grid>
         {learningOutcomes.map((outcome) => {
-          return <Outcome key={outcome.id} outcome={outcome} />;
+          return (
+            <Outcome
+              key={outcome.id}
+              outcome={outcome}
+              deleteOutcome={deleteOutcome}
+            />
+          );
         })}
       </Grid>
     </div>
