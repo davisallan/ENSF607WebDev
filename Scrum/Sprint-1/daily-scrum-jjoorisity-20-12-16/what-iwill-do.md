@@ -1,0 +1,5 @@
+- Add checkboxes to table rows for user selection.
+- Checkboxes will convert header into a delete option.
+- Add insert row button below table.
+- Create user text area below table.
+- Adjust table theme.
