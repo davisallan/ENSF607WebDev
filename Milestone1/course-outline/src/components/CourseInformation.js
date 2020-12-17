@@ -1,6 +1,5 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import TextAreaAutosize from "@material-ui/core/TextareaAutosize";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -38,10 +37,11 @@ function CourseTitle() {
 function CourseDescription() {
   return (
     <Grid item xs={12}>
-      <TextAreaAutosize
-        style={{ width: 600 }}
-        placeholder="Description of the course"
-        rowsMin={3}
+      <TextField
+        label="Course Description"
+        placeholder="Description of Course"
+        multiline
+        style={{ width: 750 }}
       />
     </Grid>
   );
@@ -69,8 +69,8 @@ function CalendarReference() {
       <TextField
         style={{ width: 750 }}
         label="Calendar Reference"
-        placeholder="E.g.
-        http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
+        multiline
+        placeholder="E.g. http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
       />
     </Grid>
   );
