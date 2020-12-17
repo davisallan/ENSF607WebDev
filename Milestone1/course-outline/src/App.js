@@ -1,12 +1,13 @@
 import { React } from "react";
 import LearningOutcomeList from "./components/LearningOutcomeList";
 import GradeContainer from "./components/GradeContainer";
-import Typography from "@material-ui/core/Typography";
 import CourseInformation from "./components/CourseInformation";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import { red, yellow, orange } from "@material-ui/core/colors";
+import Typography from "@material-ui/core/Typography";
+import { red, orange } from "@material-ui/core/colors";
 import { Logo } from "./components/CourseInformation";
+import Grid from "@material-ui/core/Grid";
 import "./App.css";
 import { Container } from "@material-ui/core";
 
@@ -27,7 +28,14 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Container>
-            <Logo />
+            <Grid container direction="row">
+              <Logo />
+              <Grid item xs={5}>
+                <Typography variant="h3" align="center">
+                  University of Calgary Course Outline
+                </Typography>
+              </Grid>
+            </Grid>
           </Container>
         </header>
         <body className="App-body">

@@ -8,8 +8,8 @@ import { makeStyles } from "@material-ui/core";
 
 export function Logo() {
   return (
-    <Grid item xs={12}>
-      <img src={logo} alt="Schulich" />
+    <Grid item xs={4}>
+      <img src={logo} alt="Schulich" height="80" />
     </Grid>
   );
 }

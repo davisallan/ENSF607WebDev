@@ -49,7 +49,7 @@ export default function GradeTable() {
     },
     {
       id: "outcomes",
-      label: "Learning outcome(s)",
+      label: "Learning Outcome(s)",
       minWidth: 300,
     },
     {
