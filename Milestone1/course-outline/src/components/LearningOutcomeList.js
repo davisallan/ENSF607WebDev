@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 import Outcome from "./Outcome";
 import { v4 as uuidv4 } from "uuid";
 
@@ -26,12 +28,15 @@ export default function LearningOutcomeList() {
   }
 
   return (
-    <div>
-      <h4>2. Learning Outcomes</h4>
+    <Container>
       <Button onClick={handleAddOutcome} variant="contained" color="primary">
         Add Learning Outcome
       </Button>
-      <p>After taking this course you will learn:</p>
+      <Typography variant="h5">2. Learning Outcomes</Typography>
+
+      <Typography variant="subtitle1" align="left">
+        At the end of this course, you will be able to:
+      </Typography>
       {learningOutcomes.map((outcome) => {
         return (
           <Outcome
@@ -43,6 +48,6 @@ export default function LearningOutcomeList() {
           />
         );
       })}
-    </div>
+    </Container>
   );
 }

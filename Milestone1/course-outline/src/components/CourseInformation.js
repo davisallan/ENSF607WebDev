@@ -1,6 +1,8 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import TextAreaAutosize from "@material-ui/core/TextareaAutosize";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import logo from "./schulich.png";
 
@@ -65,12 +67,12 @@ function CourseInput(text) {
 
 export default function CourseInformation() {
   return (
-    <div>
+    <Container>
       <Grid container>
         <Logo />
       </Grid>
       <Grid container>
-        <h3>1. Calendar Information</h3>
+        <Typography variant="h5">1. Calendar Information</Typography>
       </Grid>
       <Grid container>
         <CourseNumber />
@@ -95,6 +97,6 @@ export default function CourseInformation() {
           "E.g. http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
         )}
       </Grid>
-    </div>
+    </Container>
   );
 }

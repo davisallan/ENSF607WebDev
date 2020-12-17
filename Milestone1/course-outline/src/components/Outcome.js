@@ -1,5 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
@@ -18,14 +19,14 @@ export default function Outcome({
   }
 
   return (
-    <Grid container spacing={4} direction="row" justify="center">
+    <Grid container spacing={4} direction="row">
       <Grid item>
-        <span>{outcomeNumber}</span>
+        <Typography variant="body1">{outcomeNumber}</Typography>
       </Grid>
       <Grid item xs={6}>
         <TextField
           id="standard-multiline-flexible"
-          label="Description"
+          placeholder="Description"
           multiline
           fullWidth
           onChange={updateDescription}
