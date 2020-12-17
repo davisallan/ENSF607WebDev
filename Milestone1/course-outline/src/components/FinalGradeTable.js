@@ -6,10 +6,10 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  makeStyles,
   Tooltip,
   TextField,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
@@ -49,7 +49,7 @@ export default function GradeTable() {
     },
     {
       id: "outcomes",
-      label: "Learning Outcome(s)",
+      label: "Learning outcome(s)",
       minWidth: 300,
     },
     {
@@ -135,10 +135,9 @@ export default function GradeTable() {
                     minWidth: column.minWidth,
                     fontSize: 16,
                     fontWeight: 600,
-                    color: "white",
-                    backgroundColor: "#b71c1c",
-                  }}
-                >
+                    color: "black",
+                    backgroundColor: "white",
+                  }}>
                   {column.label}
                 </TableCell>
               ))}
@@ -148,7 +147,7 @@ export default function GradeTable() {
                     color="primary"
                     className={classes.fab}
                     onClick={addNewRow}
-                  >
+                    size="medium">
                     <AddIcon />
                   </Fab>
                 </Tooltip>
@@ -162,7 +161,7 @@ export default function GradeTable() {
                   <TextField
                     id="component-input"
                     name="gradeComponent"
-                    placeholder="Component Description"
+                    placeholder="Component description"
                     value={breakdown.gradeComponent}
                     style={{ width: "30rem" }}
                     onChange={(e) => inputChangeHandler(e, breakdown.id)}
@@ -172,7 +171,7 @@ export default function GradeTable() {
                   <TextField
                     id="outcome-input"
                     name="outcomes"
-                    placeholder="Applicable Learning Outcomes"
+                    placeholder="Applicable learning outcomes"
                     value={breakdown.outcomes}
                     style={{ width: "29rem" }}
                     onChange={(e) => inputChangeHandler(e, breakdown.id)}
@@ -193,14 +192,13 @@ export default function GradeTable() {
                   />
                 </TableCell>
                 <TableCell>
-                  {
-                    <DeleteIcon
-                      onClick={() => deleteRowHandler(breakdown.id)}
-                      style={{
-                        cursor: "pointer",
-                      }}
-                    />
-                  }
+                  <DeleteIcon
+                    onClick={() => deleteRowHandler(breakdown.id)}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    color="secondary"
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -211,10 +209,9 @@ export default function GradeTable() {
                 style={{
                   fontSize: 16,
                   fontWeight: 600,
-                  color: "white",
-                  backgroundColor: "#b71c1c",
-                }}
-              >
+                  color: "black",
+                  backgroundColor: "white",
+                }}>
                 Total
               </TableCell>
               <TableCell
@@ -222,10 +219,9 @@ export default function GradeTable() {
                 style={{
                   fontSize: 16,
                   fontWeight: 600,
-                  color: "white",
-                  backgroundColor: "#b71c1c",
-                }}
-              >
+                  color: "black",
+                  backgroundColor: "white",
+                }}>
                 {gradeSubtotal}%
               </TableCell>
             </TableRow>

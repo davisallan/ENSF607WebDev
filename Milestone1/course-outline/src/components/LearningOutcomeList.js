@@ -1,11 +1,26 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core";
+import Fab from "@material-ui/core/Fab";
+import Tooltip from "@material-ui/core/Tooltip";
+import AddIcon from "@material-ui/icons/Add";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 import Outcome from "./Outcome";
 import { v4 as uuidv4 } from "uuid";
 
 export default function LearningOutcomeList() {
-  const [learningOutcomes, setOutcomes] = useState([]);
+  const [learningOutcomes, setOutcomes] = useState([{ id: uuidv4() }]);
   let outcomeNumber = 1;
+
+  const useStyles = makeStyles((theme) => ({
+    container: {
+      marginTop: theme.spacing(10),
+      width: "100%",
+      marginBottom: theme.spacing(4),
+    },
+  }));
+
+  const classes = useStyles();
 
   function handleAddOutcome() {
     setOutcomes((prevLearningOutcomes) => {
@@ -26,12 +41,21 @@ export default function LearningOutcomeList() {
   }
 
   return (
-    <div>
-      <h4>2. Learning Outcomes</h4>
-      <Button onClick={handleAddOutcome} variant="contained" color="primary">
-        Add Learning Outcome
-      </Button>
-      <p>After taking this course you will learn:</p>
+    <Container className={classes.container}>
+      <Typography variant="h5">2. Learning Outcomes</Typography>
+      <Tooltip title="Add Learning Outcome" aria-label="insert">
+        <Fab
+          onClick={handleAddOutcome}
+          aria-label="add"
+          color="primary"
+          style={{ float: "right" }}
+          size="medium">
+          <AddIcon />
+        </Fab>
+      </Tooltip>
+      <Typography variant="subtitle1" align="left">
+        At the end of this course, you will be able to:
+      </Typography>
       {learningOutcomes.map((outcome) => {
         return (
           <Outcome
@@ -43,6 +67,6 @@ export default function LearningOutcomeList() {
           />
         );
       })}
-    </div>
+    </Container>
   );
 }

@@ -3,9 +3,23 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import GradeTable from "./FinalGradeTable";
 import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(10),
+    width: "100%",
+    justify: "center",
+  },
+}));
 
 function GradeTitle() {
-  return <Typography variant="h5">3. Final Grade Determination</Typography>;
+  const classes = useStyles();
+  return (
+    <Typography variant="h5" className={classes.root}>
+      3. Final Grade Determination
+    </Typography>
+  );
 }
 
 function TitleText() {
@@ -24,7 +38,7 @@ function NotesArea() {
   return (
     <TextField
       id="grade-notes"
-      placeholder="Enter Notes About Grade Breakdown"
+      placeholder="Enter notes about grade breakdown"
       multiline
       fullWidth={true}
     />
@@ -33,7 +47,7 @@ function NotesArea() {
 
 export default function CombinedGrades() {
   return (
-    <Container fixed>
+    <Container>
       <GradeTitle />
       <TitleText />
       <GradeTable />
