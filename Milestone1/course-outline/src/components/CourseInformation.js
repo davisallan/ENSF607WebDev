@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import logo from "./schulich.png";
 import { makeStyles } from "@material-ui/core";
 
-function Logo() {
+export function Logo() {
   return (
     <Grid item xs={12}>
       <img src={logo} alt="Schulich" />
@@ -43,7 +43,7 @@ function CourseDescription() {
     <Grid item xs={12}>
       <TextField
         label="Course Description"
-        placeholder="Description of Course"
+        placeholder="Description of course"
         multiline
         style={{ width: 750 }}
       />
@@ -105,7 +105,6 @@ export default function CourseInformation() {
   return (
     <Container className={classes.container}>
       <Grid container spacing={1}>
-        <Logo />
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h5">
             1. Calendar Information

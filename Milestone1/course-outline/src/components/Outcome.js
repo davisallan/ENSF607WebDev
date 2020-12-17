@@ -28,7 +28,7 @@ export default function Outcome({
       <Grid item xs={11}>
         <TextField
           id="standard-multiline-flexible"
-          placeholder="Outcome Description"
+          placeholder="Outcome description"
           multiline
           fullWidth
           onChange={updateDescription}

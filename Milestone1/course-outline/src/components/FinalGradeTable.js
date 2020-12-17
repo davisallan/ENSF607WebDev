@@ -49,7 +49,7 @@ export default function GradeTable() {
     },
     {
       id: "outcomes",
-      label: "Learning Outcome(s)",
+      label: "Learning outcome(s)",
       minWidth: 300,
     },
     {
@@ -161,7 +161,7 @@ export default function GradeTable() {
                   <TextField
                     id="component-input"
                     name="gradeComponent"
-                    placeholder="Component Description"
+                    placeholder="Component description"
                     value={breakdown.gradeComponent}
                     style={{ width: "30rem" }}
                     onChange={(e) => inputChangeHandler(e, breakdown.id)}
@@ -171,7 +171,7 @@ export default function GradeTable() {
                   <TextField
                     id="outcome-input"
                     name="outcomes"
-                    placeholder="Applicable Learning Outcomes"
+                    placeholder="Applicable learning outcomes"
                     value={breakdown.outcomes}
                     style={{ width: "29rem" }}
                     onChange={(e) => inputChangeHandler(e, breakdown.id)}
