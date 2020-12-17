@@ -5,10 +5,11 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import logo from "./schulich.png";
+import { makeStyles } from "@material-ui/core";
 
 function Logo() {
   return (
-    <Grid item>
+    <Grid item xs={12}>
       <img src={logo} alt="Schulich" />
     </Grid>
   );
@@ -16,7 +17,7 @@ function Logo() {
 
 function CourseNumber() {
   return (
-    <Grid item>
+    <Grid item xs={12}>
       <TextField label="Course Number" placeholder="E.g. ENSF 409" />
     </Grid>
   );
@@ -24,7 +25,7 @@ function CourseNumber() {
 
 function CourseTitle() {
   return (
-    <Grid item>
+    <Grid item xs={12}>
       <TextField
         label="Course Title"
         placeholder="E.g. Principles of Software Development"
@@ -36,61 +37,74 @@ function CourseTitle() {
 
 function CourseDescription() {
   return (
-    <TextAreaAutosize
-      style={{ width: 386 }}
-      placeholder="Description of the course"
-      rowsMin={3}
-    />
-  );
-}
-
-function CourseLabel(text) {
-  return (
-    <Grid item>
-      <TextField disabled defaultValue={text} />
+    <Grid item xs={12}>
+      <TextAreaAutosize
+        style={{ width: 600 }}
+        placeholder="Description of the course"
+        rowsMin={3}
+      />
     </Grid>
   );
 }
 
-function CourseInput(text) {
+function CourseHours() {
   return (
-    <Grid item>
-      <TextField placeholder={text} />
+    <Grid item xs={12}>
+      <TextField label="Course Hours" placeholder="E.g. 3 units; H (3-2)" />
+    </Grid>
+  );
+}
+
+function AcademicCredit() {
+  return (
+    <Grid item xs={12}>
+      <TextField label="Academic Credit" placeholder="E.g. 3" />
+    </Grid>
+  );
+}
+
+function CalendarReference() {
+  return (
+    <Grid item xs={12}>
+      <TextField
+        style={{ width: 750 }}
+        label="Calendar Reference"
+        placeholder="E.g.
+        http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
+      />
     </Grid>
   );
 }
 
 export default function CourseInformation() {
+  const useStyles = makeStyles((theme) => ({
+    container: {
+      marginTop: theme.spacing(4),
+      width: "100%",
+      marginBottom: theme.spacing(4),
+    },
+    title: {
+      marginTop: theme.spacing(2),
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <Container>
-      <Grid container>
+    <Container className={classes.container}>
+      <Grid container spacing={1} justify="flex">
         <Logo />
-      </Grid>
-      <Grid container>
-        <Typography variant="h5">1. Calendar Information</Typography>
-      </Grid>
-      <Grid container>
+        <Grid item xs={12}>
+          <Typography className={classes.title} variant="h5">
+            1. Calendar Information
+          </Typography>
+        </Grid>
         <CourseNumber />
-      </Grid>
-      <Grid container>
         <CourseTitle />
-      </Grid>
-      <Grid container>
         <CourseDescription />
-      </Grid>
-      <Grid container>
-        {CourseLabel("Course Hours:")}
-        {CourseInput("E.g. 3 units; H (3-2)")}
-      </Grid>
-      <Grid container>
-        {CourseLabel("Academic Credit:")}
-        {CourseInput("E.g. 3")}
-      </Grid>
-      <Grid container>
-        {CourseLabel("Calendar Reference:")}
-        {CourseInput(
-          "E.g. http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
-        )}
+        <CourseHours />
+        <AcademicCredit />
+        <CalendarReference />
       </Grid>
     </Container>
   );

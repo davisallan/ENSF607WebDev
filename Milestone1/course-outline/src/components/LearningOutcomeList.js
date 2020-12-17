@@ -11,17 +11,10 @@ export default function LearningOutcomeList() {
   let outcomeNumber = 1;
 
   const useStyles = makeStyles((theme) => ({
-    root: {
-      width: "100%",
-      justify: "center",
-    },
-    paper: {
+    container: {
       marginTop: theme.spacing(4),
       width: "100%",
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 650,
+      marginBottom: theme.spacing(4),
     },
   }));
 
@@ -46,10 +39,8 @@ export default function LearningOutcomeList() {
   }
 
   return (
-    <Container>
-      <Typography className={classes.paper} variant="h5">
-        2. Learning Outcomes
-      </Typography>
+    <Container className={classes.container}>
+      <Typography variant="h5">2. Learning Outcomes</Typography>
       <Button
         onClick={handleAddOutcome}
         variant="contained"

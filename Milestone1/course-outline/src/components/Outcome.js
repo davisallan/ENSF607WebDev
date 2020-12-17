@@ -34,7 +34,7 @@ export default function Outcome({
           onChange={updateDescription}
         />
       </Grid>
-      <Grid item xs={1} justify="flex-end">
+      <Grid item xs={1}>
         <Button
           onClick={handleDeleteOutcome}
           variant="contained"
