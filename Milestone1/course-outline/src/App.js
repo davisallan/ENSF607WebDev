@@ -1,5 +1,5 @@
 import LearningOutcomeList from "./components/LearningOutcomeList";
-import GradeTable from "./components/GradeTable";
+import GradeContainer from "./components/GradeContainer";
 import CourseInformation from "./components/CourseInformation";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
       <header className="App-header">
         <CourseInformation />
         <LearningOutcomeList />
-        <GradeTable />
+        <GradeContainer />
       </header>
     </div>
   );
