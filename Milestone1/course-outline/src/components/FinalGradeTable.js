@@ -6,10 +6,10 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  makeStyles,
   Tooltip,
   TextField,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
@@ -137,8 +137,7 @@ export default function GradeTable() {
                     fontWeight: 600,
                     color: "white",
                     backgroundColor: "#b71c1c",
-                  }}
-                >
+                  }}>
                   {column.label}
                 </TableCell>
               ))}
@@ -147,8 +146,7 @@ export default function GradeTable() {
                   <Fab
                     color="primary"
                     className={classes.fab}
-                    onClick={addNewRow}
-                  >
+                    onClick={addNewRow}>
                     <AddIcon />
                   </Fab>
                 </Tooltip>
@@ -213,8 +211,7 @@ export default function GradeTable() {
                   fontWeight: 600,
                   color: "white",
                   backgroundColor: "#b71c1c",
-                }}
-              >
+                }}>
                 Total
               </TableCell>
               <TableCell
@@ -224,8 +221,7 @@ export default function GradeTable() {
                   fontWeight: 600,
                   color: "white",
                   backgroundColor: "#b71c1c",
-                }}
-              >
+                }}>
                 {gradeSubtotal}%
               </TableCell>
             </TableRow>

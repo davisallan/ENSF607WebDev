@@ -17,11 +17,7 @@ function Logo() {
 function CourseNumber() {
   return (
     <Grid item>
-      <TextField
-        variant="filled"
-        label="Course Number"
-        placeholder="E.g. ENSF 409"
-      />
+      <TextField label="Course Number" placeholder="E.g. ENSF 409" />
     </Grid>
   );
 }
@@ -30,7 +26,6 @@ function CourseTitle() {
   return (
     <Grid item>
       <TextField
-        variant="filled"
         label="Course Title"
         placeholder="E.g. Principles of Software Development"
         style={{ width: 392 }}
@@ -52,7 +47,7 @@ function CourseDescription() {
 function CourseLabel(text) {
   return (
     <Grid item>
-      <TextField disabled variant="filled" defaultValue={text} />
+      <TextField disabled defaultValue={text} />
     </Grid>
   );
 }
@@ -60,7 +55,7 @@ function CourseLabel(text) {
 function CourseInput(text) {
   return (
     <Grid item>
-      <TextField variant="filled" placeholder={text} />
+      <TextField placeholder={text} />
     </Grid>
   );
 }

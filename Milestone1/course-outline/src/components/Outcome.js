@@ -19,23 +19,26 @@ export default function Outcome({
   }
 
   return (
-    <Grid container spacing={4} direction="row">
-      <Grid item>
-        <Typography variant="body1">{outcomeNumber}</Typography>
+    <Grid container spacing={1} direction="row" alignContent="flex-end">
+      <Grid item xs={1}>
+        <Typography variant="body1" align="right">
+          {outcomeNumber}
+        </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={10}>
         <TextField
           id="standard-multiline-flexible"
-          placeholder="Description"
+          placeholder="Outcome Description"
           multiline
           fullWidth
           onChange={updateDescription}
         />
       </Grid>
-      <Grid item>
+      <Grid item xs={1} justify="flex-end">
         <Button
           onClick={handleDeleteOutcome}
           variant="contained"
+          style={{ float: "right" }}
           color="primary">
           Delete
         </Button>
