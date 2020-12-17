@@ -146,7 +146,8 @@ export default function GradeTable() {
                   <Fab
                     color="primary"
                     className={classes.fab}
-                    onClick={addNewRow}>
+                    onClick={addNewRow}
+                    size="medium">
                     <AddIcon />
                   </Fab>
                 </Tooltip>

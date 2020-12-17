@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Outcome from "./Outcome";
@@ -41,13 +44,14 @@ export default function LearningOutcomeList() {
   return (
     <Container className={classes.container}>
       <Typography variant="h5">2. Learning Outcomes</Typography>
-      <Button
+      <Fab
         onClick={handleAddOutcome}
-        variant="contained"
+        aria-label="add"
+        color="primary"
         style={{ float: "right" }}
-        color="primary">
-        Add
-      </Button>
+        size="medium">
+        <AddIcon />
+      </Fab>
       <Typography variant="subtitle1" align="left">
         At the end of this course, you will be able to:
       </Typography>

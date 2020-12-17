@@ -17,7 +17,11 @@ function Logo() {
 function CourseNumber() {
   return (
     <Grid item xs={12}>
-      <TextField label="Course Number" placeholder="E.g. ENSF 409" />
+      <TextField
+        label="Course Number"
+        placeholder="E.g. ENSF 409"
+        style={{ width: 750 }}
+      />
     </Grid>
   );
 }
@@ -28,7 +32,7 @@ function CourseTitle() {
       <TextField
         label="Course Title"
         placeholder="E.g. Principles of Software Development"
-        style={{ width: 392 }}
+        style={{ width: 750 }}
       />
     </Grid>
   );
@@ -50,7 +54,11 @@ function CourseDescription() {
 function CourseHours() {
   return (
     <Grid item xs={12}>
-      <TextField label="Course Hours" placeholder="E.g. 3 units; H (3-2)" />
+      <TextField
+        label="Course Hours"
+        placeholder="E.g. 3 units; H (3-2)"
+        style={{ width: 750 }}
+      />
     </Grid>
   );
 }
@@ -58,7 +66,11 @@ function CourseHours() {
 function AcademicCredit() {
   return (
     <Grid item xs={12}>
-      <TextField label="Academic Credit" placeholder="E.g. 3" />
+      <TextField
+        label="Academic Credit"
+        placeholder="E.g. 3"
+        style={{ width: 750 }}
+      />
     </Grid>
   );
 }
@@ -92,7 +104,7 @@ export default function CourseInformation() {
 
   return (
     <Container className={classes.container}>
-      <Grid container spacing={1} justify="flex">
+      <Grid container spacing={1}>
         <Logo />
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h5">
