@@ -1,0 +1,1 @@
+- Finalize milestone 1 deliverables with team and select final design.
