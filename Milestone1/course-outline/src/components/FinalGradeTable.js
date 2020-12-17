@@ -135,8 +135,8 @@ export default function GradeTable() {
                     minWidth: column.minWidth,
                     fontSize: 16,
                     fontWeight: 600,
-                    color: "white",
-                    backgroundColor: "#b71c1c",
+                    color: "black",
+                    backgroundColor: "white",
                   }}>
                   {column.label}
                 </TableCell>
@@ -209,8 +209,8 @@ export default function GradeTable() {
                 style={{
                   fontSize: 16,
                   fontWeight: 600,
-                  color: "white",
-                  backgroundColor: "#b71c1c",
+                  color: "black",
+                  backgroundColor: "white",
                 }}>
                 Total
               </TableCell>
@@ -219,8 +219,8 @@ export default function GradeTable() {
                 style={{
                   fontSize: 16,
                   fontWeight: 600,
-                  color: "white",
-                  backgroundColor: "#b71c1c",
+                  color: "black",
+                  backgroundColor: "white",
                 }}>
                 {gradeSubtotal}%
               </TableCell>
