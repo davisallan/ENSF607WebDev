@@ -192,14 +192,13 @@ export default function GradeTable() {
                   />
                 </TableCell>
                 <TableCell>
-                  {
-                    <DeleteIcon
-                      onClick={() => deleteRowHandler(breakdown.id)}
-                      style={{
-                        cursor: "pointer",
-                      }}
-                    />
-                  }
+                  <DeleteIcon
+                    onClick={() => deleteRowHandler(breakdown.id)}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    color="secondary"
+                  />
                 </TableCell>
               </TableRow>
             ))}

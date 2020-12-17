@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
+import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -42,14 +43,16 @@ export default function LearningOutcomeList() {
   return (
     <Container className={classes.container}>
       <Typography variant="h5">2. Learning Outcomes</Typography>
-      <Fab
-        onClick={handleAddOutcome}
-        aria-label="add"
-        color="primary"
-        style={{ float: "right" }}
-        size="medium">
-        <AddIcon />
-      </Fab>
+      <Tooltip title="Add Learning Outcome" aria-label="insert">
+        <Fab
+          onClick={handleAddOutcome}
+          aria-label="add"
+          color="primary"
+          style={{ float: "right" }}
+          size="medium">
+          <AddIcon />
+        </Fab>
+      </Tooltip>
       <Typography variant="subtitle1" align="left">
         At the end of this course, you will be able to:
       </Typography>

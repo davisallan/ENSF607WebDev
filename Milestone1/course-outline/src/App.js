@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import CourseInformation from "./components/CourseInformation";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import { red, yellow } from "@material-ui/core/colors";
+import { red, yellow, orange } from "@material-ui/core/colors";
 import { Logo } from "./components/CourseInformation";
 import "./App.css";
 import { Container } from "@material-ui/core";
@@ -14,12 +14,10 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        // Purple and green play nicely together.
-        main: red[600],
+        main: orange[400],
       },
       secondary: {
-        // This is green.A700 as hex.
-        main: yellow[600],
+        main: red[600],
       },
     },
   });

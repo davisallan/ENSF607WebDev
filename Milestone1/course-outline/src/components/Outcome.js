@@ -19,7 +19,7 @@ export default function Outcome({
   }
 
   return (
-    <Grid container spacing={1} direction="row" alignContent="flex-end">
+    <Grid container spacing={3} direction="row" alignContent="flex-end">
       <Grid item xs={"auto"}>
         <Typography variant="body1" align="right">
           {outcomeNumber}
@@ -35,17 +35,11 @@ export default function Outcome({
         />
       </Grid>
       <Grid item xs={"auto"}>
-        {/* <Button
-          onClick={handleDeleteOutcome}
-          variant="contained"
-          style={{ float: "right" }}
-          color="primary">
-          Delete
-        </Button> */}
         <DeleteIcon
           style={{
             cursor: "pointer",
           }}
+          color="secondary"
           onClick={handleDeleteOutcome}></DeleteIcon>
       </Grid>
     </Grid>
