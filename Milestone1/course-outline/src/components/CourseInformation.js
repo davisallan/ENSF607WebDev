@@ -1,72 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import TextAreaAutosize from "@material-ui/core/TextareaAutosize";
 import Grid from "@material-ui/core/Grid";
 import logo from "./schulich.png";
 
-function Logo() {
-  return (
-    <Grid item>
-      <img src={logo} alt="Schulich" />
-    </Grid>
-  );
-}
-
-function CourseNumber() {
-  return (
-    <Grid item>
-      <TextField
-        variant="filled"
-        label="Course Number"
-        placeholder="E.g. ENSF 409"
-      />
-    </Grid>
-  );
-}
-
-function CourseTitle() {
-  return (
-    <Grid item>
-      <TextField
-        variant="filled"
-        label="Course Title"
-        placeholder="E.g. Principles of Software Development"
-        style={{ width: 392 }}
-      />
-    </Grid>
-  );
-}
-
-function CourseDescription() {
-  return (
-    <TextAreaAutosize
-      style={{ width: 386 }}
-      placeholder="Description of the course"
-      rowsMin={3}
-    />
-  );
-}
-
-function CourseLabel(text) {
-  return (
-    <Grid item>
-      <TextField disabled variant="filled" defaultValue={text} />
-    </Grid>
-  );
-}
-
-function CourseInput(text) {
-  return (
-    <Grid item>
-      <TextField variant="filled" placeholder={text} />
-    </Grid>
-  );
-}
-
 export default function CourseInformation() {
+  const [number, setNumber] = useState("");
+  const numberChange = (e) => {
+    setNumber(e.target.number);
+  };
+
+  function Logo() {
+    return (
+      <Grid item>
+        <img src={logo} alt="Schulich" />
+      </Grid>
+    );
+  }
+
+  function CourseNumber() {
+    return (
+      <Grid item>
+        <TextField
+          variant="filled"
+          label="Course Number"
+          placeholder="E.g. ENSF 409"
+          value={number}
+          onChange={numberChange}
+        />
+      </Grid>
+    );
+  }
+
+  function CourseTitle() {
+    return (
+      <Grid item>
+        <TextField
+          variant="filled"
+          label="Course Title"
+          placeholder="E.g. Principles of Software Development"
+          style={{ width: 392 }}
+        />
+      </Grid>
+    );
+  }
+
+  function CourseDescription() {
+    return (
+      <TextAreaAutosize
+        style={{ width: 386 }}
+        placeholder="Description of the course"
+        rowsMin={3}
+      />
+    );
+  }
+
+  function CourseLabel(text) {
+    return (
+      <Grid item>
+        <TextField disabled variant="filled" defaultValue={text} />
+      </Grid>
+    );
+  }
+
+  function CourseInput(text) {
+    return (
+      <Grid item>
+        <TextField variant="filled" placeholder={text} />
+      </Grid>
+    );
+  }
+
   return (
     <div>
-      <Grid container>
+      <Grid container justify="center">
         <Logo />
       </Grid>
       <Grid container>
