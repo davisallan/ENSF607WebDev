@@ -1,0 +1,6 @@
+- Finalized Final Grades Table
+- Complete weight subtotal column and percentage restrictions.
+- Created unique row id's for the table so they were not connected.
+- Adjusted formatting for table textfields and grades text entries.
+- Finished creating add row and delete row buttons.
+- Formatting proposal for React webpage.
