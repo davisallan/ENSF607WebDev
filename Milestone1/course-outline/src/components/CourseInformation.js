@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -14,81 +14,21 @@ export function Logo() {
   );
 }
 
-function CourseNumber() {
-  return (
-    <Grid item xs={12}>
-      <TextField
-        label="Course Number"
-        placeholder="E.g. ENSF 409"
-        style={{ width: 750 }}
-      />
-    </Grid>
-  );
-}
-
-function CourseTitle() {
-  return (
-    <Grid item xs={12}>
-      <TextField
-        label="Course Title"
-        placeholder="E.g. Principles of Software Development"
-        style={{ width: 750 }}
-      />
-    </Grid>
-  );
-}
-
-function CourseDescription() {
-  return (
-    <Grid item xs={12}>
-      <TextField
-        label="Course Description"
-        placeholder="Description of course"
-        multiline
-        style={{ width: 750 }}
-      />
-    </Grid>
-  );
-}
-
-function CourseHours() {
-  return (
-    <Grid item xs={12}>
-      <TextField
-        label="Course Hours"
-        placeholder="E.g. 3 units; H (3-2)"
-        style={{ width: 750 }}
-      />
-    </Grid>
-  );
-}
-
-function AcademicCredit() {
-  return (
-    <Grid item xs={12}>
-      <TextField
-        label="Academic Credit"
-        placeholder="E.g. 3"
-        style={{ width: 750 }}
-      />
-    </Grid>
-  );
-}
-
-function CalendarReference() {
-  return (
-    <Grid item xs={12}>
-      <TextField
-        style={{ width: 750 }}
-        label="Calendar Reference"
-        multiline
-        placeholder="E.g. http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
-      />
-    </Grid>
-  );
-}
-
 export default function CourseInformation() {
+  const [courseInfo, setCourseInfo] = useState({
+    number: "",
+    title: "",
+    description: "",
+    hours: "",
+    credit: "",
+    reference: "",
+  });
+
+  function handleOnChange(event) {
+    const value = event.target.value;
+    setCourseInfo({ ...courseInfo, [event.target.name]: value });
+  }
+
   const useStyles = makeStyles((theme) => ({
     container: {
       marginTop: theme.spacing(4),
@@ -110,12 +50,62 @@ export default function CourseInformation() {
             1. Calendar Information
           </Typography>
         </Grid>
-        <CourseNumber />
-        <CourseTitle />
-        <CourseDescription />
-        <CourseHours />
-        <AcademicCredit />
-        <CalendarReference />
+        <Grid item xs={12}>
+          <TextField
+            label="Course Number"
+            placeholder="E.g. ENSF 409"
+            style={{ width: 750 }}
+            name="number"
+            onChange={handleOnChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Course Title"
+            placeholder="E.g. Principles of Software Development"
+            style={{ width: 750 }}
+            name="title"
+            onChange={handleOnChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Course Description"
+            placeholder="Description of course"
+            multiline
+            style={{ width: 750 }}
+            name="description"
+            onChange={handleOnChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Course Hours"
+            placeholder="E.g. 3 units; H (3-2)"
+            style={{ width: 750 }}
+            name="hours"
+            onChange={handleOnChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Academic Credit"
+            placeholder="E.g. 3"
+            style={{ width: 750 }}
+            name="credit"
+            onChange={handleOnChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            style={{ width: 750 }}
+            label="Calendar Reference"
+            multiline
+            placeholder="E.g. http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
+            name="reference"
+            onChange={handleOnChange}
+          />
+        </Grid>
       </Grid>
     </Container>
   );
