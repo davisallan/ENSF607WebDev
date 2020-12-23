@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Table } from "@material-ui/core";
-import { Paper } from "@material-ui/core";
 import {
+  Table,
+  Paper,
   TableHead,
   TableBody,
   TableCell,
@@ -137,7 +137,8 @@ export default function GradeTable() {
                     fontWeight: 600,
                     color: "black",
                     backgroundColor: "white",
-                  }}>
+                  }}
+                >
                   {column.label}
                 </TableCell>
               ))}
@@ -147,7 +148,8 @@ export default function GradeTable() {
                     color="primary"
                     className={classes.fab}
                     onClick={addNewRow}
-                    size="medium">
+                    size="small"
+                  >
                     <AddIcon />
                   </Fab>
                 </Tooltip>
@@ -191,7 +193,7 @@ export default function GradeTable() {
                     onChange={(e) => handleWeightChange(e, breakdown.id)}
                   />
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <DeleteIcon
                     onClick={() => deleteRowHandler(breakdown.id)}
                     style={{
@@ -211,7 +213,8 @@ export default function GradeTable() {
                   fontWeight: 600,
                   color: "black",
                   backgroundColor: "white",
-                }}>
+                }}
+              >
                 Total
               </TableCell>
               <TableCell
@@ -221,7 +224,8 @@ export default function GradeTable() {
                   fontWeight: 600,
                   color: "black",
                   backgroundColor: "white",
-                }}>
+                }}
+              >
                 {gradeSubtotal}%
               </TableCell>
             </TableRow>

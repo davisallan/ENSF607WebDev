@@ -49,7 +49,8 @@ export default function LearningOutcomeList() {
           aria-label="add"
           color="primary"
           style={{ float: "right" }}
-          size="medium">
+          size="small"
+        >
           <AddIcon />
         </Fab>
       </Tooltip>
