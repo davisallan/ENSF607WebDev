@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import GradeTable from "./FinalGradeTable";
+import LetterTable from "./LetterGradeTable";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -53,6 +54,7 @@ export default function CombinedGrades() {
       <GradeTable />
       <NotesTitle />
       <NotesArea />
+      <LetterTable />
     </Container>
   );
 }
