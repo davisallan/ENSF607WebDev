@@ -10,6 +10,8 @@ import { Logo } from "./components/CourseInformation";
 import Grid from "@material-ui/core/Grid";
 import "./App.css";
 import { Container } from "@material-ui/core";
+import SaveIcon from "@material-ui/icons/Save";
+import Button from "@material-ui/core/Button";
 
 function App() {
   const theme = createMuiTheme({
@@ -22,6 +24,28 @@ function App() {
       },
     },
   });
+
+  function SaveButton() {
+    const style = {
+      top: "auto",
+      right: 20,
+      bottom: 20,
+      left: "auto",
+      position: "fixed",
+    };
+    return (
+      <Button
+        style={style}
+        position="fixed"
+        variant="contained"
+        color="primary"
+        size="large"
+        startIcon={<SaveIcon />}
+      >
+        Save
+      </Button>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -39,6 +63,7 @@ function App() {
           </Container>
         </header>
         <body className="App-body">
+          <SaveButton />
           <CourseInformation />
           <LearningOutcomeList />
           <GradeContainer />
