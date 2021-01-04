@@ -1,0 +1,3 @@
+- Added graduate attribute tables
+- Implemented adding and deletion of rows
+- Formatted some alignment issues

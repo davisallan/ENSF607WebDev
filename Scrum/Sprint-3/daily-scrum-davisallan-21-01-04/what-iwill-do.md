@@ -1,0 +1,2 @@
+- research how to link react and django
+- research how to structure the overall state of our application
