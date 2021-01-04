@@ -3,3 +3,7 @@ from .models import *
 
 # Register your models here.
 admin.site.register(CalenderInfo)
+admin.site.register(CourseOutline)
+admin.site.register(LearningOutcome)
+admin.site.register(FinalGradesTable)
+admin.site.register(FinalGradesInfo)
