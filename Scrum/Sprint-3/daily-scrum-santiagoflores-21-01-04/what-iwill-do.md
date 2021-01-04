@@ -1,0 +1,2 @@
+- read on how to connect react and django
+- read on how to properly use the save button
