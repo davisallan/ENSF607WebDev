@@ -1,0 +1,3 @@
+- Added in Final Grades breakdown table.
+- reduced size of final grade table buttons
+- Aligned the delete row and add row buttons on the final grades table.
