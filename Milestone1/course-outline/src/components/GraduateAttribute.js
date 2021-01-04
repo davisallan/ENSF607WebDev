@@ -73,6 +73,20 @@ export default function GraduateAttribute({ numOutcomes }) {
     ]);
   }
 
+  function inputChangeHandler(e, i) {
+    let result = attribute.map((attribute) => {
+      return attribute.id === i
+        ? {
+            ...attribute,
+            [e.target.name]: e.target.value,
+          }
+        : {
+            ...attribute,
+          };
+    });
+    setAttribute(result);
+  }
+
   const classes = useStyles();
 
   return (
@@ -113,16 +127,45 @@ export default function GraduateAttribute({ numOutcomes }) {
               <TableRow key={id}>
                 <TableCell>
                   <TextField
-                    name="outcome"
-                    placeholder="Learning Outcome #"
+                    name="learningOutcome"
+                    placeholder="#"
                     value={attribute.learningOutcome}
+                    onChange={(e) => inputChangeHandler(e, attribute.id)}
                   />
                 </TableCell>
                 <TableCell>
-                  <Select>
+                  <Select
+                    name="graduateAttribute"
+                    value={attribute.graduateAttribute}
+                    onChange={(e) => inputChangeHandler(e, attribute.id)}>
                     <MenuItem value={1}>
                       A1. A knowledge base for engineering
                     </MenuItem>
+                    <MenuItem value={2}>A2. Problem analysis</MenuItem>
+                    <MenuItem value={3}>A3. Investigation</MenuItem>
+                    <MenuItem value={4}>A4. Design</MenuItem>
+                    <MenuItem value={5}>A5. Use of engineering tools</MenuItem>
+                    <MenuItem value={6}>A6. Individual and team work</MenuItem>
+                    <MenuItem value={7}>A7. Communication skills</MenuItem>
+                    <MenuItem value={8}>A8. Professionalisim</MenuItem>
+                    <MenuItem value={9}>
+                      A9. Impact of engineering on society/environment
+                    </MenuItem>
+                    <MenuItem value={10}>A10. Ethics and equity</MenuItem>
+                    <MenuItem value={11}>
+                      A11. Economics and project management
+                    </MenuItem>
+                    <MenuItem value={12}>A12. Life-long learning</MenuItem>
+                  </Select>
+                </TableCell>
+                <TableCell>
+                  <Select
+                    name="instructionLevel"
+                    value={attribute.instructionLevel}
+                    onChange={(e) => inputChangeHandler(e, attribute.id)}>
+                    <MenuItem value={1}>I (Introduced)</MenuItem>
+                    <MenuItem value={2}>D (Developed)</MenuItem>
+                    <MenuItem value={3}>A (Applied)</MenuItem>
                   </Select>
                 </TableCell>
               </TableRow>
