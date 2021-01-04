@@ -6,6 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Outcome from "./Outcome";
+import GraduateAttribute from "./GraduateAttribute";
 import { v4 as uuidv4 } from "uuid";
 
 export default function LearningOutcomeList() {
@@ -48,9 +49,10 @@ export default function LearningOutcomeList() {
           onClick={handleAddOutcome}
           aria-label="add"
           color="primary"
-          style={{ float: "right" }}
-          size="small"
-        >
+          style={{
+            float: "right",
+          }}
+          size="small">
           <AddIcon />
         </Fab>
       </Tooltip>
@@ -68,6 +70,8 @@ export default function LearningOutcomeList() {
           />
         );
       })}
+      <GraduateAttribute
+        numOutcomes={learningOutcomes.length}></GraduateAttribute>
     </Container>
   );
 }
