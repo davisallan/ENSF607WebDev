@@ -8,6 +8,7 @@ import {
   TableRow,
   Tooltip,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 650,
+  },
+  text: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -97,6 +102,13 @@ export default function GraduateAttribute({ numOutcomes }) {
 
   return (
     <div className={classes.root}>
+      <Typography className={classes.text} variant="body1" gutterBottom>
+        Graduate Attributes are generic characteristics specified by the CEAB
+        (Canadian Engineering Accreditation Board), expected to be exhibited by
+        graduates of Canadian engineering schools. This table summarizes how the
+        Learning Outcomes relate to key Graduate Attributes addressed in this
+        course.
+      </Typography>
       <Paper className={classes.paper}>
         <Table className={classes.table} size="small">
           <TableHead>
