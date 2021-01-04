@@ -87,6 +87,12 @@ export default function GraduateAttribute({ numOutcomes }) {
     setAttribute(result);
   }
 
+  function deleteRowHandler(id) {
+    const temp = [...attribute];
+    const filteredRow = temp.filter((attribute) => attribute.id !== id);
+    setAttribute([...filteredRow]);
+  }
+
   const classes = useStyles();
 
   return (
@@ -109,7 +115,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell align="right">
+              <TableCell align="center">
                 <Tooltip title="Insert Row" aria-label="insert">
                   <Fab
                     color="primary"
@@ -130,6 +136,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                     name="learningOutcome"
                     placeholder="#"
                     value={attribute.learningOutcome}
+                    style={{ width: "10rem" }}
                     onChange={(e) => inputChangeHandler(e, attribute.id)}
                   />
                 </TableCell>
@@ -137,6 +144,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                   <Select
                     name="graduateAttribute"
                     value={attribute.graduateAttribute}
+                    style={{ width: "27rem" }}
                     onChange={(e) => inputChangeHandler(e, attribute.id)}>
                     <MenuItem value={1}>
                       A1. A knowledge base for engineering
@@ -161,12 +169,22 @@ export default function GraduateAttribute({ numOutcomes }) {
                 <TableCell>
                   <Select
                     name="instructionLevel"
+                    style={{ width: "10rem" }}
                     value={attribute.instructionLevel}
                     onChange={(e) => inputChangeHandler(e, attribute.id)}>
                     <MenuItem value={1}>I (Introduced)</MenuItem>
                     <MenuItem value={2}>D (Developed)</MenuItem>
                     <MenuItem value={3}>A (Applied)</MenuItem>
                   </Select>
+                </TableCell>
+                <TableCell align="center">
+                  <DeleteIcon
+                    onClick={() => deleteRowHandler(attribute.id)}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    color="secondary"
+                  />
                 </TableCell>
               </TableRow>
             ))}
