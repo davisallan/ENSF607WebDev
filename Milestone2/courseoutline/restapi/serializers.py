@@ -11,7 +11,7 @@ class CalendarSerializer(serializers.HyperlinkedModelSerializer):
 class OutlineSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CourseOutline
-        fields = ('id', 'courseNumber')
+        fields = ('courseId', 'courseNumber')
 
 
 class OutcomesSerializer(serializers.HyperlinkedModelSerializer):
