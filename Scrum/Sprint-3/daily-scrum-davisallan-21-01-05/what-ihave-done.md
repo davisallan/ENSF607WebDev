@@ -1,0 +1,3 @@
+- researched react router/how to connect the react app to the back end
+- thought of another idea of how to structure the program to make things simpler
+- identified some re-factoring opportunities with the learning outcomes component
