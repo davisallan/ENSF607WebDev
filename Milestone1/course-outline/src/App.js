@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import LearningOutcomeList from "./components/LearningOutcomeList";
 import GradeContainer from "./components/GradeContainer";
 import CourseInformation from "./components/CourseInformation";
@@ -14,6 +14,20 @@ import SaveIcon from "@material-ui/icons/Save";
 import Button from "@material-ui/core/Button";
 
 function App() {
+  const [states, setStates] = useState({
+    number: "",
+    title: "",
+    description: "",
+    hours: "",
+    credit: "",
+    reference: "",
+  });
+
+  function onChangeStates(event) {
+    const value = event.target.value;
+    setStates({ ...states, [event.target.name]: value });
+  }
+
   const theme = createMuiTheme({
     palette: {
       primary: {
@@ -64,7 +78,7 @@ function App() {
         </header>
         <body className="App-body">
           <SaveButton />
-          <CourseInformation />
+          <CourseInformation changeStates={onChangeStates} />
           <LearningOutcomeList />
           <GradeContainer />
         </body>

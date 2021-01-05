@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -14,19 +14,9 @@ export function Logo() {
   );
 }
 
-export default function CourseInformation() {
-  const [courseInfo, setCourseInfo] = useState({
-    number: "",
-    title: "",
-    description: "",
-    hours: "",
-    credit: "",
-    reference: "",
-  });
-
+export default function CourseInformation(props) {
   function handleOnChange(event) {
-    const value = event.target.value;
-    setCourseInfo({ ...courseInfo, [event.target.name]: value });
+    props.changeStates(event);
   }
 
   const useStyles = makeStyles((theme) => ({
