@@ -1,0 +1,4 @@
+- Group work to create REST API for Django back end on course outline.
+- Research axios for connection between front end and back end.
+- Research Context, useReducer, useMemo, and useCallBack.
+- Implement test using Context between parent and FinalGradeTable child.
