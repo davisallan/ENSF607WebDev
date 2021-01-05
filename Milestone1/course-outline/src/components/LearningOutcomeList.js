@@ -9,7 +9,7 @@ import Outcome from "./Outcome";
 import GraduateAttribute from "./GraduateAttribute";
 import { v4 as uuidv4 } from "uuid";
 
-export default function LearningOutcomeList() {
+export default function LearningOutcomeList(props) {
   const [learningOutcomes, setOutcomes] = useState([{ id: uuidv4() }]);
   let outcomeNumber = 1;
 
@@ -28,6 +28,9 @@ export default function LearningOutcomeList() {
       return [...prevLearningOutcomes, { id: uuidv4() }];
     });
   }
+  // function handleAddOutcome() {
+  //   props.changeOutcome();
+  // }
 
   function deleteOutcome(id) {
     const newOutcomes = learningOutcomes.filter((outcome) => outcome.id !== id);
@@ -52,7 +55,8 @@ export default function LearningOutcomeList() {
           style={{
             float: "right",
           }}
-          size="small">
+          size="small"
+        >
           <AddIcon />
         </Fab>
       </Tooltip>
@@ -71,7 +75,8 @@ export default function LearningOutcomeList() {
         );
       })}
       <GraduateAttribute
-        numOutcomes={learningOutcomes.length}></GraduateAttribute>
+        numOutcomes={learningOutcomes.length}
+      ></GraduateAttribute>
     </Container>
   );
 }

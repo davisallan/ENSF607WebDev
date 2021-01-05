@@ -16,7 +16,7 @@ export function Logo() {
 
 export default function CourseInformation(props) {
   function handleOnChange(event) {
-    props.changeStates(event);
+    props.changeInformation(event);
   }
 
   const useStyles = makeStyles((theme) => ({

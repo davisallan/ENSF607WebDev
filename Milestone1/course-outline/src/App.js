@@ -23,7 +23,7 @@ function App() {
     reference: "",
   });
 
-  function onChangeStates(event) {
+  function onChangeInformation(event) {
     const value = event.target.value;
     setStates({ ...states, [event.target.name]: value });
   }
@@ -78,7 +78,7 @@ function App() {
         </header>
         <body className="App-body">
           <SaveButton />
-          <CourseInformation changeStates={onChangeStates} />
+          <CourseInformation changeInformation={onChangeInformation} />
           <LearningOutcomeList />
           <GradeContainer />
         </body>
