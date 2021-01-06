@@ -1,0 +1,2 @@
+- app is very laggy now that we have lifted state to app level, cant seem to get it to not be laggy
+- unsure how to proceed at this point, reached out for help

@@ -1,0 +1,3 @@
+- attempted to use react memo to fix lag
+- lifted state of learning outcome and graduate attributes to app level
+- refactored learning outcome to a table

@@ -1,0 +1,1 @@
+- try to fix the laggy app, will attempt to have it not go to app level and see if that fixes it
