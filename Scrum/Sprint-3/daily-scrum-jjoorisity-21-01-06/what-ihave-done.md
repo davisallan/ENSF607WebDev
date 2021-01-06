@@ -1,0 +1,3 @@
+- Researched React.Memo and React.useMemo hook to try and reduce the amount of rerendering occurring.
+- Tried to implement Memo on CourseInformation.
+- Tried to use useMemo on FinalGradeTable and LetterGradeTable.
