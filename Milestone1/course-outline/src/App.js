@@ -1,5 +1,5 @@
 import { React } from "react";
-import LearningOutcomeList from "./components/LearningOutcomeList";
+import LearningOutcome from "./components/LearningOutcome";
 import GradeContainer from "./components/GradeContainer";
 import CourseInformation from "./components/CourseInformation";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -40,8 +40,7 @@ function App() {
         variant="contained"
         color="primary"
         size="large"
-        startIcon={<SaveIcon />}
-      >
+        startIcon={<SaveIcon />}>
         Save
       </Button>
     );
@@ -65,7 +64,7 @@ function App() {
         <body className="App-body">
           <SaveButton />
           <CourseInformation />
-          <LearningOutcomeList />
+          <LearningOutcome />
           <GradeContainer />
         </body>
       </div>

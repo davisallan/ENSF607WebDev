@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
 import {
   Table,
   Paper,
@@ -11,12 +11,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { v4 as uuidv4 } from "uuid";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GraduateAttribute({ numOutcomes }) {
+export default function GraduateAttribute() {
   const [attribute, setAttribute] = useState([
     {
       id: uuidv4(),
@@ -46,6 +46,38 @@ export default function GraduateAttribute({ numOutcomes }) {
       instructionLevel: "",
     },
   ]);
+
+  function addNewAttributeRow() {
+    setAttribute([
+      ...attribute,
+      {
+        id: uuidv4(),
+        learningOutcome: "",
+        graduateAttribute: "",
+        instructionLevel: "",
+      },
+    ]);
+  }
+
+  function handleAttributeChange(e, i) {
+    let result = attribute.map((attribute) => {
+      return attribute.id === i
+        ? {
+            ...attribute,
+            [e.target.name]: e.target.value,
+          }
+        : {
+            ...attribute,
+          };
+    });
+    setAttribute(result);
+  }
+
+  function deleteAttributeRow(id) {
+    const temp = [...attribute];
+    const filteredRow = temp.filter((attribute) => attribute.id !== id);
+    setAttribute([...filteredRow]);
+  }
 
   const columns = [
     {
@@ -65,38 +97,6 @@ export default function GraduateAttribute({ numOutcomes }) {
       align: "center",
     },
   ];
-
-  function addNewRow() {
-    setAttribute([
-      ...attribute,
-      {
-        id: uuidv4(),
-        learningOutcome: "",
-        graduateAttribute: "",
-        instructionLevel: "",
-      },
-    ]);
-  }
-
-  function inputChangeHandler(e, i) {
-    let result = attribute.map((attribute) => {
-      return attribute.id === i
-        ? {
-            ...attribute,
-            [e.target.name]: e.target.value,
-          }
-        : {
-            ...attribute,
-          };
-    });
-    setAttribute(result);
-  }
-
-  function deleteRowHandler(id) {
-    const temp = [...attribute];
-    const filteredRow = temp.filter((attribute) => attribute.id !== id);
-    setAttribute([...filteredRow]);
-  }
 
   const classes = useStyles();
 
@@ -132,7 +132,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                   <Fab
                     color="primary"
                     className={classes.fab}
-                    onClick={addNewRow}
+                    onClick={addNewAttributeRow}
                     size="small">
                     <AddIcon />
                   </Fab>
@@ -149,7 +149,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                     placeholder="#"
                     value={attribute.learningOutcome}
                     style={{ width: "10rem" }}
-                    onChange={(e) => inputChangeHandler(e, attribute.id)}
+                    onChange={(e) => handleAttributeChange(e, attribute.id)}
                   />
                 </TableCell>
                 <TableCell>
@@ -157,7 +157,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                     name="graduateAttribute"
                     value={attribute.graduateAttribute}
                     style={{ width: "27rem" }}
-                    onChange={(e) => inputChangeHandler(e, attribute.id)}>
+                    onChange={(e) => handleAttributeChange(e, attribute.id)}>
                     <MenuItem value={1}>
                       A1. A knowledge base for engineering
                     </MenuItem>
@@ -183,7 +183,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                     name="instructionLevel"
                     style={{ width: "10rem" }}
                     value={attribute.instructionLevel}
-                    onChange={(e) => inputChangeHandler(e, attribute.id)}>
+                    onChange={(e) => handleAttributeChange(e, attribute.id)}>
                     <MenuItem value={1}>I (Introduced)</MenuItem>
                     <MenuItem value={2}>D (Developed)</MenuItem>
                     <MenuItem value={3}>A (Applied)</MenuItem>
@@ -191,7 +191,7 @@ export default function GraduateAttribute({ numOutcomes }) {
                 </TableCell>
                 <TableCell align="center">
                   <DeleteIcon
-                    onClick={() => deleteRowHandler(attribute.id)}
+                    onClick={() => deleteAttributeRow(attribute.id)}
                     style={{
                       cursor: "pointer",
                     }}
