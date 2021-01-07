@@ -33,13 +33,20 @@ function App() {
     return newOutline
       ? {
           number: "",
-          title: "",
+          title: "Test run",
           description: "",
           hours: "",
           credit: "",
           reference: "",
         }
-      : {};
+      : {
+          number: "",
+          title: "Test failed",
+          description: "",
+          hours: "",
+          credit: "",
+          reference: "",
+        };
   }
 
   function SaveButton() {
@@ -57,7 +64,8 @@ function App() {
         variant="contained"
         color="primary"
         size="large"
-        startIcon={<SaveIcon />}>
+        startIcon={<SaveIcon />}
+      >
         Save
       </Button>
     );

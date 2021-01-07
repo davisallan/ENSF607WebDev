@@ -14,17 +14,23 @@ export function Logo() {
   );
 }
 
-export default function CourseInformation(
-  { appStatus },
-  { courseInformation }
-) {
+export default function CourseInformation({ appStatus, courseInformation }) {
+  const {
+    number,
+    title,
+    description,
+    hours,
+    credit,
+    reference,
+  } = courseInformation;
+
   const [courseInfo, setCourseInfo] = useState({
-    number: courseInformation.number,
-    title: courseInformation.title,
-    description: courseInformation.description,
-    hours: courseInformation.hours,
-    credit: courseInformation.credit,
-    reference: courseInformation.reference,
+    number: number,
+    title: title,
+    description: description,
+    hours: hours,
+    credit: credit,
+    reference: reference,
   });
 
   function handleOnChange(event) {
@@ -60,6 +66,7 @@ export default function CourseInformation(
             style={{ width: 750 }}
             name="number"
             onChange={handleOnChange}
+            value={courseInfo.number}
           />
         </Grid>
         <Grid item xs={12}>
@@ -69,6 +76,7 @@ export default function CourseInformation(
             style={{ width: 750 }}
             name="title"
             onChange={handleOnChange}
+            value={courseInfo.title}
           />
         </Grid>
         <Grid item xs={12}>
@@ -79,6 +87,7 @@ export default function CourseInformation(
             style={{ width: 750 }}
             name="description"
             onChange={handleOnChange}
+            value={courseInfo.description}
           />
         </Grid>
         <Grid item xs={12}>
@@ -88,6 +97,7 @@ export default function CourseInformation(
             style={{ width: 750 }}
             name="hours"
             onChange={handleOnChange}
+            value={courseInfo.hours}
           />
         </Grid>
         <Grid item xs={12}>
@@ -97,6 +107,7 @@ export default function CourseInformation(
             style={{ width: 750 }}
             name="credit"
             onChange={handleOnChange}
+            value={courseInfo.credit}
           />
         </Grid>
         <Grid item xs={12}>
@@ -107,6 +118,7 @@ export default function CourseInformation(
             placeholder="E.g. http://www.ucalgary.ca/pubs/calendar/current/software-engineering-for-engineers.html#38252"
             name="reference"
             onChange={handleOnChange}
+            value={courseInfo.reference}
           />
         </Grid>
       </Grid>
