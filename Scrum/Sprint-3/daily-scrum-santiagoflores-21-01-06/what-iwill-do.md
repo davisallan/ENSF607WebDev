@@ -1,0 +1,3 @@
+- Go to office hours and understand the issue with our program
+- Finish React part
+- Connect to Django

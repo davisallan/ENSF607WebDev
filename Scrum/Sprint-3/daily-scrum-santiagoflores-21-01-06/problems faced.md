@@ -1,0 +1,1 @@
+The website seems to be laggy when moving the states to parent component

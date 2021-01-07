@@ -1,0 +1,3 @@
+- Read about React.memo
+- Tried to implement React.memo
+- Tried other potential solutions from blogs online
