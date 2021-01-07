@@ -6,6 +6,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import logo from "./schulich.png";
 import { makeStyles } from "@material-ui/core";
+import http from "../http-common";
 
 export function Logo() {
   return (
@@ -44,10 +45,19 @@ export default function CourseInformation({ appStatus, courseInformation }) {
   //   if (appStatus) {
   //     axios({
   //       method: "post",
-  //       url: "http://127.0.0.1:8000/courseOutline/",
+  //       url: "/restapi/courseoutline/",
   //       data: {
   //         courseId: courseId,
   //         courseNumber: courseInfo.number,
+  //       },
+  //       proxy: {
+  //         protocol: "https",
+  //         host: "127.0.0.1",
+  //         port: 8000,
+  //         auth: {
+  //           username: "admin",
+  //           password: "password",
+  //         },
   //       },
   //     });
   //   }
@@ -55,17 +65,10 @@ export default function CourseInformation({ appStatus, courseInformation }) {
 
   useEffect(() => {
     if (appStatus) {
-      axios
-        .post("http://127.0.0.1:8000/courseOutline/", {
-          courseId: courseId,
-          courseNumber: courseInfo.number,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      http.post("/admin/restapi/courseoutline", {
+        courseId: courseId,
+        courseNumber: courseInfo.number,
+      });
     }
   }, [appStatus, courseId, courseInfo]);
 
