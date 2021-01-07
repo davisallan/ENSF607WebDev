@@ -12,6 +12,7 @@ import "./App.css";
 import { Container } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import Button from "@material-ui/core/Button";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const theme = createMuiTheme({
@@ -25,13 +26,18 @@ function App() {
     },
   });
 
-  var appStatus = false;
+  var appStatus = true;
 
   var newOutline = true;
+
+  function NewCourseId() {
+    return uuidv4();
+  }
 
   function CourseInfo(newOutline) {
     return newOutline
       ? {
+          courseId: NewCourseId(),
           number: "",
           title: "Test run",
           description: "",

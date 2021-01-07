@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -16,6 +17,7 @@ export function Logo() {
 
 export default function CourseInformation({ appStatus, courseInformation }) {
   const {
+    courseId,
     number,
     title,
     description,
@@ -37,6 +39,35 @@ export default function CourseInformation({ appStatus, courseInformation }) {
     const value = event.target.value;
     setCourseInfo({ ...courseInfo, [event.target.name]: value });
   }
+
+  // useEffect(() => {
+  //   if (appStatus) {
+  //     axios({
+  //       method: "post",
+  //       url: "http://127.0.0.1:8000/courseOutline/",
+  //       data: {
+  //         courseId: courseId,
+  //         courseNumber: courseInfo.number,
+  //       },
+  //     });
+  //   }
+  // }, [appStatus, courseId, courseInfo]);
+
+  useEffect(() => {
+    if (appStatus) {
+      axios
+        .post("http://127.0.0.1:8000/courseOutline/", {
+          courseId: courseId,
+          courseNumber: courseInfo.number,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }, [appStatus, courseId, courseInfo]);
 
   const useStyles = makeStyles((theme) => ({
     container: {
