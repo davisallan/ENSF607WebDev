@@ -26,8 +26,8 @@ class GradeTableSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('courseId', 'component', 'outcomes', 'weight')
 
 
-class GradeTableSerializer(serializers.HyperlinkedModelSerializer):
+class LetterTableSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = FinalGradesTable
+        model = FinalGradesInfo
         fields = ('courseId', 'notes', 'letterAPlus', 'letterA', 'letterAMinus', 'letterBPlus', 'letterB',
                   'letterBMinus', 'letterCPlus', 'letterC', 'letterCMinus', 'letterDPlus', 'letterD', 'letterF')

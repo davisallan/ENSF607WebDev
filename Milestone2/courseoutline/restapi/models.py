@@ -4,7 +4,7 @@ from django.db import models
 
 
 class CourseOutline(models.Model):
-    courseId = models.AutoField(primary_key=True)
+    courseId = models.TextField(primary_key=True)
     courseNumber = models.CharField(max_length=10)
 
 
