@@ -14,14 +14,17 @@ export function Logo() {
   );
 }
 
-export default function CourseInformation() {
+export default function CourseInformation(
+  { appStatus },
+  { courseInformation }
+) {
   const [courseInfo, setCourseInfo] = useState({
-    number: "",
-    title: "",
-    description: "",
-    hours: "",
-    credit: "",
-    reference: "",
+    number: courseInformation.number,
+    title: courseInformation.title,
+    description: courseInformation.description,
+    hours: courseInformation.hours,
+    credit: courseInformation.credit,
+    reference: courseInformation.reference,
   });
 
   function handleOnChange(event) {

@@ -25,6 +25,23 @@ function App() {
     },
   });
 
+  var appStatus = false;
+
+  var newOutline = true;
+
+  function CourseInfo(newOutline) {
+    return newOutline
+      ? {
+          number: "",
+          title: "",
+          description: "",
+          hours: "",
+          credit: "",
+          reference: "",
+        }
+      : {};
+  }
+
   function SaveButton() {
     const style = {
       top: "auto",
@@ -63,7 +80,10 @@ function App() {
         </header>
         <body className="App-body">
           <SaveButton />
-          <CourseInformation />
+          <CourseInformation
+            appStatus={appStatus}
+            courseInformation={CourseInfo(newOutline)}
+          />
           <LearningOutcome />
           <GradeContainer />
         </body>
