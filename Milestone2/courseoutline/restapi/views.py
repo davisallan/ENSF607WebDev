@@ -7,13 +7,8 @@ from .models import *
 
 
 class CalendarInfoViewSet(viewsets.ModelViewSet):
-    queryset = CalenderInfo.objects.all()
+    queryset = CalenderInfo.objects.all().order_by('courseNumber')
     serializer_class = CalendarSerializer
-
-
-class CourseOutlineViewSet(viewsets.ModelViewSet):
-    queryset = CourseOutline.objects.all().order_by('courseNumber')
-    serializer_class = OutlineSerializer
 
 
 class LearningOutcomeViewSet(viewsets.ModelViewSet):

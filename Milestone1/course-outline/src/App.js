@@ -10,8 +10,6 @@ import { Logo } from "./components/CourseInformation";
 import Grid from "@material-ui/core/Grid";
 import "./App.css";
 import { Container } from "@material-ui/core";
-import SaveIcon from "@material-ui/icons/Save";
-import Button from "@material-ui/core/Button";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
@@ -26,26 +24,28 @@ function App() {
     },
   });
 
-  var appStatus = true;
-
   var newOutline = true;
 
+  var newCourseId;
+
   function NewCourseId() {
-    return uuidv4();
+    newCourseId = uuidv4();
+    return newCourseId;
   }
 
   function CourseInfo(newOutline) {
     return newOutline
       ? {
           courseId: NewCourseId(),
-          number: "10",
-          title: "Test run",
+          number: "",
+          title: "Test success",
           description: "",
-          hours: "10",
+          hours: "",
           credit: "",
           reference: "",
         }
       : {
+          courseId: "",
           number: "",
           title: "Test failed",
           description: "",
@@ -53,28 +53,6 @@ function App() {
           credit: "",
           reference: "",
         };
-  }
-
-  function SaveButton() {
-    const style = {
-      top: "auto",
-      right: 20,
-      bottom: 20,
-      left: "auto",
-      position: "fixed",
-    };
-    return (
-      <Button
-        style={style}
-        position="fixed"
-        variant="contained"
-        color="primary"
-        size="large"
-        startIcon={<SaveIcon />}
-      >
-        Save
-      </Button>
-    );
   }
 
   return (
@@ -93,11 +71,7 @@ function App() {
           </Container>
         </header>
         <body className="App-body">
-          <SaveButton />
-          <CourseInformation
-            appStatus={appStatus}
-            courseInformation={CourseInfo(newOutline)}
-          />
+          <CourseInformation courseInformation={CourseInfo(newOutline)} />
           <LearningOutcome />
           <GradeContainer />
         </body>

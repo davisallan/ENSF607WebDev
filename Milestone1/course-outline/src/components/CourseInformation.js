@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -6,6 +6,8 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import logo from "./schulich.png";
 import { makeStyles } from "@material-ui/core";
+import SaveIcon from "@material-ui/icons/Save";
+import Button from "@material-ui/core/Button";
 
 export function Logo() {
   return (
@@ -15,7 +17,7 @@ export function Logo() {
   );
 }
 
-export default function CourseInformation({ appStatus, courseInformation }) {
+export default function CourseInformation({ courseInformation }) {
   const {
     courseId,
     number,
@@ -40,44 +42,18 @@ export default function CourseInformation({ appStatus, courseInformation }) {
     setCourseInfo({ ...courseInfo, [event.target.name]: value });
   }
 
-  // useEffect(() => {
-  //   if (appStatus) {
-  //     axios({
-  //       method: "post",
-  //       url: "http://127.0.0.1:8000/courseOutline/",
-  //       data: {
-  //         courseId: courseId,
-  //         courseNumber: courseInfo.number,
-  //       },
-  //     });
-  //   }
-  // }, [appStatus, courseId, courseInfo]);
-
-  const storeCourseInfo = useCallback(
-    async (appStatus) => {
-      if (appStatus) {
-        axios
-          .post("http://127.0.0.1:8000/courseOutline/", {
-            courseId: courseId,
-            courseNumber: courseInfo.number,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        const response = await axios.get(
-          `http://127.0.0.1:8000/courseOutline/${courseId}`,
-          {
-            params: { courseId: courseId },
-          }
-        );
+  function saveInfo() {
+    axios
+      .get(`http://127.0.0.1:8000/calendarInfo/${courseId}`, {
+        params: { courseId: courseId },
+      })
+      .then(function (response) {
         if (response.status === 200) {
           axios
-            .post("http://127.0.0.1:8000/calendarInfo/", {
-              courseId: `http://127.0.0.1:8000/courseOutline/${courseId}/`,
-              courseTitle: courseInfo.number,
+            .put(`http://127.0.0.1:8000/calendarInfo/${courseId}/`, {
+              courseId: courseId,
+              courseNumber: courseInfo.number,
+              courseTitle: courseInfo.title,
               courseDescription: courseInfo.description,
               courseHours: courseInfo.hours,
               academicCredit: courseInfo.credit,
@@ -90,14 +66,27 @@ export default function CourseInformation({ appStatus, courseInformation }) {
               console.log(error);
             });
         }
-      }
-    },
-    [courseId, courseInfo]
-  );
-
-  useEffect(() => {
-    storeCourseInfo(appStatus);
-  }, [appStatus, storeCourseInfo]);
+      })
+      .catch(function (error) {
+        console.log(error);
+        axios
+          .post("http://127.0.0.1:8000/calendarInfo/", {
+            courseId: courseId,
+            courseNumber: courseInfo.number,
+            courseTitle: courseInfo.title,
+            courseDescription: courseInfo.description,
+            courseHours: courseInfo.hours,
+            academicCredit: courseInfo.credit,
+            calendarReference: courseInfo.reference,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+  }
 
   const useStyles = makeStyles((theme) => ({
     container: {
@@ -181,6 +170,19 @@ export default function CourseInformation({ appStatus, courseInformation }) {
             onChange={handleOnChange}
             value={courseInfo.reference}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <Container align="right">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              startIcon={<SaveIcon />}
+              onClick={saveInfo}
+            >
+              Save
+            </Button>
+          </Container>
         </Grid>
       </Grid>
     </Container>
