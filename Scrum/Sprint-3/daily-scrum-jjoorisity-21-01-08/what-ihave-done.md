@@ -1,0 +1,2 @@
+- Worked on the post and get requests to Django, success with the Calendar Info component.
+- Working on toggling the save request using the save button and useEffect.

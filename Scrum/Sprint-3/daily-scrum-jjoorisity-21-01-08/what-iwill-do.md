@@ -1,0 +1,3 @@
+- Finalize the toggle save of the save button and useEffects.
+- Copy over the useEffect and props to FinalGrade and LetterGrade components
+- Work on new React navigations.

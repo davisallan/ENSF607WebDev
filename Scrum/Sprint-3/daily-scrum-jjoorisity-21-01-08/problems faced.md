@@ -1,0 +1,1 @@
+Issues with infinite loop from using the save toggle in the useEffects.
