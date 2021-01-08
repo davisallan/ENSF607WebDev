@@ -68,16 +68,15 @@ export default function CourseInformation({ appStatus, courseInformation }) {
             console.log(error);
           });
         const response = await axios.get(
-          "http://127.0.0.1:8000/courseOutline/",
+          `http://127.0.0.1:8000/courseOutline/${courseId}`,
           {
             params: { courseId: courseId },
           }
         );
-        console.log(response);
         if (response.status === 200) {
           axios
             .post("http://127.0.0.1:8000/calendarInfo/", {
-              courseId: `http://127.0.0.1:8000/courseOutline/${courseId}`,
+              courseId: `http://127.0.0.1:8000/courseOutline/${courseId}/`,
               courseTitle: courseInfo.number,
               courseDescription: courseInfo.description,
               courseHours: courseInfo.hours,

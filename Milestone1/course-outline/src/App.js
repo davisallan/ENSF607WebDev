@@ -38,7 +38,7 @@ function App() {
     return newOutline
       ? {
           courseId: NewCourseId(),
-          number: "1",
+          number: "10",
           title: "Test run",
           description: "",
           hours: "10",
