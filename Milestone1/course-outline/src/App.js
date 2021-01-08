@@ -43,6 +43,7 @@ function App() {
           hours: "",
           credit: "",
           reference: "",
+          existingOutline: false,
         }
       : {
           courseId: "",
@@ -52,6 +53,7 @@ function App() {
           hours: "",
           credit: "",
           reference: "",
+          existingOutline: true,
         };
   }
 

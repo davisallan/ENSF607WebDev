@@ -26,6 +26,7 @@ export default function CourseInformation({ courseInformation }) {
     hours,
     credit,
     reference,
+    existingOutline,
   } = courseInformation;
 
   const [courseInfo, setCourseInfo] = useState({
@@ -35,6 +36,7 @@ export default function CourseInformation({ courseInformation }) {
     hours: hours,
     credit: credit,
     reference: reference,
+    existingOutline: existingOutline,
   });
 
   function handleOnChange(event) {
@@ -42,50 +44,47 @@ export default function CourseInformation({ courseInformation }) {
     setCourseInfo({ ...courseInfo, [event.target.name]: value });
   }
 
-  function saveInfo() {
+  function editCourseInfo() {
     axios
-      .get(`http://127.0.0.1:8000/calendarInfo/${courseId}`, {
-        params: { courseId: courseId },
+      .put(`http://127.0.0.1:8000/calendarInfo/${courseId}/`, {
+        courseId: courseId,
+        courseNumber: courseInfo.number,
+        courseTitle: courseInfo.title,
+        courseDescription: courseInfo.description,
+        courseHours: courseInfo.hours,
+        academicCredit: courseInfo.credit,
+        calendarReference: courseInfo.reference,
       })
       .then(function (response) {
-        if (response.status === 200) {
-          axios
-            .put(`http://127.0.0.1:8000/calendarInfo/${courseId}/`, {
-              courseId: courseId,
-              courseNumber: courseInfo.number,
-              courseTitle: courseInfo.title,
-              courseDescription: courseInfo.description,
-              courseHours: courseInfo.hours,
-              academicCredit: courseInfo.credit,
-              calendarReference: courseInfo.reference,
-            })
-            .then(function (response) {
-              console.log(response);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        }
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
-        axios
-          .post("http://127.0.0.1:8000/calendarInfo/", {
-            courseId: courseId,
-            courseNumber: courseInfo.number,
-            courseTitle: courseInfo.title,
-            courseDescription: courseInfo.description,
-            courseHours: courseInfo.hours,
-            academicCredit: courseInfo.credit,
-            calendarReference: courseInfo.reference,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
       });
+  }
+
+  function newCourseInfo() {
+    axios
+      .post("http://127.0.0.1:8000/calendarInfo/", {
+        courseId: courseId,
+        courseNumber: courseInfo.number,
+        courseTitle: courseInfo.title,
+        courseDescription: courseInfo.description,
+        courseHours: courseInfo.hours,
+        academicCredit: courseInfo.credit,
+        calendarReference: courseInfo.reference,
+      })
+      .then(function (response) {
+        setCourseInfo({ ...courseInfo, existingOutline: true });
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  function saveInfo() {
+    courseInfo.existingOutline ? editCourseInfo() : newCourseInfo();
   }
 
   const useStyles = makeStyles((theme) => ({
