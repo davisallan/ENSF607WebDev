@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -53,21 +53,52 @@ export default function CourseInformation({ appStatus, courseInformation }) {
   //   }
   // }, [appStatus, courseId, courseInfo]);
 
+  const storeCourseInfo = useCallback(
+    async (appStatus) => {
+      if (appStatus) {
+        axios
+          .post("http://127.0.0.1:8000/courseOutline/", {
+            courseId: courseId,
+            courseNumber: courseInfo.number,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        const response = await axios.get(
+          "http://127.0.0.1:8000/courseOutline/",
+          {
+            params: { courseId: courseId },
+          }
+        );
+        console.log(response);
+        if (response.status === 200) {
+          axios
+            .post("http://127.0.0.1:8000/calendarInfo/", {
+              courseId: `http://127.0.0.1:8000/courseOutline/${courseId}`,
+              courseTitle: courseInfo.number,
+              courseDescription: courseInfo.description,
+              courseHours: courseInfo.hours,
+              academicCredit: courseInfo.credit,
+              calendarReference: courseInfo.reference,
+            })
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+      }
+    },
+    [courseId, courseInfo]
+  );
+
   useEffect(() => {
-    if (appStatus) {
-      axios
-        .post("http://127.0.0.1:8000/courseOutline/", {
-          courseId: courseId,
-          courseNumber: courseInfo.number,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  }, [appStatus, courseId, courseInfo]);
+    storeCourseInfo(appStatus);
+  }, [appStatus, storeCourseInfo]);
 
   const useStyles = makeStyles((theme) => ({
     container: {
