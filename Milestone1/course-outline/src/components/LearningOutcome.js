@@ -138,20 +138,6 @@ export default function LearningOutcome({
     setAttribute([...filteredRow]);
   }
 
-  // function changeOutcomeExisting(i) {
-  //   let result = learningOutcome.map((learningOutcome) => {
-  //     return learningOutcome.id === i
-  //       ? {
-  //           ...learningOutcome,
-  //           outcomeExisting: true,
-  //         }
-  //       : {
-  //           ...learningOutcome,
-  //         };
-  //   });
-  //   setLearningOutcome(result);
-  // }
-
   function newLearningOutcome(id, count, state) {
     console.log(state);
     let result = state.map((learningOutcome) => {
