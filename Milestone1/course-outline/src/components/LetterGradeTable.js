@@ -198,7 +198,6 @@ export default function FinalGradeComponent({
             };
       });
       setLTBreakdown(result);
-      //updateRightCol(onlyNums, i + 1);
     }
   }
 
@@ -209,8 +208,8 @@ export default function FinalGradeComponent({
 
   function editFinalGrade() {
     axios
-      .put(`http://127.0.0.1:8000/finalGradeTable/${courseId}/`, {
-        courseId: courseId,
+      .put(`http://127.0.0.1:8000/finalGradeTable/${id}/`, {
+        courseId: `http://127.0.0.1:8000/calendar Info/${courseId}/`,
         id: gtbreakdown.id,
         gradeComponent: gtbreakdown.gradeComponent,
         outcomes: gtbreakdown.outcomes,
@@ -340,7 +339,7 @@ export default function FinalGradeComponent({
     <Container>
       <GradeTitle />
       <TitleText />
-      <GradeTable />
+      <GradeTable gradeTable={(gtbreakdown, setGTBreakdown)} />
       <NotesTitle />
       <NotesArea />
       <div className={classes.root}>
