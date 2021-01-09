@@ -108,9 +108,9 @@ export default function GraduateAttribute({
               <TableRow key={id}>
                 <TableCell>
                   <TextField
-                    name="learningOutcome"
+                    name="outcomeNumber"
                     placeholder="#"
-                    value={attribute.learningOutcome}
+                    value={attribute.outcomeNumber}
                     style={{ width: "10rem" }}
                     onChange={(e) => handleAttributeChange(e, attribute.id)}
                   />

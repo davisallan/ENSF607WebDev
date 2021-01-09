@@ -55,7 +55,7 @@ export default function LearningOutcome({ learningOutcomeInfo }) {
   const [attribute, setAttribute] = useState([
     {
       id: uuidv4(),
-      learningOutcome: "",
+      outcomeNumber: "",
       graduateAttribute: "",
       instructionLevel: "",
     },
@@ -98,7 +98,7 @@ export default function LearningOutcome({ learningOutcomeInfo }) {
       ...attribute,
       {
         id: uuidv4(),
-        learningOutcome: "",
+        outcomeNumber: "",
         graduateAttribute: "",
         instructionLevel: "",
       },

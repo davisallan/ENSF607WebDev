@@ -150,6 +150,26 @@ function App() {
         };
   }
 
+  function GradAttributeInfo(newOutline) {
+    return newOutline
+      ? {
+          courseId: newCourseId,
+          id: uuidv4(),
+          outcomeNumber: "1",
+          graduateAttribute: "3",
+          instructionLevel: "2",
+          attributeExisting: false,
+        }
+      : {
+          courseId: "",
+          id: "",
+          outcomeNumber: "",
+          graduateAttribute: "",
+          instructionLevel: "",
+          attributeExisting: true,
+        };
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -169,6 +189,7 @@ function App() {
           <CourseInformation courseInformation={CourseInfo(newOutline)} />
           <LearningOutcome
             learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
+            gradAttributeInfo={GradAttributeInfo(newOutline)}
           />
           <FinalGradeComponent
             finalGradeInfo={FinalGradeInfo(newOutline)}
