@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import {
   Table,
   Paper,
@@ -16,7 +16,6 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,48 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GraduateAttribute() {
-  const [attribute, setAttribute] = useState([
-    {
-      id: uuidv4(),
-      learningOutcome: "",
-      graduateAttribute: "",
-      instructionLevel: "",
-    },
-  ]);
-
-  function addNewAttributeRow() {
-    setAttribute([
-      ...attribute,
-      {
-        id: uuidv4(),
-        learningOutcome: "",
-        graduateAttribute: "",
-        instructionLevel: "",
-      },
-    ]);
-  }
-
-  function handleAttributeChange(e, i) {
-    let result = attribute.map((attribute) => {
-      return attribute.id === i
-        ? {
-            ...attribute,
-            [e.target.name]: e.target.value,
-          }
-        : {
-            ...attribute,
-          };
-    });
-    setAttribute(result);
-  }
-
-  function deleteAttributeRow(id) {
-    const temp = [...attribute];
-    const filteredRow = temp.filter((attribute) => attribute.id !== id);
-    setAttribute([...filteredRow]);
-  }
-
+export default function GraduateAttribute({
+  attribute,
+  addNewAttributeRow,
+  handleAttributeChange,
+  deleteAttributeRow,
+}) {
   const columns = [
     {
       id: "learningOutcome",

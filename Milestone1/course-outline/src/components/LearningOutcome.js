@@ -38,10 +38,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LearningOutcome() {
+  let outcomeNumber = 1;
+
   const [learningOutcome, setLearningOutcome] = useState([
     {
       id: uuidv4(),
       description: "",
+    },
+  ]);
+
+  const [attribute, setAttribute] = useState([
+    {
+      id: uuidv4(),
+      learningOutcome: "",
+      graduateAttribute: "",
+      instructionLevel: "",
     },
   ]);
 
@@ -76,7 +87,38 @@ export default function LearningOutcome() {
     );
     setLearningOutcome([...filteredRow]);
   }
-  let outcomeNumber = 1;
+
+  function addNewAttributeRow() {
+    setAttribute([
+      ...attribute,
+      {
+        id: uuidv4(),
+        learningOutcome: "",
+        graduateAttribute: "",
+        instructionLevel: "",
+      },
+    ]);
+  }
+
+  function handleAttributeChange(e, i) {
+    let result = attribute.map((attribute) => {
+      return attribute.id === i
+        ? {
+            ...attribute,
+            [e.target.name]: e.target.value,
+          }
+        : {
+            ...attribute,
+          };
+    });
+    setAttribute(result);
+  }
+
+  function deleteAttributeRow(id) {
+    const temp = [...attribute];
+    const filteredRow = temp.filter((attribute) => attribute.id !== id);
+    setAttribute([...filteredRow]);
+  }
 
   const columns = [
     {
@@ -165,7 +207,12 @@ export default function LearningOutcome() {
             </TableBody>
           </Table>
         </Paper>
-        <GraduateAttribute />
+        <GraduateAttribute
+          attribute={attribute}
+          addNewAttributeRow={addNewAttributeRow}
+          handleAttributeChange={handleAttributeChange}
+          deleteAttributeRow={deleteAttributeRow}
+        />
       </div>
     </Container>
   );
