@@ -16,6 +16,8 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import GraduateAttribute from "./GraduateAttribute";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
 import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
@@ -213,6 +215,17 @@ export default function LearningOutcome() {
           handleAttributeChange={handleAttributeChange}
           deleteAttributeRow={deleteAttributeRow}
         />
+        <Container align="right">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<SaveIcon />}
+            // onClick={}
+          >
+            Save
+          </Button>
+        </Container>
       </div>
     </Container>
   );
