@@ -104,15 +104,15 @@ export default function GraduateAttribute({
             </TableRow>
           </TableHead>
           <TableBody>
-            {attribute.map((attribute, id) => (
-              <TableRow key={id}>
+            {attribute.map((attribute, gradId) => (
+              <TableRow key={gradId}>
                 <TableCell>
                   <TextField
                     name="outcomeNumber"
                     placeholder="#"
                     value={attribute.outcomeNumber}
                     style={{ width: "10rem" }}
-                    onChange={(e) => handleAttributeChange(e, attribute.id)}
+                    onChange={(e) => handleAttributeChange(e, attribute.gradId)}
                   />
                 </TableCell>
                 <TableCell>
@@ -120,7 +120,9 @@ export default function GraduateAttribute({
                     name="graduateAttribute"
                     value={attribute.graduateAttribute}
                     style={{ width: "27rem" }}
-                    onChange={(e) => handleAttributeChange(e, attribute.id)}>
+                    onChange={(e) =>
+                      handleAttributeChange(e, attribute.gradId)
+                    }>
                     <MenuItem value={1}>
                       A1. A knowledge base for engineering
                     </MenuItem>

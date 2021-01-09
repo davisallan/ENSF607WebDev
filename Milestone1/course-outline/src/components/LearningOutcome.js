@@ -39,10 +39,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LearningOutcome({ learningOutcomeInfo }) {
+export default function LearningOutcome({
+  learningOutcomeInfo,
+  gradAttributeInfo,
+}) {
   const { courseId, id, description, outcomeExisting } = learningOutcomeInfo;
+  const {
+    gradId,
+    outcomeNumber,
+    graduateAttribute,
+    instructionLevel,
+    attributeExisting,
+  } = gradAttributeInfo;
 
-  let outcomeNumber = 1;
+  let outcomeNum = 1;
 
   const [learningOutcome, setLearningOutcome] = useState([
     {
@@ -54,10 +64,11 @@ export default function LearningOutcome({ learningOutcomeInfo }) {
 
   const [attribute, setAttribute] = useState([
     {
-      id: uuidv4(),
-      outcomeNumber: "",
-      graduateAttribute: "",
-      instructionLevel: "",
+      gradId: gradId,
+      outcomeNumber: outcomeNumber,
+      graduateAttribute: graduateAttribute,
+      instructionLevel: instructionLevel,
+      attributeExisting: attributeExisting,
     },
   ]);
 
@@ -97,7 +108,7 @@ export default function LearningOutcome({ learningOutcomeInfo }) {
     setAttribute([
       ...attribute,
       {
-        id: uuidv4(),
+        gradId: uuidv4(),
         outcomeNumber: "",
         graduateAttribute: "",
         instructionLevel: "",
@@ -107,7 +118,7 @@ export default function LearningOutcome({ learningOutcomeInfo }) {
 
   function handleAttributeChange(e, i) {
     let result = attribute.map((attribute) => {
-      return attribute.id === i
+      return attribute.gradId === i
         ? {
             ...attribute,
             [e.target.name]: e.target.value,
@@ -121,7 +132,7 @@ export default function LearningOutcome({ learningOutcomeInfo }) {
 
   function deleteAttributeRow(id) {
     const temp = [...attribute];
-    const filteredRow = temp.filter((attribute) => attribute.id !== id);
+    const filteredRow = temp.filter((attribute) => attribute.gradId !== id);
     setAttribute([...filteredRow]);
   }
 
@@ -183,7 +194,7 @@ export default function LearningOutcome({ learningOutcomeInfo }) {
                 <TableRow key={id}>
                   <TableCell>
                     <Typography variant="body1" align="left">
-                      {outcomeNumber++}
+                      {outcomeNum++}
                     </Typography>
                   </TableCell>
                   <TableCell>

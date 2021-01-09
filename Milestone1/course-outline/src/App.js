@@ -153,16 +153,14 @@ function App() {
   function GradAttributeInfo(newOutline) {
     return newOutline
       ? {
-          courseId: newCourseId,
-          id: uuidv4(),
+          gradId: uuidv4(),
           outcomeNumber: "1",
           graduateAttribute: "3",
           instructionLevel: "2",
           attributeExisting: false,
         }
       : {
-          courseId: "",
-          id: "",
+          gradId: "",
           outcomeNumber: "",
           graduateAttribute: "",
           instructionLevel: "",
