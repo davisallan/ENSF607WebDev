@@ -39,13 +39,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LearningOutcome() {
+export default function LearningOutcome({ learningOutcomeInfo }) {
+  const { courseId, id, description, outcomeExisting } = learningOutcomeInfo;
+
   let outcomeNumber = 1;
 
   const [learningOutcome, setLearningOutcome] = useState([
     {
-      id: uuidv4(),
-      description: "",
+      id: id,
+      description: description,
+      outcomeExisting: outcomeExisting,
     },
   ]);
 
@@ -188,6 +191,7 @@ export default function LearningOutcome() {
                       id="standard-multiline-flexible"
                       placeholder="Outcome description"
                       name="description"
+                      value={learningOutcome.description}
                       multiline
                       fullWidth
                       onChange={(e) =>

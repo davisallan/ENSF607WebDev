@@ -25,7 +25,7 @@ function App() {
     },
   });
 
-  var newOutline = false;
+  var newOutline = true;
 
   var newCourseId;
 
@@ -134,6 +134,22 @@ function App() {
         };
   }
 
+  function LearningOutcomeInfo(newOutline) {
+    return newOutline
+      ? {
+          courseId: newCourseId,
+          id: uuidv4(),
+          description: "test",
+          outcomeExisting: false,
+        }
+      : {
+          courseId: "",
+          id: "",
+          description: "",
+          outcomeExisting: true,
+        };
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -151,7 +167,9 @@ function App() {
         </header>
         <body className="App-body">
           <CourseInformation courseInformation={CourseInfo(newOutline)} />
-          <LearningOutcome />
+          <LearningOutcome
+            learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
+          />
           <FinalGradeComponent
             finalGradeInfo={FinalGradeInfo(newOutline)}
             letterGradeInfo={LetterGradeInfo(newOutline)}
