@@ -121,6 +121,7 @@ function App() {
       : {
           courseId: "",
           notes: "",
+          infoId: "",
           letterAPlus: "95.0",
           letterA: "90.0",
           letterAMinus: "85.0",
@@ -133,7 +134,7 @@ function App() {
           letterDPlus: "53.0",
           letterD: "50.0",
           letterF: "",
-          ltExisting: false,
+          ltExisting: true,
         };
   }
 

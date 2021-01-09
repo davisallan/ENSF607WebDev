@@ -69,13 +69,11 @@ export default function FinalGradeComponent({
     },
   ]);
 
-  const [noteArea, setNoteArea] = useState([
-    {
-      notes: notes,
-      infoId: infoId,
-      ltExisting: ltExisting,
-    },
-  ]);
+  const [noteArea, setNoteArea] = useState({
+    notes: notes,
+    infoId: infoId,
+    ltExisting: ltExisting,
+  });
 
   const [ltbreakdown, setLTBreakdown] = useState([
     {
@@ -267,7 +265,7 @@ export default function FinalGradeComponent({
     for (const grade of gtbreakdown) {
       if (grade.gtid === id) {
         axios
-          .put(`http://127.0.0.1:8000/finalGradeTable/${id}/`, {
+          .put(`http://127.0.0.1:8000/finalGradeTable/${grade.gtid}/`, {
             courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
             finalGradeId: grade.gtid,
             gradeComponent: grade.gradeComponent,
@@ -309,24 +307,85 @@ export default function FinalGradeComponent({
     return result;
   }
 
+  function storeLetterGrade() {
+    let letters = {
+      letterAPlus: "",
+      letterA: "",
+      letterAMinus: "",
+      letterBPlus: "",
+      letterB: "",
+      letterBMinus: "",
+      letterCPlus: "",
+      letterC: "",
+      letterCMinus: "",
+      letterDPlus: "",
+      letterD: "",
+      letterF: "",
+    };
+    for (const letterGrade of ltbreakdown) {
+      switch (letterGrade.id) {
+        case 1:
+          letters.letterAPlus = letterGrade.leftRange;
+          break;
+        case 2:
+          letters.letterA = letterGrade.leftRange;
+          break;
+        case 3:
+          letters.letterAMinus = letterGrade.leftRange;
+          break;
+        case 4:
+          letters.letterBPlus = letterGrade.leftRange;
+          break;
+        case 5:
+          letters.letterB = letterGrade.leftRange;
+          break;
+        case 6:
+          letters.letterBMinus = letterGrade.leftRange;
+          break;
+        case 7:
+          letters.letterCPlus = letterGrade.leftRange;
+          break;
+        case 8:
+          letters.letterC = letterGrade.leftRange;
+          break;
+        case 9:
+          letters.letterCMinus = letterGrade.leftRange;
+          break;
+        case 10:
+          letters.letterDPlus = letterGrade.leftRange;
+          break;
+        case 11:
+          letters.letterD = letterGrade.leftRange;
+          break;
+        case 12:
+          letters.letterF = letterGrade.leftRange;
+          break;
+        default:
+          break;
+      }
+    }
+    return letters;
+  }
+
   function editLetterGrade() {
+    const letters = storeLetterGrade();
     axios
-      .put(`http://127.0.0.1:8000/finalGradeInfo/${courseId}/`, {
+      .put(`http://127.0.0.1:8000/finalGradeInfo/${noteArea.infoId}/`, {
         courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
         infoId: noteArea.infoId,
         notes: noteArea.notes,
-        letterAPlus: ltbreakdown.leftRange,
-        letterA: ltbreakdown.leftRange,
-        letterAMinus: ltbreakdown.leftRange,
-        letterBPlus: ltbreakdown.leftRange,
-        letterB: ltbreakdown.leftRange,
-        letterBMinus: ltbreakdown.leftRange,
-        letterCPlus: ltbreakdown.leftRange,
-        letterC: ltbreakdown.leftRange,
-        letterCMinus: ltbreakdown.leftRange,
-        letterDPlus: ltbreakdown.leftRange,
-        letterD: ltbreakdown.leftRange,
-        letterF: ltbreakdown.leftRange,
+        letterAPlus: letters.letterAPlus,
+        letterA: letters.letterA,
+        letterAMinus: letters.letterAMinus,
+        letterBPlus: letters.letterBPlus,
+        letterB: letters.letterB,
+        letterBMinus: letters.letterBMinus,
+        letterCPlus: letters.letterCPlus,
+        letterC: letters.letterC,
+        letterCMinus: letters.letterCMinus,
+        letterDPlus: letters.letterDPlus,
+        letterD: letters.letterD,
+        letterF: letters.letterF,
       })
       .then(function (response) {
         console.log(response);
@@ -337,23 +396,27 @@ export default function FinalGradeComponent({
   }
 
   function newLetterGrade() {
+    const letters = storeLetterGrade();
+    console.log(noteArea);
+    console.log(noteArea.infoId);
+    console.log(infoId);
     axios
       .post("http://127.0.0.1:8000/finalGradeInfo/", {
         courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
         infoId: noteArea.infoId,
         notes: noteArea.notes,
-        letterAPlus: ltbreakdown.leftRange,
-        letterA: ltbreakdown.leftRange,
-        letterAMinus: ltbreakdown.leftRange,
-        letterBPlus: ltbreakdown.leftRange,
-        letterB: ltbreakdown.leftRange,
-        letterBMinus: ltbreakdown.leftRange,
-        letterCPlus: ltbreakdown.leftRange,
-        letterC: ltbreakdown.leftRange,
-        letterCMinus: ltbreakdown.leftRange,
-        letterDPlus: ltbreakdown.leftRange,
-        letterD: ltbreakdown.leftRange,
-        letterF: ltbreakdown.leftRange,
+        letterAPlus: letters.letterAPlus,
+        letterA: letters.letterA,
+        letterAMinus: letters.letterAMinus,
+        letterBPlus: letters.letterBPlus,
+        letterB: letters.letterB,
+        letterBMinus: letters.letterBMinus,
+        letterCPlus: letters.letterCPlus,
+        letterC: letters.letterC,
+        letterCMinus: letters.letterCMinus,
+        letterDPlus: letters.letterDPlus,
+        letterD: letters.letterD,
+        letterF: letters.letterF,
       })
       .then(function (response) {
         setNoteArea({ ...noteArea, ltExisting: true });
@@ -374,7 +437,7 @@ export default function FinalGradeComponent({
       }
     }
     setGTBreakdown(state);
-    //noteArea.existing ? editLetterGrade() : newLetterGrade();
+    noteArea.ltExisting ? editLetterGrade() : newLetterGrade();
   }
 
   function GradeTitle() {
@@ -406,7 +469,7 @@ export default function FinalGradeComponent({
         placeholder="Enter notes about grade breakdown"
         multiline
         fullWidth={true}
-        onChange={(e) => handleNoteChange(e)}
+        onChange={handleNoteChange}
       />
     );
   }
