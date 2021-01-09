@@ -12,7 +12,13 @@ class CalendarSerializer(serializers.HyperlinkedModelSerializer):
 class OutcomesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LearningOutcome
-        fields = ('courseId', 'outcomeNumber', 'outcomeDescription', 'graduateAttribute', 'instructionLevel')
+        fields = ('courseId', 'outcomeNumber', 'outcomeDescription')
+
+
+class GradAttributeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GraduateAttribute
+        fields = ('courseId', 'outcomeNumber', 'graduateAttribute', 'instructionLevel')
 
 
 class GradeTableSerializer(serializers.HyperlinkedModelSerializer):

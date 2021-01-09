@@ -17,6 +17,11 @@ class LearningOutcome(models.Model):
     courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
     outcomeNumber = models.CharField(max_length=2, blank=True)
     outcomeDescription = models.TextField(blank=True)
+
+
+class GraduateAttribute(models.Model):
+    courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
+    outcomeNumber = models.CharField(max_length=2, blank=True)
     graduateAttribute = models.CharField(max_length=50, blank=True)
     instructionLevel = models.CharField(max_length=15, blank=True)
 

@@ -5,6 +5,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'calendarInfo', views.CalendarInfoViewSet)
 router.register(r'learningOutcome', views.LearningOutcomeViewSet)
+router.register(r'graduateAttribute', views.GraduateAttributeViewSet)
 router.register(r'finalGradeTable', views.FinalGradesTableViewSet)
 router.register(r'finalGradeInfo', views.FinalGradesInfoViewSet)
 
