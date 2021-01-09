@@ -1,4 +1,5 @@
 import { React } from "react";
+import axios from "axios";
 import LearningOutcome from "./components/LearningOutcome";
 import FinalGradeComponent from "./components/LetterGradeTable";
 import CourseInformation from "./components/CourseInformation";
@@ -24,7 +25,7 @@ function App() {
     },
   });
 
-  var newOutline = true;
+  var newOutline = false;
 
   var newCourseId;
 
@@ -33,28 +34,48 @@ function App() {
     return newCourseId;
   }
 
+  var information = {
+    courseId: "",
+    number: "",
+    title: "",
+    description: "",
+    hours: "",
+    credit: "",
+    reference: "",
+    existingOutline: false,
+  };
+
+  function InformationRetrieval(courseId) {
+    axios
+      .get(`http://127.0.0.1:8000/calendarInfo/${courseId}/`)
+      .then(function (response) {
+        information.courseId = response.data.courseId;
+        information.number = response.data.courseNumber;
+        information.title = response.data.courseTitle;
+        information.description = response.data.courseDescription;
+        information.hours = response.data.courseHours;
+        information.credit = response.data.academicCredit;
+        information.reference = response.data.calendarReference;
+        information.existingOutline = true;
+      });
+    return information;
+  }
+
   function CourseInfo(newOutline) {
-    return newOutline
-      ? {
-          courseId: NewCourseId(),
-          number: "",
-          title: "Test success",
-          description: "",
-          hours: "",
-          credit: "",
-          reference: "",
-          existingOutline: false,
-        }
-      : {
-          courseId: "",
-          number: "",
-          title: "Test failed",
-          description: "",
-          hours: "",
-          credit: "",
-          reference: "",
-          existingOutline: true,
-        };
+    if (newOutline) {
+      return {
+        courseId: NewCourseId(),
+        number: "",
+        title: "Test success",
+        description: "",
+        hours: "",
+        credit: "",
+        reference: "",
+        existingOutline: false,
+      };
+    } else {
+      return InformationRetrieval("b58fe20d-b492-4c53-8873-04f6f4499a2d");
+    }
   }
 
   function FinalGradeInfo(newOutline) {
