@@ -1,0 +1,2 @@
+- work on getting the learning outcomes and graduate attributes to post to django
+- figure out how we are going to handle the saving/managing of the overall app state
