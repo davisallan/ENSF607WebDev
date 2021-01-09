@@ -1,6 +1,6 @@
 import { React } from "react";
 import LearningOutcome from "./components/LearningOutcome";
-import GradeContainer from "./components/GradeContainer";
+import FinalGradeComponent from "./components/LetterGradeTable";
 import CourseInformation from "./components/CourseInformation";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -57,6 +57,62 @@ function App() {
         };
   }
 
+  function FinalGradeInfo(newOutline) {
+    return newOutline
+      ? {
+          CourseId: newCourseId,
+          id: uuidv4(),
+          gradeComponent: "",
+          outcomes: "",
+          weight: 0,
+          fgExisting: false,
+        }
+      : {
+          CourseId: "",
+          id: "",
+          gradeComponent: "",
+          outcomes: "",
+          weight: 0,
+          fgExisting: true,
+        };
+  }
+
+  function LetterGradeInfo(newOutline) {
+    return newOutline
+      ? {
+          notes: "",
+          letterAPlus: "95.0",
+          letterA: "90.0",
+          letterAMinus: "85.0",
+          letterBPlus: "80.0",
+          letterB: "75.0",
+          letterBMinus: "70.0",
+          letterCPlus: "65.0",
+          letterC: "60.0",
+          letterCMinus: "56.0",
+          letterDPlus: "53.0",
+          letterD: "50.0",
+          letterF: "",
+          ltExisting: false,
+        }
+      : {
+          notes: "",
+          letterAPlus: "95.0",
+          letterA: "90.0",
+          letterAMinus: "85.0",
+          letterBPlus: "80.0",
+          letterB: "75.0",
+          letterBMinus: "70.0",
+          letterCPlus: "65.0",
+          letterC: "60.0",
+          letterCMinus: "56.0",
+          letterDPlus: "53.0",
+          letterD: "50.0",
+          letterF: "",
+          ltExisting: false,
+        };
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -75,7 +131,10 @@ function App() {
         <body className="App-body">
           <CourseInformation courseInformation={CourseInfo(newOutline)} />
           <LearningOutcome />
-          <GradeContainer />
+          <FinalGradeComponent
+            finalGradeInfo={FinalGradeInfo(newOutline)}
+            letterGradeInfo={LetterGradeInfo(newOutline)}
+          />
         </body>
       </div>
     </ThemeProvider>
