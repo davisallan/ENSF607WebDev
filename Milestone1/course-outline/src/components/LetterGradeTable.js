@@ -16,6 +16,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import GradeTable from "./FinalGradeTable";
 import SaveIcon from "@material-ui/icons/Save";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,9 @@ export default function FinalGradeComponent({
   letterGradeInfo,
 }) {
   const {
+    courseId,
     notes,
+    infoId,
     letterAPlus,
     letterA,
     letterAMinus,
@@ -54,28 +57,22 @@ export default function FinalGradeComponent({
     ltExisting,
   } = letterGradeInfo;
 
-  const {
-    courseId,
-    id,
-    gradeComponent,
-    outcomes,
-    weight,
-    fgExisting,
-  } = finalGradeInfo;
+  const { id, gradeComponent, outcomes, weight, fgExisting } = finalGradeInfo;
 
   const [gtbreakdown, setGTBreakdown] = useState([
     {
-      id: id,
+      gtid: id,
       gradeComponent: gradeComponent,
       outcomes: outcomes,
       weight: weight,
-      existing: fgExisting,
+      fgExisting: fgExisting,
     },
   ]);
 
   const [noteArea, setNoteArea] = useState([
     {
       notes: notes,
+      infoId: infoId,
       ltExisting: ltExisting,
     },
   ]);
@@ -206,45 +203,117 @@ export default function FinalGradeComponent({
     setNoteArea({ ...noteArea, [event.target.name]: value });
   }
 
-  function editFinalGrade() {
-    axios
-      .put(`http://127.0.0.1:8000/finalGradeTable/${id}/`, {
-        courseId: `http://127.0.0.1:8000/calendar Info/${courseId}/`,
-        id: gtbreakdown.id,
-        gradeComponent: gtbreakdown.gradeComponent,
-        outcomes: gtbreakdown.outcomes,
-        weight: gtbreakdown.weight,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  function addNewRow() {
+    setGTBreakdown([
+      ...gtbreakdown,
+      {
+        gtid: uuidv4(),
+        gradeComponent: "",
+        outcomes: "",
+        weight: 0,
+        fgExisting: false,
+      },
+    ]);
   }
 
-  function newFinalGrade() {
-    axios
-      .post("http://127.0.0.1:8000/finalGradeTable/", {
-        courseId: courseId,
-        id: gtbreakdown.id,
-        gradeComponent: gtbreakdown.gradeComponent,
-        outcomes: gtbreakdown.outcomes,
-        weight: gtbreakdown.weight,
-      })
-      .then(function (response) {
-        setGTBreakdown({ ...gtbreakdown, fgExisting: true });
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
+  function inputChangeHandler(e, i) {
+    let result = gtbreakdown.map((gtbreakdown) => {
+      return gtbreakdown.gtid === i
+        ? {
+            ...gtbreakdown,
+            [e.target.name]: e.target.value,
+          }
+        : {
+            ...gtbreakdown,
+          };
+    });
+    setGTBreakdown(result);
+  }
+
+  function handleWeightChange(e, i) {
+    const onlyNums = e.target.value.replace(/[^0-9]/g, "");
+    if (onlyNums.length >= 0 && onlyNums <= 100) {
+      let result = gtbreakdown.map((gtbreakdown) => {
+        return gtbreakdown.gtid === i
+          ? {
+              ...gtbreakdown,
+              [e.target.name]: onlyNums,
+            }
+          : {
+              ...gtbreakdown,
+            };
       });
+      setGTBreakdown(result);
+    }
+  }
+
+  function deleteRowHandler(id) {
+    const temp = [...gtbreakdown];
+    const filteredRow = temp.filter((gtbreakdown) => gtbreakdown.gtid !== id);
+    setGTBreakdown([...filteredRow]);
+  }
+
+  function subtotal(items) {
+    let total = items
+      .map(({ weight }) => Number.parseFloat(weight))
+      .reduce((sum, i) => sum + i, 0);
+
+    return total > 100 ? "Error" : total;
+  }
+
+  const gradeSubtotal = subtotal(gtbreakdown);
+
+  function editFinalGrade(id) {
+    for (const grade of gtbreakdown) {
+      if (grade.gtid === id) {
+        axios
+          .put(`http://127.0.0.1:8000/finalGradeTable/${id}/`, {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            finalGradeId: grade.gtid,
+            gradeComponent: grade.gradeComponent,
+            outcomes: grade.outcomes,
+            weight: grade.weight,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    }
+  }
+
+  function newFinalGrade(id, state) {
+    let result = state.map((gtbreakdown) => {
+      if (gtbreakdown.gtid === id) {
+        axios
+          .post("http://127.0.0.1:8000/finalGradeTable/", {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            finalGradeId: gtbreakdown.gtid,
+            gradeComponent: gtbreakdown.gradeComponent,
+            outcomes: gtbreakdown.outcomes,
+            weight: gtbreakdown.weight,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        return { ...gtbreakdown, fgExisting: true };
+      } else {
+        return { ...gtbreakdown };
+      }
+    });
+    return result;
   }
 
   function editLetterGrade() {
     axios
       .put(`http://127.0.0.1:8000/finalGradeInfo/${courseId}/`, {
-        courseId: courseId,
+        courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+        infoId: noteArea.infoId,
         notes: noteArea.notes,
         letterAPlus: ltbreakdown.leftRange,
         letterA: ltbreakdown.leftRange,
@@ -270,7 +339,8 @@ export default function FinalGradeComponent({
   function newLetterGrade() {
     axios
       .post("http://127.0.0.1:8000/finalGradeInfo/", {
-        courseId: courseId,
+        courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+        infoId: noteArea.infoId,
         notes: noteArea.notes,
         letterAPlus: ltbreakdown.leftRange,
         letterA: ltbreakdown.leftRange,
@@ -295,8 +365,16 @@ export default function FinalGradeComponent({
   }
 
   function saveInfo() {
-    gtbreakdown.existing ? editFinalGrade() : newFinalGrade();
-    noteArea.existing ? editLetterGrade() : newLetterGrade();
+    let state = [...gtbreakdown];
+    for (const grade of gtbreakdown) {
+      if (grade.fgExisting) {
+        editFinalGrade(grade.gtid);
+      } else {
+        state = newFinalGrade(grade.gtid, state);
+      }
+    }
+    setGTBreakdown(state);
+    //noteArea.existing ? editLetterGrade() : newLetterGrade();
   }
 
   function GradeTitle() {
@@ -339,7 +417,14 @@ export default function FinalGradeComponent({
     <Container>
       <GradeTitle />
       <TitleText />
-      <GradeTable gradeTable={(gtbreakdown, setGTBreakdown)} />
+      <GradeTable
+        gtbreakdown={gtbreakdown}
+        addNewRow={addNewRow}
+        inputChangeHandler={inputChangeHandler}
+        handleWeightChange={handleWeightChange}
+        deleteRowHandler={deleteRowHandler}
+        gradeSubtotal={gradeSubtotal}
+      />
       <NotesTitle />
       <NotesArea />
       <div className={classes.root}>

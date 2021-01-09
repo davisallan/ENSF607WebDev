@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Table,
   Paper,
@@ -14,7 +14,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
-import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,16 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GradeTable() {
-  const [breakdown, setBreakdown] = useState([
-    {
-      id: uuidv4(),
-      gradeComponent: "",
-      outcomes: "",
-      weight: 0,
-    },
-  ]);
-
+export default function GradeTable({
+  gtbreakdown,
+  addNewRow,
+  inputChangeHandler,
+  handleWeightChange,
+  deleteRowHandler,
+  gradeSubtotal,
+}) {
   const columns = [
     {
       id: "gradeComponent",
@@ -59,65 +56,6 @@ export default function GradeTable() {
       align: "center",
     },
   ];
-
-  function addNewRow() {
-    setBreakdown([
-      ...breakdown,
-      {
-        id: uuidv4(),
-        gradeComponent: "",
-        outcomes: "",
-        weight: 0,
-      },
-    ]);
-  }
-
-  function subtotal(items) {
-    let total = items
-      .map(({ weight }) => Number.parseFloat(weight))
-      .reduce((sum, i) => sum + i, 0);
-
-    return total > 100 ? "Error" : total;
-  }
-
-  const gradeSubtotal = subtotal(breakdown);
-
-  function inputChangeHandler(e, i) {
-    let result = breakdown.map((breakdown) => {
-      return breakdown.id === i
-        ? {
-            ...breakdown,
-            [e.target.name]: e.target.value,
-          }
-        : {
-            ...breakdown,
-          };
-    });
-    setBreakdown(result);
-  }
-
-  function handleWeightChange(e, i) {
-    const onlyNums = e.target.value.replace(/[^0-9]/g, "");
-    if (onlyNums.length >= 0 && onlyNums <= 100) {
-      let result = breakdown.map((breakdown) => {
-        return breakdown.id === i
-          ? {
-              ...breakdown,
-              [e.target.name]: onlyNums,
-            }
-          : {
-              ...breakdown,
-            };
-      });
-      setBreakdown(result);
-    }
-  }
-
-  function deleteRowHandler(id) {
-    const temp = [...breakdown];
-    const filteredRow = temp.filter((breakdown) => breakdown.id !== id);
-    setBreakdown([...filteredRow]);
-  }
 
   const classes = useStyles();
 
@@ -157,45 +95,42 @@ export default function GradeTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {breakdown.map((breakdown, id) => (
-              <TableRow key={id}>
+            {gtbreakdown.map((gtbreakdown, gtid) => (
+              <TableRow key={gtid}>
                 <TableCell>
                   <TextField
-                    id="component-input"
                     name="gradeComponent"
                     placeholder="Component description"
-                    value={breakdown.gradeComponent}
+                    value={gtbreakdown.gradeComponent}
                     style={{ width: "30rem" }}
-                    onChange={(e) => inputChangeHandler(e, breakdown.id)}
+                    onChange={(e) => inputChangeHandler(e, gtbreakdown.gtid)}
                   />
                 </TableCell>
                 <TableCell>
                   <TextField
-                    id="outcome-input"
                     name="outcomes"
                     placeholder="Applicable learning outcomes"
-                    value={breakdown.outcomes}
+                    value={gtbreakdown.outcomes}
                     style={{ width: "29rem" }}
-                    onChange={(e) => inputChangeHandler(e, breakdown.id)}
+                    onChange={(e) => inputChangeHandler(e, gtbreakdown.gtid)}
                   />
                 </TableCell>
                 <TableCell>
                   <TextField
-                    id="weight-input"
                     name="weight"
-                    value={breakdown.weight}
+                    value={gtbreakdown.weight}
                     inputProps={{ style: { textAlign: "center" } }}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">%</InputAdornment>
                       ),
                     }}
-                    onChange={(e) => handleWeightChange(e, breakdown.id)}
+                    onChange={(e) => handleWeightChange(e, gtbreakdown.gtid)}
                   />
                 </TableCell>
                 <TableCell align="center">
                   <DeleteIcon
-                    onClick={() => deleteRowHandler(breakdown.id)}
+                    onClick={() => deleteRowHandler(gtbreakdown.gtid)}
                     style={{
                       cursor: "pointer",
                     }}

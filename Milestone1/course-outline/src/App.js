@@ -81,7 +81,7 @@ function App() {
   function FinalGradeInfo(newOutline) {
     return newOutline
       ? {
-          CourseId: newCourseId,
+          courseId: newCourseId,
           id: uuidv4(),
           gradeComponent: "",
           outcomes: "",
@@ -89,7 +89,7 @@ function App() {
           fgExisting: false,
         }
       : {
-          CourseId: "",
+          courseId: "",
           id: "",
           gradeComponent: "",
           outcomes: "",
@@ -101,7 +101,9 @@ function App() {
   function LetterGradeInfo(newOutline) {
     return newOutline
       ? {
+          courseId: newCourseId,
           notes: "",
+          infoId: uuidv4(),
           letterAPlus: "95.0",
           letterA: "90.0",
           letterAMinus: "85.0",
@@ -117,6 +119,7 @@ function App() {
           ltExisting: false,
         }
       : {
+          courseId: "",
           notes: "",
           letterAPlus: "95.0",
           letterA: "90.0",
@@ -137,13 +140,11 @@ function App() {
   function LearningOutcomeInfo(newOutline) {
     return newOutline
       ? {
-          courseId: newCourseId,
           id: uuidv4(),
           description: "",
           outcomeExisting: false,
         }
       : {
-          courseId: "",
           id: "",
           description: "",
           outcomeExisting: true,
