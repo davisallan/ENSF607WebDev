@@ -148,7 +148,9 @@ export default function GraduateAttribute({
                     name="instructionLevel"
                     style={{ width: "10rem" }}
                     value={attribute.instructionLevel}
-                    onChange={(e) => handleAttributeChange(e, attribute.id)}>
+                    onChange={(e) =>
+                      handleAttributeChange(e, attribute.gradId)
+                    }>
                     <MenuItem value={1}>I (Introduced)</MenuItem>
                     <MenuItem value={2}>D (Developed)</MenuItem>
                     <MenuItem value={3}>A (Applied)</MenuItem>

@@ -18,6 +18,7 @@ import GraduateAttribute from "./GraduateAttribute";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
@@ -135,6 +136,20 @@ export default function LearningOutcome({
     const filteredRow = temp.filter((attribute) => attribute.gradId !== id);
     setAttribute([...filteredRow]);
   }
+
+  // function newLearningOutcome() {
+  //   axios
+  //     .post("http://127.0.0.1:8000/learningOutcome/", {
+  //       courseId: courseId,
+  //       outcomeNumber: attribute.outcomeNumber,
+  //       outcomeDescription: learningOutcome.description,
+  //       graduateAttribute: attribute.graduateAttribute,
+  //       instructionLevel: attribute.instructionLevel,
+  //     })
+  //     .then(function (response) {
+
+  //   })
+  // }
 
   const columns = [
     {
