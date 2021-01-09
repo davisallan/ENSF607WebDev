@@ -12,8 +12,13 @@ class CalendarInfoViewSet(viewsets.ModelViewSet):
 
 
 class LearningOutcomeViewSet(viewsets.ModelViewSet):
-    queryset = LearningOutcome.objects.all().order_by('outcomeNumber')
+    queryset = LearningOutcome.objects.all().order_by('courseId')
     serializer_class = OutcomesSerializer
+
+
+class GraduateAttributeViewSet(viewsets.ModelViewSet):
+    queryset = GraduateAttribute.objects.all().order_by('courseId')
+    serializer_class = GradAttributeSerializer
 
 
 class FinalGradesTableViewSet(viewsets.ModelViewSet):

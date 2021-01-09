@@ -16,6 +16,9 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import GraduateAttribute from "./GraduateAttribute";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,11 +40,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LearningOutcome() {
+export default function LearningOutcome({
+  learningOutcomeInfo,
+  gradAttributeInfo,
+}) {
+  const { courseId, id, description, outcomeExisting } = learningOutcomeInfo;
+  const {
+    gradId,
+    outcomeNumber,
+    graduateAttribute,
+    instructionLevel,
+    attributeExisting,
+  } = gradAttributeInfo;
+
+  let outcomeNum = 1;
+
   const [learningOutcome, setLearningOutcome] = useState([
     {
-      id: uuidv4(),
-      description: "",
+      id: id,
+      description: description,
+      outcomeExisting: outcomeExisting,
+    },
+  ]);
+
+  const [attribute, setAttribute] = useState([
+    {
+      gradId: gradId,
+      outcomeNumber: outcomeNumber,
+      graduateAttribute: graduateAttribute,
+      instructionLevel: instructionLevel,
+      attributeExisting: attributeExisting,
     },
   ]);
 
@@ -51,6 +79,7 @@ export default function LearningOutcome() {
       {
         id: uuidv4(),
         description: "",
+        outcomeExisting: false,
       },
     ]);
   }
@@ -76,7 +105,97 @@ export default function LearningOutcome() {
     );
     setLearningOutcome([...filteredRow]);
   }
-  let outcomeNumber = 1;
+
+  function addNewAttributeRow() {
+    setAttribute([
+      ...attribute,
+      {
+        gradId: uuidv4(),
+        outcomeNumber: "",
+        graduateAttribute: "",
+        instructionLevel: "",
+      },
+    ]);
+  }
+
+  function handleAttributeChange(e, i) {
+    let result = attribute.map((attribute) => {
+      return attribute.gradId === i
+        ? {
+            ...attribute,
+            [e.target.name]: e.target.value,
+          }
+        : {
+            ...attribute,
+          };
+    });
+    setAttribute(result);
+  }
+
+  function deleteAttributeRow(id) {
+    const temp = [...attribute];
+    const filteredRow = temp.filter((attribute) => attribute.gradId !== id);
+    setAttribute([...filteredRow]);
+  }
+
+  function newLearningOutcome(id, count, state) {
+    console.log(state);
+    let result = state.map((learningOutcome) => {
+      if (learningOutcome.id === id) {
+        axios
+          .post("http://127.0.0.1:8000/learningOutcome/", {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            outcomeId: learningOutcome.id,
+            outcomeNumber: count,
+            outcomeDescription: learningOutcome.description,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        return { ...learningOutcome, outcomeExisting: true };
+      } else {
+        return { ...learningOutcome };
+      }
+    });
+    return result;
+  }
+
+  function editLearningOutcome(id, count) {
+    for (const outcome of learningOutcome) {
+      if (outcome.id === id) {
+        axios
+          .put(`http://127.0.0.1:8000/learningOutcome/${outcome.id}/`, {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            outcomeId: outcome.id,
+            outcomeNumber: count,
+            outcomeDescription: outcome.description,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    }
+  }
+
+  function saveInfo() {
+    var count = 1;
+    let state = [...learningOutcome];
+    for (const outcome of learningOutcome) {
+      if (outcome.outcomeExisting) {
+        editLearningOutcome(outcome.id, count);
+      } else {
+        state = newLearningOutcome(outcome.id, count, state);
+      }
+      count++;
+    }
+    setLearningOutcome(state);
+  }
 
   const columns = [
     {
@@ -136,7 +255,7 @@ export default function LearningOutcome() {
                 <TableRow key={id}>
                   <TableCell>
                     <Typography variant="body1" align="left">
-                      {outcomeNumber++}
+                      {outcomeNum++}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -144,6 +263,7 @@ export default function LearningOutcome() {
                       id="standard-multiline-flexible"
                       placeholder="Outcome description"
                       name="description"
+                      value={learningOutcome.description}
                       multiline
                       fullWidth
                       onChange={(e) =>
@@ -165,7 +285,22 @@ export default function LearningOutcome() {
             </TableBody>
           </Table>
         </Paper>
-        <GraduateAttribute />
+        <GraduateAttribute
+          attribute={attribute}
+          addNewAttributeRow={addNewAttributeRow}
+          handleAttributeChange={handleAttributeChange}
+          deleteAttributeRow={deleteAttributeRow}
+        />
+        <Container align="right">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<SaveIcon />}
+            onClick={saveInfo}>
+            Save
+          </Button>
+        </Container>
       </div>
     </Container>
   );

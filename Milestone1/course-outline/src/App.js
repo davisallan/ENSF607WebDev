@@ -25,7 +25,7 @@ function App() {
     },
   });
 
-  var newOutline = false;
+  var newOutline = true;
 
   var newCourseId;
 
@@ -134,6 +134,40 @@ function App() {
         };
   }
 
+  function LearningOutcomeInfo(newOutline) {
+    return newOutline
+      ? {
+          courseId: newCourseId,
+          id: uuidv4(),
+          description: "",
+          outcomeExisting: false,
+        }
+      : {
+          courseId: "",
+          id: "",
+          description: "",
+          outcomeExisting: true,
+        };
+  }
+
+  function GradAttributeInfo(newOutline) {
+    return newOutline
+      ? {
+          gradId: uuidv4(),
+          outcomeNumber: "1",
+          graduateAttribute: "3",
+          instructionLevel: "2",
+          attributeExisting: false,
+        }
+      : {
+          gradId: "",
+          outcomeNumber: "",
+          graduateAttribute: "",
+          instructionLevel: "",
+          attributeExisting: true,
+        };
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -151,7 +185,10 @@ function App() {
         </header>
         <body className="App-body">
           <CourseInformation courseInformation={CourseInfo(newOutline)} />
-          <LearningOutcome />
+          <LearningOutcome
+            learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
+            gradAttributeInfo={GradAttributeInfo(newOutline)}
+          />
           <FinalGradeComponent
             finalGradeInfo={FinalGradeInfo(newOutline)}
             letterGradeInfo={LetterGradeInfo(newOutline)}

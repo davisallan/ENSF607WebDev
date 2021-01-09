@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import {
   Table,
   Paper,
@@ -16,7 +16,6 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,48 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GraduateAttribute() {
-  const [attribute, setAttribute] = useState([
-    {
-      id: uuidv4(),
-      learningOutcome: "",
-      graduateAttribute: "",
-      instructionLevel: "",
-    },
-  ]);
-
-  function addNewAttributeRow() {
-    setAttribute([
-      ...attribute,
-      {
-        id: uuidv4(),
-        learningOutcome: "",
-        graduateAttribute: "",
-        instructionLevel: "",
-      },
-    ]);
-  }
-
-  function handleAttributeChange(e, i) {
-    let result = attribute.map((attribute) => {
-      return attribute.id === i
-        ? {
-            ...attribute,
-            [e.target.name]: e.target.value,
-          }
-        : {
-            ...attribute,
-          };
-    });
-    setAttribute(result);
-  }
-
-  function deleteAttributeRow(id) {
-    const temp = [...attribute];
-    const filteredRow = temp.filter((attribute) => attribute.id !== id);
-    setAttribute([...filteredRow]);
-  }
-
+export default function GraduateAttribute({
+  attribute,
+  addNewAttributeRow,
+  handleAttributeChange,
+  deleteAttributeRow,
+}) {
   const columns = [
     {
       id: "learningOutcome",
@@ -141,15 +104,15 @@ export default function GraduateAttribute() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {attribute.map((attribute, id) => (
-              <TableRow key={id}>
+            {attribute.map((attribute, gradId) => (
+              <TableRow key={gradId}>
                 <TableCell>
                   <TextField
-                    name="learningOutcome"
+                    name="outcomeNumber"
                     placeholder="#"
-                    value={attribute.learningOutcome}
+                    value={attribute.outcomeNumber}
                     style={{ width: "10rem" }}
-                    onChange={(e) => handleAttributeChange(e, attribute.id)}
+                    onChange={(e) => handleAttributeChange(e, attribute.gradId)}
                   />
                 </TableCell>
                 <TableCell>
@@ -157,7 +120,9 @@ export default function GraduateAttribute() {
                     name="graduateAttribute"
                     value={attribute.graduateAttribute}
                     style={{ width: "27rem" }}
-                    onChange={(e) => handleAttributeChange(e, attribute.id)}>
+                    onChange={(e) =>
+                      handleAttributeChange(e, attribute.gradId)
+                    }>
                     <MenuItem value={1}>
                       A1. A knowledge base for engineering
                     </MenuItem>
@@ -183,7 +148,9 @@ export default function GraduateAttribute() {
                     name="instructionLevel"
                     style={{ width: "10rem" }}
                     value={attribute.instructionLevel}
-                    onChange={(e) => handleAttributeChange(e, attribute.id)}>
+                    onChange={(e) =>
+                      handleAttributeChange(e, attribute.gradId)
+                    }>
                     <MenuItem value={1}>I (Introduced)</MenuItem>
                     <MenuItem value={2}>D (Developed)</MenuItem>
                     <MenuItem value={3}>A (Applied)</MenuItem>

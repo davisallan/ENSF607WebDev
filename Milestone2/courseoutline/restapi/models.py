@@ -15,14 +15,22 @@ class CalenderInfo(models.Model):
 
 class LearningOutcome(models.Model):
     courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
+    outcomeId = models.TextField(primary_key=True)
     outcomeNumber = models.CharField(max_length=2, blank=True)
     outcomeDescription = models.TextField(blank=True)
+
+
+class GraduateAttribute(models.Model):
+    courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
+    gradId = models.TextField(primary_key=True)
+    outcomeNumber = models.CharField(max_length=2, blank=True)
     graduateAttribute = models.CharField(max_length=50, blank=True)
     instructionLevel = models.CharField(max_length=15, blank=True)
 
 
 class FinalGradesTable(models.Model):
     courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
+    finalGradeId = models.TextField(primary_key=True)
     component = models.CharField(max_length=25, blank=True)
     outcomes = models.CharField(max_length=15, blank=True)
     weight = models.CharField(max_length=3, blank=True)
@@ -30,6 +38,7 @@ class FinalGradesTable(models.Model):
 
 class FinalGradesInfo(models.Model):
     courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
+    infoId = models.TextField(primary_key=True)
     notes = models.TextField(blank=True)
     letterAPlus = models.CharField(max_length=4, blank=True)
     letterA = models.CharField(max_length=4, blank=True)
