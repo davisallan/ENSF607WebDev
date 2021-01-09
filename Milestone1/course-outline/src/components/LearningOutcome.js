@@ -137,19 +137,51 @@ export default function LearningOutcome({
     setAttribute([...filteredRow]);
   }
 
-  // function newLearningOutcome() {
-  //   axios
-  //     .post("http://127.0.0.1:8000/learningOutcome/", {
-  //       courseId: courseId,
-  //       outcomeNumber: attribute.outcomeNumber,
-  //       outcomeDescription: learningOutcome.description,
-  //       graduateAttribute: attribute.graduateAttribute,
-  //       instructionLevel: attribute.instructionLevel,
-  //     })
-  //     .then(function (response) {
+  function newLearningOutcome() {
+    console.log("NEW LEARNING OUTCOME");
+    console.log(courseId);
+    var count = 1;
+    for (const outcome of learningOutcome) {
+      axios
+        .post("http://127.0.0.1:8000/learningOutcome/", {
+          courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+          outcomeNumber: count++,
+          outcomeDescription: outcome.description,
+        })
+        .then(function (response) {
+          // setLearningOutcome({ ...learningOutcome, outcomeExisting: true });
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
 
-  //   })
-  // }
+  function editLearningOutcome() {
+    var count = 1;
+    console.log("EDIT LEARNING OUTCOME");
+    for (const outcome of learningOutcome) {
+      axios
+        .put(`http://127.0.0.1:8000/learningOutcome/${courseId}/`, {
+          courseId: courseId,
+          outcomeNumber: count++,
+          outcomeDescription: outcome.description,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
+
+  function saveInfo() {
+    learningOutcome.outcomeExisting
+      ? editLearningOutcome()
+      : newLearningOutcome();
+  }
 
   const columns = [
     {
@@ -251,8 +283,7 @@ export default function LearningOutcome({
             color="primary"
             size="large"
             startIcon={<SaveIcon />}
-            // onClick={}
-          >
+            onClick={saveInfo}>
             Save
           </Button>
         </Container>
