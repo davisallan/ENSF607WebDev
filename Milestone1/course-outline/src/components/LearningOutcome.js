@@ -79,6 +79,7 @@ export default function LearningOutcome({
       {
         id: uuidv4(),
         description: "",
+        outcomeExisting: false,
       },
     ]);
   }
@@ -137,50 +138,77 @@ export default function LearningOutcome({
     setAttribute([...filteredRow]);
   }
 
-  function newLearningOutcome() {
-    console.log("NEW LEARNING OUTCOME");
-    console.log(courseId);
-    var count = 1;
-    for (const outcome of learningOutcome) {
-      axios
-        .post("http://127.0.0.1:8000/learningOutcome/", {
-          courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
-          outcomeNumber: count++,
-          outcomeDescription: outcome.description,
-        })
-        .then(function (response) {
-          // setLearningOutcome({ ...learningOutcome, outcomeExisting: true });
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+  // function changeOutcomeExisting(i) {
+  //   let result = learningOutcome.map((learningOutcome) => {
+  //     return learningOutcome.id === i
+  //       ? {
+  //           ...learningOutcome,
+  //           outcomeExisting: true,
+  //         }
+  //       : {
+  //           ...learningOutcome,
+  //         };
+  //   });
+  //   setLearningOutcome(result);
+  // }
+
+  function newLearningOutcome(id, count, state) {
+    console.log(state);
+    let result = state.map((learningOutcome) => {
+      if (learningOutcome.id === id) {
+        axios
+          .post("http://127.0.0.1:8000/learningOutcome/", {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            outcomeId: learningOutcome.id,
+            outcomeNumber: count,
+            outcomeDescription: learningOutcome.description,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        return { ...learningOutcome, outcomeExisting: true };
+      } else {
+        return { ...learningOutcome };
+      }
+    });
+    return result;
   }
 
-  function editLearningOutcome() {
-    var count = 1;
-    console.log("EDIT LEARNING OUTCOME");
+  function editLearningOutcome(id, count) {
     for (const outcome of learningOutcome) {
-      axios
-        .put(`http://127.0.0.1:8000/learningOutcome/${courseId}/`, {
-          courseId: courseId,
-          outcomeNumber: count++,
-          outcomeDescription: outcome.description,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      if (outcome.id === id) {
+        axios
+          .put(`http://127.0.0.1:8000/learningOutcome/${outcome.id}/`, {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            outcomeId: outcome.id,
+            outcomeNumber: count,
+            outcomeDescription: outcome.description,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
   }
 
   function saveInfo() {
-    learningOutcome.outcomeExisting
-      ? editLearningOutcome()
-      : newLearningOutcome();
+    var count = 1;
+    let state = [...learningOutcome];
+    for (const outcome of learningOutcome) {
+      if (outcome.outcomeExisting) {
+        editLearningOutcome(outcome.id, count);
+      } else {
+        state = newLearningOutcome(outcome.id, count, state);
+      }
+      count++;
+    }
+    setLearningOutcome(state);
   }
 
   const columns = [

@@ -139,7 +139,7 @@ function App() {
       ? {
           courseId: newCourseId,
           id: uuidv4(),
-          description: "test",
+          description: "",
           outcomeExisting: false,
         }
       : {
