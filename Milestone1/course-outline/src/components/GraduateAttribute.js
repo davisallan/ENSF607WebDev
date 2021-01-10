@@ -158,7 +158,7 @@ export default function GraduateAttribute({
                 </TableCell>
                 <TableCell align="center">
                   <DeleteIcon
-                    onClick={() => deleteAttributeRow(attribute.id)}
+                    onClick={() => deleteAttributeRow(attribute.gradId)}
                     style={{
                       cursor: "pointer",
                     }}
