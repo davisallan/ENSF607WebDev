@@ -74,7 +74,6 @@ export default function LearningOutcome({
   ]);
 
   function addNewOutcomeRow() {
-    console.log(courseId);
     setLearningOutcome([
       ...learningOutcome,
       {
