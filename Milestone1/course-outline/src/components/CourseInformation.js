@@ -177,8 +177,7 @@ export default function CourseInformation({ courseInformation }) {
               color="primary"
               size="large"
               startIcon={<SaveIcon />}
-              onClick={saveInfo}
-            >
+              onClick={saveInfo}>
               Save
             </Button>
           </Container>

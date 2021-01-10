@@ -228,10 +228,11 @@ export default function LearningOutcome({
   }
 
   function editGradAttribute(id) {
+    console.log(id);
     for (const gradAttr of attribute) {
       if (gradAttr.gradId === id) {
         axios
-          .put(`http://127.0.0.1:8000/graduateAttribute/${gradAttr.gradId}`, {
+          .put(`http://127.0.0.1:8000/graduateAttribute/${gradAttr.gradId}/`, {
             courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
             gradId: gradAttr.gradId,
             outcomeNumber: gradAttr.outcomeNumber,
@@ -282,11 +283,13 @@ export default function LearningOutcome({
     }
     setLearningOutcome(state);
 
+    console.log("before grad attribute loop");
     //saving graduate attributes
     let gradState = [...attribute];
     for (const gradAttr of attribute) {
       if (gradAttr.attributeExisting) {
-        editGradAttribute(gradAttr.id);
+        console.log("EDIT GRAD ATTRIBUTE");
+        editGradAttribute(gradAttr.gradId);
       } else {
         gradState = newGradAttribute(gradAttr.gradId, gradState);
       }
