@@ -268,7 +268,7 @@ export default function FinalGradeComponent({
           .put(`http://127.0.0.1:8000/finalGradeTable/${grade.gtid}/`, {
             courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
             finalGradeId: grade.gtid,
-            gradeComponent: grade.gradeComponent,
+            component: grade.gradeComponent,
             outcomes: grade.outcomes,
             weight: grade.weight,
           })
@@ -289,7 +289,7 @@ export default function FinalGradeComponent({
           .post("http://127.0.0.1:8000/finalGradeTable/", {
             courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
             finalGradeId: gtbreakdown.gtid,
-            gradeComponent: gtbreakdown.gradeComponent,
+            component: gtbreakdown.gradeComponent,
             outcomes: gtbreakdown.outcomes,
             weight: gtbreakdown.weight,
           })
@@ -397,9 +397,6 @@ export default function FinalGradeComponent({
 
   function newLetterGrade() {
     const letters = storeLetterGrade();
-    console.log(noteArea);
-    console.log(noteArea.infoId);
-    console.log(infoId);
     axios
       .post("http://127.0.0.1:8000/finalGradeInfo/", {
         courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
@@ -462,18 +459,6 @@ export default function FinalGradeComponent({
     return <Typography variant="h6">Notes:</Typography>;
   }
 
-  function NotesArea() {
-    return (
-      <TextField
-        id="grade-notes"
-        placeholder="Enter notes about grade breakdown"
-        multiline
-        fullWidth={true}
-        onChange={handleNoteChange}
-      />
-    );
-  }
-
   const classes = useStyles();
 
   return (
@@ -489,7 +474,14 @@ export default function FinalGradeComponent({
         gradeSubtotal={gradeSubtotal}
       />
       <NotesTitle />
-      <NotesArea />
+      <TextField
+        id="grade-notes"
+        name="notes"
+        placeholder="Enter notes about grade breakdown"
+        multiline
+        fullWidth={true}
+        onChange={handleNoteChange}
+      />
       <div className={classes.root}>
         <Container align="center">
           <Paper className={classes.paper}>
