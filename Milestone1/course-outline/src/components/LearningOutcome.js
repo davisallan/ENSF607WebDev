@@ -136,13 +136,13 @@ export default function LearningOutcome({
   }
 
   function deleteAttributeRow(id) {
+    deleteGradAttribute(id);
     const temp = [...attribute];
     const filteredRow = temp.filter((attribute) => attribute.gradId !== id);
     setAttribute([...filteredRow]);
   }
 
   function newLearningOutcome(id, count, state) {
-    console.log(courseId);
     let result = state.map((learningOutcome) => {
       if (learningOutcome.id === id) {
         axios
@@ -245,6 +245,26 @@ export default function LearningOutcome({
           .catch(function (error) {
             console.log(error);
           });
+      }
+    }
+  }
+
+  function deleteGradAttribute(id) {
+    for (const gradAttr of attribute) {
+      if (gradAttr.gradId === id) {
+        if (gradAttr.attributeExisting) {
+          axios
+            .delete(
+              `http://127.0.0.1:8000/graduateAttribute/${gradAttr.gradId}`,
+              {}
+            )
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
       }
     }
   }
