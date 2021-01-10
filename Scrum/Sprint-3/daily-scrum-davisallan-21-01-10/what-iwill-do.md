@@ -1,0 +1,3 @@
+- implement post/put for graduate attributes, 
+- implement put for learning outcomes
+- implemente delete functionality
