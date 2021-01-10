@@ -74,6 +74,7 @@ export default function LearningOutcome({
   ]);
 
   function addNewOutcomeRow() {
+    console.log(courseId);
     setLearningOutcome([
       ...learningOutcome,
       {
@@ -114,6 +115,7 @@ export default function LearningOutcome({
         outcomeNumber: "",
         graduateAttribute: "",
         instructionLevel: "",
+        attributeExisting: false,
       },
     ]);
   }
@@ -139,7 +141,7 @@ export default function LearningOutcome({
   }
 
   function newLearningOutcome(id, count, state) {
-    console.log(state);
+    console.log(courseId);
     let result = state.map((learningOutcome) => {
       if (learningOutcome.id === id) {
         axios
@@ -183,7 +185,54 @@ export default function LearningOutcome({
     }
   }
 
+  function newGradAttribute(id, state) {
+    let result = state.map((attribute) => {
+      if (attribute.gradId === id) {
+        axios
+          .post("http://127.0.0.1:8000/graduateAttribute/", {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            gradId: attribute.gradId,
+            outcomeNumber: attribute.outcomeNumber,
+            graduateAttribute: attribute.graduateAttribute,
+            instructionLevel: attribute.instructionLevel,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        return { ...attribute, attributeExisting: true };
+      } else {
+        return { ...attribute };
+      }
+    });
+    return result;
+  }
+
+  function editGradAttribute(id) {
+    for (const gradAttr of attribute) {
+      if (gradAttr.gradId === id) {
+        axios
+          .put(`http://127.0.0.1:8000/graduateAttribute/${gradAttr.gradId}`, {
+            courseId: `http://127.0.0.1:8000/calendarInfo/${courseId}/`,
+            gradId: gradAttr.gradId,
+            outcomeNumber: gradAttr.outcomeNumber,
+            graduateAttribute: gradAttr.graduateAttribute,
+            instructionLevel: gradAttr.instructionLevel,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    }
+  }
+
   function saveInfo() {
+    //saving learning outcomes
     var count = 1;
     let state = [...learningOutcome];
     for (const outcome of learningOutcome) {
@@ -195,6 +244,17 @@ export default function LearningOutcome({
       count++;
     }
     setLearningOutcome(state);
+
+    //saving graduate attributes
+    let gradState = [...attribute];
+    for (const gradAttr of attribute) {
+      if (gradAttr.attributeExisting) {
+        editGradAttribute(gradAttr.id);
+      } else {
+        gradState = newGradAttribute(gradAttr.gradId, gradState);
+      }
+    }
+    setAttribute(gradState);
   }
 
   const columns = [

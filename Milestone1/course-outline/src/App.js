@@ -141,6 +141,7 @@ function App() {
   function LearningOutcomeInfo(newOutline) {
     return newOutline
       ? {
+          courseId: newCourseId,
           id: uuidv4(),
           description: "",
           outcomeExisting: false,
