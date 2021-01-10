@@ -25,13 +25,13 @@ function App() {
     },
   });
 
-  var newOutline = true;
+  var newOutline = false;
 
-  var newCourseId;
+  var courseId;
 
   function NewCourseId() {
-    newCourseId = uuidv4();
-    return newCourseId;
+    courseId = uuidv4();
+    return courseId;
   }
 
   var information = {
@@ -45,10 +45,13 @@ function App() {
     existingOutline: false,
   };
 
+  var outcomeInfo = [];
+
   function InformationRetrieval(courseId) {
     axios
       .get(`http://127.0.0.1:8000/calendarInfo/${courseId}/`)
       .then(function (response) {
+        console.log("inside Info retrieval then");
         information.courseId = response.data.courseId;
         information.number = response.data.courseNumber;
         information.title = response.data.courseTitle;
@@ -59,6 +62,26 @@ function App() {
         information.existingOutline = true;
       });
     return information;
+  }
+
+  function learningOutcomeRetrieval(courseId) {
+    axios
+      .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const outcome of response.data) {
+          console.log(response.data);
+          outcomeInfo.push({
+            id: outcome.outcomeId,
+            description: outcome.outcomeDescription,
+            outcomeExisting: true,
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(outcomeInfo);
+    return outcomeInfo;
   }
 
   function CourseInfo(newOutline) {
@@ -74,14 +97,14 @@ function App() {
         existingOutline: false,
       };
     } else {
-      return InformationRetrieval("6d01847e-a23e-4d0d-9970-8ccc1b36872c");
+      return InformationRetrieval("379aab3c-031c-4ad4-b319-3cfb0a1beea2");
     }
   }
 
   function FinalGradeInfo(newOutline) {
     return newOutline
       ? {
-          courseId: newCourseId,
+          courseId: courseId,
           id: uuidv4(),
           gradeComponent: "",
           outcomes: "",
@@ -101,7 +124,7 @@ function App() {
   function LetterGradeInfo(newOutline) {
     return newOutline
       ? {
-          courseId: newCourseId,
+          courseId: courseId,
           notes: "",
           infoId: uuidv4(),
           letterAPlus: "95.0",
@@ -139,18 +162,17 @@ function App() {
   }
 
   function LearningOutcomeInfo(newOutline) {
-    return newOutline
-      ? {
-          courseId: newCourseId,
+    if (newOutline) {
+      return [
+        {
           id: uuidv4(),
           description: "",
           outcomeExisting: false,
-        }
-      : {
-          id: "",
-          description: "",
-          outcomeExisting: true,
-        };
+        },
+      ];
+    } else {
+      return learningOutcomeRetrieval("02b715dd-c7de-437c-863e-9d873a964484");
+    }
   }
 
   function GradAttributeInfo(newOutline) {
@@ -189,6 +211,7 @@ function App() {
         <body className="App-body">
           <CourseInformation courseInformation={CourseInfo(newOutline)} />
           <LearningOutcome
+            courseId={courseId}
             learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
             gradAttributeInfo={GradAttributeInfo(newOutline)}
           />

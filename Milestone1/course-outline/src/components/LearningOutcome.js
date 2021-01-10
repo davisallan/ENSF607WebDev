@@ -41,10 +41,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LearningOutcome({
+  courseId,
   learningOutcomeInfo,
   gradAttributeInfo,
 }) {
-  const { courseId, id, description, outcomeExisting } = learningOutcomeInfo;
+  // const { courseId, id, description, outcomeExisting } = learningOutcomeInfo;
   const {
     gradId,
     outcomeNumber,
@@ -55,13 +56,7 @@ export default function LearningOutcome({
 
   let outcomeNum = 1;
 
-  const [learningOutcome, setLearningOutcome] = useState([
-    {
-      id: id,
-      description: description,
-      outcomeExisting: outcomeExisting,
-    },
-  ]);
+  const [learningOutcome, setLearningOutcome] = useState(learningOutcomeInfo);
 
   const [attribute, setAttribute] = useState([
     {
@@ -228,7 +223,6 @@ export default function LearningOutcome({
   }
 
   function editGradAttribute(id) {
-    console.log(id);
     for (const gradAttr of attribute) {
       if (gradAttr.gradId === id) {
         axios
@@ -283,12 +277,10 @@ export default function LearningOutcome({
     }
     setLearningOutcome(state);
 
-    console.log("before grad attribute loop");
     //saving graduate attributes
     let gradState = [...attribute];
     for (const gradAttr of attribute) {
       if (gradAttr.attributeExisting) {
-        console.log("EDIT GRAD ATTRIBUTE");
         editGradAttribute(gradAttr.gradId);
       } else {
         gradState = newGradAttribute(gradAttr.gradId, gradState);

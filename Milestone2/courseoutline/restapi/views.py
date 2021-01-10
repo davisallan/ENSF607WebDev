@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
@@ -12,7 +13,9 @@ class CalendarInfoViewSet(viewsets.ModelViewSet):
 
 
 class LearningOutcomeViewSet(viewsets.ModelViewSet):
-    queryset = LearningOutcome.objects.all().order_by('courseId')
+    queryset = LearningOutcome.objects.all().order_by('outcomeNumber')
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['courseId']
     serializer_class = OutcomesSerializer
 
 
