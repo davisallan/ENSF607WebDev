@@ -1,0 +1,4 @@
+- Implement delete function call.
+- Implement get for existing course info for LetterGradeTable and FinalGradeTable
+- Start building react front end.
+- Figure out how to move save button in LetterGrades outside of adjusted style for table.
