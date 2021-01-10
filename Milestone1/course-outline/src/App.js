@@ -51,7 +51,6 @@ function App() {
     axios
       .get(`http://127.0.0.1:8000/calendarInfo/${courseId}/`)
       .then(function (response) {
-        console.log("inside Info retrieval then");
         information.courseId = response.data.courseId;
         information.number = response.data.courseNumber;
         information.title = response.data.courseTitle;
@@ -69,7 +68,6 @@ function App() {
       .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
       .then(function (response) {
         for (const outcome of response.data) {
-          console.log(response.data);
           outcomeInfo.push({
             id: outcome.outcomeId,
             description: outcome.outcomeDescription,
@@ -80,7 +78,6 @@ function App() {
       .catch(function (error) {
         console.log(error);
       });
-    console.log(outcomeInfo);
     return outcomeInfo;
   }
 
