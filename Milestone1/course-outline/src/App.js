@@ -157,9 +157,9 @@ function App() {
     return newOutline
       ? {
           gradId: uuidv4(),
-          outcomeNumber: "1",
-          graduateAttribute: "3",
-          instructionLevel: "2",
+          outcomeNumber: "",
+          graduateAttribute: "",
+          instructionLevel: "",
           attributeExisting: false,
         }
       : {
