@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FinalGradeComponent({
+  courseId,
   finalGradeInfo,
   letterGradeInfo,
 }) {
   const {
-    courseId,
     notes,
     infoId,
     letterAPlus,
@@ -57,17 +57,7 @@ export default function FinalGradeComponent({
     ltExisting,
   } = letterGradeInfo;
 
-  const { id, gradeComponent, outcomes, weight, fgExisting } = finalGradeInfo;
-
-  const [gtbreakdown, setGTBreakdown] = useState([
-    {
-      gtid: id,
-      gradeComponent: gradeComponent,
-      outcomes: outcomes,
-      weight: weight,
-      fgExisting: fgExisting,
-    },
-  ]);
+  const [gtbreakdown, setGTBreakdown] = useState(finalGradeInfo);
 
   const [noteArea, setNoteArea] = useState({
     notes: notes,

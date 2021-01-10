@@ -26,9 +26,13 @@ class GraduateAttributeViewSet(viewsets.ModelViewSet):
 
 class FinalGradesTableViewSet(viewsets.ModelViewSet):
     queryset = FinalGradesTable.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['courseId']
     serializer_class = GradeTableSerializer
 
 
 class FinalGradesInfoViewSet(viewsets.ModelViewSet):
     queryset = FinalGradesInfo.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['courseId']
     serializer_class = LetterTableSerializer
