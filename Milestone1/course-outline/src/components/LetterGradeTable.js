@@ -282,6 +282,21 @@ export default function FinalGradeComponent({
     }
   }
 
+  function deleteFinalGrade(id) {
+    for (const grade of gtbreakdown) {
+      if (grade.gtid === id) {
+        axios
+          .delete(`http://127.0.0.1:8000/finalGradeTable/${grade.gtid}/`)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    }
+  }
+
   function newFinalGrade(id, state) {
     let result = state.map((gtbreakdown) => {
       if (gtbreakdown.gtid === id) {
@@ -471,6 +486,7 @@ export default function FinalGradeComponent({
         inputChangeHandler={inputChangeHandler}
         handleWeightChange={handleWeightChange}
         deleteRowHandler={deleteRowHandler}
+        deleteFinalGrade={deleteFinalGrade}
         gradeSubtotal={gradeSubtotal}
       />
       <NotesTitle />

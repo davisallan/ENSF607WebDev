@@ -36,6 +36,7 @@ export default function GradeTable({
   inputChangeHandler,
   handleWeightChange,
   deleteRowHandler,
+  deleteFinalGrade,
   gradeSubtotal,
 }) {
   const columns = [
@@ -130,7 +131,10 @@ export default function GradeTable({
                 </TableCell>
                 <TableCell align="center">
                   <DeleteIcon
-                    onClick={() => deleteRowHandler(gtbreakdown.gtid)}
+                    onClick={() => {
+                      deleteRowHandler(gtbreakdown.gtid);
+                      deleteFinalGrade(gtbreakdown.gtid);
+                    }}
                     style={{
                       cursor: "pointer",
                     }}
