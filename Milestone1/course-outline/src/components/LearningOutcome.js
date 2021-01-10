@@ -100,6 +100,7 @@ export default function LearningOutcome({
   }
 
   function deleteOutcomeRow(id) {
+    deleteLearningOutcome(id);
     const temp = [...learningOutcome];
     const filteredRow = temp.filter(
       (learningOutcome) => learningOutcome.id !== id
@@ -181,6 +182,23 @@ export default function LearningOutcome({
           .catch(function (error) {
             console.log(error);
           });
+      }
+    }
+  }
+
+  function deleteLearningOutcome(id) {
+    for (const outcome of learningOutcome) {
+      if (outcome.id === id) {
+        if (outcome.outcomeExisting) {
+          axios
+            .delete(`http://127.0.0.1:8000/learningOutcome/${outcome.id}/`, {})
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
       }
     }
   }

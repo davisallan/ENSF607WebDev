@@ -66,7 +66,7 @@ function App() {
       return {
         courseId: NewCourseId(),
         number: "",
-        title: "Test success",
+        title: "",
         description: "",
         hours: "",
         credit: "",
