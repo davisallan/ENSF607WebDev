@@ -6,12 +6,13 @@ import CourseInformation from "./components/CourseInformation";
 import Typography from "@material-ui/core/Typography";
 import { Logo } from "./components/CourseInformation";
 import Grid from "@material-ui/core/Grid";
-import { Container } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 
-export default function CourseOutline({ location, match }) {
+export default function CourseOutline({ location }) {
   var newOutline = location.state.newOutline;
-  var courseId = match.params.id;
+  var courseId = location.state.courseId;
 
   var letterInfo = {
     notes: "",
@@ -290,6 +291,19 @@ export default function CourseOutline({ location, match }) {
         </Container>
       </header>
       <body>
+        <Container>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            component={Link}
+            to={{
+              pathname: `/`,
+            }}
+          >
+            BACK
+          </Button>
+        </Container>
         <CourseInformation courseId={courseId} newOutline={newOutline} />
         <LearningOutcome
           courseId={courseId}

@@ -79,9 +79,13 @@ export default function CourseInformation({ courseId, newOutline }) {
       })
       .then(function (response) {
         console.log(response);
+        response.status === 200
+          ? window.alert("Save Successful!")
+          : window.alert("Save failed, please try again.");
       })
       .catch(function (error) {
         console.log(error);
+        window.alert("Save failed, please try again.");
       });
   }
 

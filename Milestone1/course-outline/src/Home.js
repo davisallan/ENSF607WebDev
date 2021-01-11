@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Container, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,11 +20,6 @@ export default function Home() {
     courseOutlineRetrieval();
   }, []);
 
-  // function NewCourseId() {
-  //   courseId = uuidv4();
-  //   return courseId;
-  // }
-
   const [outlines, setOutlines] = useState([]);
 
   function courseOutlineRetrieval() {
@@ -36,6 +32,12 @@ export default function Home() {
         console.log(error);
       });
   }
+
+  const courseId = uuidv4();
+
+  // function newCourseId() {
+  //   courseId = uuidv4();
+  // }
 
   const classes = useStyles();
 
@@ -55,7 +57,18 @@ export default function Home() {
       </header>
       <body>
         <Container>
-          <Button color="secondary">New Course Outline</Button>
+          <Button
+            component={Link}
+            to={{
+              pathname: `/courseoutline/${courseId}`,
+              state: {
+                newOutline: true,
+                courseId: courseId,
+              },
+            }}
+          >
+            New Course Outline
+          </Button>
           <Typography variant="h5" className={classes.root}>
             Existing Course Outlines
           </Typography>
@@ -66,6 +79,7 @@ export default function Home() {
                   pathname: `/courseoutline/${outline.courseId}`,
                   state: {
                     newOutline: false,
+                    courseId: outline.courseId,
                   },
                 }}
               >
