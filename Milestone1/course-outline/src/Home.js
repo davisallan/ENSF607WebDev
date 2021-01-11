@@ -73,7 +73,7 @@ export default function Home() {
             Existing Course Outlines
           </Typography>
           {outlines.map((outline) => (
-            <Typography variant="h6" key={outline.courseId}>
+            <Typography variant="subtitle1" key={outline.courseId}>
               <Link
                 to={{
                   pathname: `/courseoutline/${outline.courseId}`,
