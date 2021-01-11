@@ -1,0 +1,2 @@
+- Implement Home page and Nav for Course Outline.
+- Implement router and links to existing course outlines.
