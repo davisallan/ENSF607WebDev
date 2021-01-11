@@ -9,15 +9,9 @@ import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 
-export default function CourseOutline() {
-  var newOutline = false;
-  console.log("");
-  var courseId = "379aab3c-031c-4ad4-b319-3cfb0a1beea2";
-
-  function NewCourseId() {
-    courseId = uuidv4();
-    return courseId;
-  }
+export default function CourseOutline({ location, match }) {
+  var newOutline = location.state.newOutline;
+  var courseId = match.params.id;
 
   var information = {
     courseId: "",
@@ -142,6 +136,23 @@ export default function CourseOutline() {
     return information;
   }
 
+  // async function InformationRetrieval() {
+  //   const result = await axios.get(
+  //     `http://127.0.0.1:8000/calendarInfo/${courseId}/`
+  //   );
+
+  //   information.courseId = result.data.courseId;
+  //   information.number = result.data.courseNumber;
+  //   information.title = result.data.courseTitle;
+  //   information.description = result.data.courseDescription;
+  //   information.hours = result.data.courseHours;
+  //   information.credit = result.data.academicCredit;
+  //   information.reference = result.data.calendarReference;
+  //   information.existingOutline = true;
+  //   console.log(information);
+  //   return information;
+  // }
+
   function learningOutcomeRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
@@ -240,7 +251,7 @@ export default function CourseOutline() {
   function CourseInfo(newOutline) {
     if (newOutline) {
       return {
-        courseId: NewCourseId(),
+        courseId: courseId,
         number: "",
         title: "",
         description: "",
@@ -326,8 +337,8 @@ export default function CourseOutline() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div>
+      <header>
         <Container>
           <Grid container direction="row">
             <Logo />
@@ -339,7 +350,7 @@ export default function CourseOutline() {
           </Grid>
         </Container>
       </header>
-      <body className="App-body">
+      <body>
         <CourseInformation
           courseId={courseId}
           courseInformation={CourseInfo(newOutline)}

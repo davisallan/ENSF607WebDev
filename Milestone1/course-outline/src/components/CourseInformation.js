@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -18,7 +18,15 @@ export function Logo() {
 }
 
 export default function CourseInformation({ courseId, courseInformation }) {
-  const [courseInfo, setCourseInfo] = useState(courseInformation);
+  const [courseInfo, setCourseInfo] = useState({});
+
+  useEffect(() => {
+    console.log("Current State");
+    console.log(courseInfo);
+    console.log("Setting new State");
+    console.log(courseInformation);
+    setCourseInfo(courseInformation);
+  }, [courseInformation]);
 
   function handleOnChange(event) {
     const value = event.target.value;
@@ -158,7 +166,8 @@ export default function CourseInformation({ courseId, courseInformation }) {
               color="primary"
               size="large"
               startIcon={<SaveIcon />}
-              onClick={saveInfo}>
+              onClick={saveInfo}
+            >
               Save
             </Button>
           </Container>

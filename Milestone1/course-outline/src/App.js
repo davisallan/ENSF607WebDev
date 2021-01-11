@@ -1,5 +1,6 @@
 import { React } from "react";
 import CourseOutline from "./CourseOutline";
+import Home from "./Home";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +9,7 @@ import { Logo } from "./components/CourseInformation";
 import Grid from "@material-ui/core/Grid";
 import "./App.css";
 import { Container } from "@material-ui/core";
-import Home from "./Home";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   const theme = createMuiTheme({
@@ -24,12 +25,14 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <header className="App-header"></header>
-        <body className="App-body">
-          <CourseOutline />
-        </body>
-      </div>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/courseoutline/:id" component={CourseOutline} />
+          </Switch>
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }

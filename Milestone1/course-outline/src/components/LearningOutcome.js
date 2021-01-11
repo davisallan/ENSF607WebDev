@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Table,
   Paper,
@@ -47,7 +47,14 @@ export default function LearningOutcome({
 }) {
   let outcomeNum = 1;
 
-  const [learningOutcome, setLearningOutcome] = useState(learningOutcomeInfo);
+  useEffect(() => {
+    console.log("Current State");
+    console.log("testing learning outcomes");
+    console.log(learningOutcomeInfo);
+    setLearningOutcome(learningOutcomeInfo);
+  }, [learningOutcomeInfo]);
+
+  const [learningOutcome, setLearningOutcome] = useState([]);
 
   const [attribute, setAttribute] = useState(gradAttributeInfo);
 
@@ -308,7 +315,8 @@ export default function LearningOutcome({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}>
+                    }}
+                  >
                     {column.label}
                   </TableCell>
                 ))}
@@ -318,7 +326,8 @@ export default function LearningOutcome({
                       color="primary"
                       className={classes.fab}
                       onClick={addNewOutcomeRow}
-                      size="small">
+                      size="small"
+                    >
                       <AddIcon />
                     </Fab>
                   </Tooltip>
@@ -372,7 +381,8 @@ export default function LearningOutcome({
             color="primary"
             size="large"
             startIcon={<SaveIcon />}
-            onClick={saveInfo}>
+            onClick={saveInfo}
+          >
             Save
           </Button>
         </Container>
