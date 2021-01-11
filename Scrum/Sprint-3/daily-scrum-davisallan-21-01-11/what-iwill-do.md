@@ -1,0 +1,2 @@
+- build the homepage
+- implement React router to link the two pages and complete the application

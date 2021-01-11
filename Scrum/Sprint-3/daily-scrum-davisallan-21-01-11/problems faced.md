@@ -1,0 +1,2 @@
+- issue with the app crashing after changes to implementing get function from db for final grade
+- issue with re-rendering on the refresh
