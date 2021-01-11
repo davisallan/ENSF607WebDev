@@ -33,24 +33,98 @@ export default function CourseOutline() {
   var letterInfo = {
     notes: "",
     infoId: "",
-    letterAPlus: "",
-    letterA: "",
-    letterAMinus: "",
-    letterBPlus: "",
-    letterB: "",
-    letterBMinus: "",
-    letterCPlus: "",
-    letterC: "",
-    letterCMinus: "",
-    letterDPlus: "",
-    letterD: "",
-    letterF: "",
     ltExisting: false,
   };
 
   var outcomeInfo = [];
   var gradAttrInfo = [];
   var gradTableInfo = [];
+  var letterTableInfo = [
+    {
+      id: 1,
+      letter: "A+",
+      leftRange: "95.0",
+      comparison: "<= T <",
+      rightRange: "100.0",
+    },
+    {
+      id: 2,
+      letter: "A",
+      leftRange: "90.0",
+      comparison: "<= T <",
+      rightRange: "95.0",
+    },
+    {
+      id: 3,
+      letter: "A-",
+      leftRange: "85.0",
+      comparison: "<= T <",
+      rightRange: "90.0",
+    },
+    {
+      id: 4,
+      letter: "B+",
+      leftRange: "80.0",
+      comparison: "<= T <",
+      rightRange: "85.0",
+    },
+    {
+      id: 5,
+      letter: "B",
+      leftRange: "75.0",
+      comparison: "<= T <",
+      rightRange: "80.0",
+    },
+    {
+      id: 6,
+      letter: "B-",
+      leftRange: "70.0",
+      comparison: "<= T <",
+      rightRange: "75.0",
+    },
+    {
+      id: 7,
+      letter: "C+",
+      leftRange: "65.0",
+      comparison: "<= T <",
+      rightRange: "70.0",
+    },
+    {
+      id: 8,
+      letter: "C",
+      leftRange: "60.0",
+      comparison: "<= T <",
+      rightRange: "65.0",
+    },
+    {
+      id: 9,
+      letter: "C-",
+      leftRange: "56.0",
+      comparison: "<= T <",
+      rightRange: "60.0",
+    },
+    {
+      id: 10,
+      letter: "D+",
+      leftRange: "53.0",
+      comparison: "<= T <",
+      rightRange: "56.0",
+    },
+    {
+      id: 11,
+      letter: "D",
+      leftRange: "50.0",
+      comparison: "<= T <",
+      rightRange: "53.0",
+    },
+    {
+      id: 12,
+      letter: "F",
+      leftRange: "",
+      comparison: "T <",
+      rightRange: "50.0",
+    },
+  ];
 
   function InformationRetrieval() {
     axios
@@ -130,27 +204,36 @@ export default function CourseOutline() {
     axios
       .get(`http://127.0.0.1:8000/finalGradeInfo/?courseId=${courseId}`)
       .then(function (response) {
-        console.log(response);
         letterInfo.notes = response.data[0].notes;
         letterInfo.infoId = response.data[0].infoId;
-        letterInfo.letterAPlus = response.data[0].letterAPlus;
-        letterInfo.letterA = response.data[0].letterA;
-        letterInfo.letterAMinus = response.data[0].letterAMinus;
-        letterInfo.letterBPlus = response.data[0].letterBPlus;
-        letterInfo.letterB = response.data[0].letterB;
-        letterInfo.letterBMinus = response.data[0].letterBMinus;
-        letterInfo.letterCPlus = response.data[0].letterCPlus;
-        letterInfo.letterC = response.data[0].letterC;
-        letterInfo.letterCMinus = response.data[0].letterCMinus;
-        letterInfo.letterDPlus = response.data[0].letterDPlus;
-        letterInfo.letterD = response.data[0].letterD;
-        letterInfo.letterF = response.data[0].letterF;
         letterInfo.ltExisting = true;
+        letterTableInfo[0].leftRange = response.data[0].letterAPlus;
+        letterTableInfo[1].rightRange = response.data[0].letterAPlus;
+        letterTableInfo[1].leftRange = response.data[0].letterA;
+        letterTableInfo[2].rightRange = response.data[0].letterA;
+        letterTableInfo[2].leftRange = response.data[0].letterAMinus;
+        letterTableInfo[3].rightRange = response.data[0].letterAMinus;
+        letterTableInfo[3].leftRange = response.data[0].letterBPlus;
+        letterTableInfo[4].rightRange = response.data[0].letterBPlus;
+        letterTableInfo[4].leftRange = response.data[0].letterB;
+        letterTableInfo[5].rightRange = response.data[0].letterB;
+        letterTableInfo[5].leftRange = response.data[0].letterBMinus;
+        letterTableInfo[6].rightRange = response.data[0].letterBMinus;
+        letterTableInfo[6].leftRange = response.data[0].letterCPlus;
+        letterTableInfo[7].rightRange = response.data[0].letterCPlus;
+        letterTableInfo[7].leftRange = response.data[0].letterC;
+        letterTableInfo[8].rightRange = response.data[0].letterC;
+        letterTableInfo[8].leftRange = response.data[0].letterCMinus;
+        letterTableInfo[9].rightRange = response.data[0].letterCMinus;
+        letterTableInfo[9].leftRange = response.data[0].letterDPlus;
+        letterTableInfo[10].rightRange = response.data[0].letterDPlus;
+        letterTableInfo[10].leftRange = response.data[0].letterD;
+        letterTableInfo[11].rightRange = response.data[0].letterD;
+        letterTableInfo[11].leftRange = response.data[0].letterF;
       })
       .catch(function (error) {
         console.log(error);
       });
-    console.log(letterInfo);
     return letterInfo;
   }
 
@@ -270,6 +353,7 @@ export default function CourseOutline() {
           courseId={courseId}
           finalGradeInfo={FinalGradeInfo(newOutline)}
           letterGradeInfo={LetterGradeInfo(newOutline)}
+          letterTableInfo={letterTableInfo}
         />
       </body>
     </div>
