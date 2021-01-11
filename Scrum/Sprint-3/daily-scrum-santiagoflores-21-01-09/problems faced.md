@@ -1,0 +1,1 @@
+- PAssing the response from get to component to display be displayed
