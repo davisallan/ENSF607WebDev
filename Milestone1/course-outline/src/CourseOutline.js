@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function CourseOutline() {
   var newOutline = false;
 
-  var courseId;
+  var courseId = "379aab3c-031c-4ad4-b319-3cfb0a1beea2";
 
   function NewCourseId() {
     courseId = uuidv4();
@@ -31,6 +31,7 @@ export default function CourseOutline() {
   };
 
   var outcomeInfo = [];
+  var gradTableInfo = [];
 
   function InformationRetrieval(courseId) {
     axios
@@ -66,6 +67,26 @@ export default function CourseOutline() {
     return outcomeInfo;
   }
 
+  function gradeTableRetrieval(courseId) {
+    axios
+      .get(`http://127.0.0.1:8000/finalGradeTable/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const component of response.data) {
+          gradTableInfo.push({
+            id: component.finalGradeId,
+            gradeComponent: component.component,
+            outcomes: component.outcomes,
+            weight: component.weight,
+            fgExisting: true,
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return gradTableInfo;
+  }
+
   function CourseInfo(newOutline) {
     if (newOutline) {
       return {
@@ -84,23 +105,19 @@ export default function CourseOutline() {
   }
 
   function FinalGradeInfo(newOutline) {
-    return newOutline
-      ? {
-          courseId: courseId,
+    if (newOutline) {
+      return [
+        {
           id: uuidv4(),
           gradeComponent: "",
           outcomes: "",
           weight: 0,
           fgExisting: false,
-        }
-      : {
-          courseId: "",
-          id: "",
-          gradeComponent: "",
-          outcomes: "",
-          weight: 0,
-          fgExisting: true,
-        };
+        },
+      ];
+    } else {
+      return gradeTableRetrieval("379aab3c-031c-4ad4-b319-3cfb0a1beea2");
+    }
   }
 
   function LetterGradeInfo(newOutline) {
@@ -190,13 +207,17 @@ export default function CourseOutline() {
         </Container>
       </header>
       <body className="App-body">
-        <CourseInformation courseInformation={CourseInfo(newOutline)} />
+        <CourseInformation
+          courseId={courseId}
+          courseInformation={CourseInfo(newOutline)}
+        />
         <LearningOutcome
           courseId={courseId}
           learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
           gradAttributeInfo={GradAttributeInfo(newOutline)}
         />
         <FinalGradeComponent
+          courseId={courseId}
           finalGradeInfo={FinalGradeInfo(newOutline)}
           letterGradeInfo={LetterGradeInfo(newOutline)}
         />

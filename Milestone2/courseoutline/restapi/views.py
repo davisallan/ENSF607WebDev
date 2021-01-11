@@ -21,14 +21,20 @@ class LearningOutcomeViewSet(viewsets.ModelViewSet):
 
 class GraduateAttributeViewSet(viewsets.ModelViewSet):
     queryset = GraduateAttribute.objects.all().order_by('courseId')
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['courseId']
     serializer_class = GradAttributeSerializer
 
 
 class FinalGradesTableViewSet(viewsets.ModelViewSet):
     queryset = FinalGradesTable.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['courseId']
     serializer_class = GradeTableSerializer
 
 
 class FinalGradesInfoViewSet(viewsets.ModelViewSet):
     queryset = FinalGradesInfo.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['courseId']
     serializer_class = LetterTableSerializer

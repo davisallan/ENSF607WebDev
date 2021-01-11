@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FinalGradeComponent({
+  courseId,
   finalGradeInfo,
   letterGradeInfo,
 }) {
   const {
-    courseId,
     notes,
     infoId,
     letterAPlus,
@@ -57,17 +57,9 @@ export default function FinalGradeComponent({
     ltExisting,
   } = letterGradeInfo;
 
-  const { id, gradeComponent, outcomes, weight, fgExisting } = finalGradeInfo;
+  // const { id, gradeComponent, outcomes, weight, fgExisting } = finalGradeInfo;
 
-  const [gtbreakdown, setGTBreakdown] = useState([
-    {
-      gtid: id,
-      gradeComponent: gradeComponent,
-      outcomes: outcomes,
-      weight: weight,
-      fgExisting: fgExisting,
-    },
-  ]);
+  const [gtbreakdown, setGTBreakdown] = useState(finalGradeInfo);
 
   const [noteArea, setNoteArea] = useState({
     notes: notes,
@@ -515,8 +507,7 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     Letter Grade
                   </TableCell>
                   <TableCell
@@ -529,8 +520,7 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     Total Mark (T)
                   </TableCell>
                 </TableRow>
@@ -586,8 +576,7 @@ export default function FinalGradeComponent({
           color="primary"
           size="large"
           startIcon={<SaveIcon />}
-          onClick={saveInfo}
-        >
+          onClick={saveInfo}>
           Save
         </Button>
       </Container>
