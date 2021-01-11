@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function CourseOutline() {
   var newOutline = false;
-
+  console.log("");
   var courseId = "379aab3c-031c-4ad4-b319-3cfb0a1beea2";
 
   function NewCourseId() {

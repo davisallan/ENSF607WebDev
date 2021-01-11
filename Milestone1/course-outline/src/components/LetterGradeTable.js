@@ -381,6 +381,7 @@ export default function FinalGradeComponent({
         name="notes"
         placeholder="Enter notes about grade breakdown"
         multiline
+        value={noteArea.notes}
         fullWidth={true}
         onChange={handleNoteChange}
       />
