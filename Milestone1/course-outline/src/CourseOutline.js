@@ -13,17 +13,6 @@ export default function CourseOutline({ location, match }) {
   var newOutline = location.state.newOutline;
   var courseId = match.params.id;
 
-  var information = {
-    courseId: "",
-    number: "",
-    title: "",
-    description: "",
-    hours: "",
-    credit: "",
-    reference: "",
-    existingOutline: false,
-  };
-
   var letterInfo = {
     notes: "",
     infoId: "",
@@ -120,39 +109,6 @@ export default function CourseOutline({ location, match }) {
     },
   ];
 
-  function InformationRetrieval() {
-    axios
-      .get(`http://127.0.0.1:8000/calendarInfo/${courseId}/`)
-      .then(function (response) {
-        information.courseId = response.data.courseId;
-        information.number = response.data.courseNumber;
-        information.title = response.data.courseTitle;
-        information.description = response.data.courseDescription;
-        information.hours = response.data.courseHours;
-        information.credit = response.data.academicCredit;
-        information.reference = response.data.calendarReference;
-        information.existingOutline = true;
-      });
-    return information;
-  }
-
-  // async function InformationRetrieval() {
-  //   const result = await axios.get(
-  //     `http://127.0.0.1:8000/calendarInfo/${courseId}/`
-  //   );
-
-  //   information.courseId = result.data.courseId;
-  //   information.number = result.data.courseNumber;
-  //   information.title = result.data.courseTitle;
-  //   information.description = result.data.courseDescription;
-  //   information.hours = result.data.courseHours;
-  //   information.credit = result.data.academicCredit;
-  //   information.reference = result.data.calendarReference;
-  //   information.existingOutline = true;
-  //   console.log(information);
-  //   return information;
-  // }
-
   function learningOutcomeRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
@@ -248,23 +204,6 @@ export default function CourseOutline({ location, match }) {
     return letterInfo;
   }
 
-  function CourseInfo(newOutline) {
-    if (newOutline) {
-      return {
-        courseId: courseId,
-        number: "",
-        title: "",
-        description: "",
-        hours: "",
-        credit: "",
-        reference: "",
-        existingOutline: false,
-      };
-    } else {
-      return InformationRetrieval();
-    }
-  }
-
   function FinalGradeInfo(newOutline) {
     if (newOutline) {
       return [
@@ -351,10 +290,7 @@ export default function CourseOutline({ location, match }) {
         </Container>
       </header>
       <body>
-        <CourseInformation
-          courseId={courseId}
-          courseInformation={CourseInfo(newOutline)}
-        />
+        <CourseInformation courseId={courseId} newOutline={newOutline} />
         <LearningOutcome
           courseId={courseId}
           learningOutcomeInfo={LearningOutcomeInfo(newOutline)}

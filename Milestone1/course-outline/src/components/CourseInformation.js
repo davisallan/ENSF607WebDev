@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -17,16 +17,49 @@ export function Logo() {
   );
 }
 
-export default function CourseInformation({ courseId, courseInformation }) {
-  const [courseInfo, setCourseInfo] = useState({});
+export default function CourseInformation({ courseId, newOutline }) {
+  const [courseInfo, setCourseInfo] = useState({
+    courseId: courseId,
+    number: "",
+    title: "",
+    description: "",
+    hours: "",
+    credit: "",
+    reference: "",
+    existingOutline: false,
+  });
+
+  const informationRetrieval = useCallback(async () => {
+    var information = {
+      courseId: "",
+      number: "",
+      title: "",
+      description: "",
+      hours: "",
+      credit: "",
+      reference: "",
+      existingOutline: false,
+    };
+    await axios
+      .get(`http://127.0.0.1:8000/calendarInfo/${courseId}/`)
+      .then(function (response) {
+        information.courseId = response.data.courseId;
+        information.number = response.data.courseNumber;
+        information.title = response.data.courseTitle;
+        information.description = response.data.courseDescription;
+        information.hours = response.data.courseHours;
+        information.credit = response.data.academicCredit;
+        information.reference = response.data.calendarReference;
+        information.existingOutline = true;
+        setCourseInfo(information);
+      });
+  }, [courseId]);
 
   useEffect(() => {
-    console.log("Current State");
-    console.log(courseInfo);
-    console.log("Setting new State");
-    console.log(courseInformation);
-    setCourseInfo(courseInformation);
-  }, [courseInformation]);
+    if (!newOutline) {
+      informationRetrieval();
+    }
+  }, [newOutline, informationRetrieval]);
 
   function handleOnChange(event) {
     const value = event.target.value;
