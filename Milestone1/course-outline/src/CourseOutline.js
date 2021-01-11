@@ -30,6 +30,24 @@ export default function CourseOutline() {
     existingOutline: false,
   };
 
+  var letterInfo = {
+    notes: "",
+    infoId: "",
+    letterAPlus: "",
+    letterA: "",
+    letterAMinus: "",
+    letterBPlus: "",
+    letterB: "",
+    letterBMinus: "",
+    letterCPlus: "",
+    letterC: "",
+    letterCMinus: "",
+    letterDPlus: "",
+    letterD: "",
+    letterF: "",
+    ltExisting: false,
+  };
+
   var outcomeInfo = [];
   var gradAttrInfo = [];
   var gradTableInfo = [];
@@ -108,6 +126,34 @@ export default function CourseOutline() {
     return gradTableInfo;
   }
 
+  function gradeInfoRetrieval() {
+    axios
+      .get(`http://127.0.0.1:8000/finalGradeInfo/?courseId=${courseId}`)
+      .then(function (response) {
+        console.log(response);
+        letterInfo.notes = response.data[0].notes;
+        letterInfo.infoId = response.data[0].infoId;
+        letterInfo.letterAPlus = response.data[0].letterAPlus;
+        letterInfo.letterA = response.data[0].letterA;
+        letterInfo.letterAMinus = response.data[0].letterAMinus;
+        letterInfo.letterBPlus = response.data[0].letterBPlus;
+        letterInfo.letterB = response.data[0].letterB;
+        letterInfo.letterBMinus = response.data[0].letterBMinus;
+        letterInfo.letterCPlus = response.data[0].letterCPlus;
+        letterInfo.letterC = response.data[0].letterC;
+        letterInfo.letterCMinus = response.data[0].letterCMinus;
+        letterInfo.letterDPlus = response.data[0].letterDPlus;
+        letterInfo.letterD = response.data[0].letterD;
+        letterInfo.letterF = response.data[0].letterF;
+        letterInfo.ltExisting = true;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(letterInfo);
+    return letterInfo;
+  }
+
   function CourseInfo(newOutline) {
     if (newOutline) {
       return {
@@ -142,43 +188,28 @@ export default function CourseOutline() {
   }
 
   function LetterGradeInfo(newOutline) {
-    return newOutline
-      ? {
-          courseId: courseId,
-          notes: "",
-          infoId: uuidv4(),
-          letterAPlus: "95.0",
-          letterA: "90.0",
-          letterAMinus: "85.0",
-          letterBPlus: "80.0",
-          letterB: "75.0",
-          letterBMinus: "70.0",
-          letterCPlus: "65.0",
-          letterC: "60.0",
-          letterCMinus: "56.0",
-          letterDPlus: "53.0",
-          letterD: "50.0",
-          letterF: "",
-          ltExisting: false,
-        }
-      : {
-          courseId: "",
-          notes: "",
-          infoId: "",
-          letterAPlus: "95.0",
-          letterA: "90.0",
-          letterAMinus: "85.0",
-          letterBPlus: "80.0",
-          letterB: "75.0",
-          letterBMinus: "70.0",
-          letterCPlus: "65.0",
-          letterC: "60.0",
-          letterCMinus: "56.0",
-          letterDPlus: "53.0",
-          letterD: "50.0",
-          letterF: "",
-          ltExisting: true,
-        };
+    if (newOutline) {
+      return {
+        courseId: courseId,
+        notes: "",
+        infoId: uuidv4(),
+        letterAPlus: "95.0",
+        letterA: "90.0",
+        letterAMinus: "85.0",
+        letterBPlus: "80.0",
+        letterB: "75.0",
+        letterBMinus: "70.0",
+        letterCPlus: "65.0",
+        letterC: "60.0",
+        letterCMinus: "56.0",
+        letterDPlus: "53.0",
+        letterD: "50.0",
+        letterF: "",
+        ltExisting: false,
+      };
+    } else {
+      return gradeInfoRetrieval();
+    }
   }
 
   function LearningOutcomeInfo(newOutline) {

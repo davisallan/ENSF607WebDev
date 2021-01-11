@@ -57,8 +57,6 @@ export default function FinalGradeComponent({
     ltExisting,
   } = letterGradeInfo;
 
-  // const { id, gradeComponent, outcomes, weight, fgExisting } = finalGradeInfo;
-
   const [gtbreakdown, setGTBreakdown] = useState(finalGradeInfo);
 
   const [noteArea, setNoteArea] = useState({
