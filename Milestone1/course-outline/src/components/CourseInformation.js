@@ -17,27 +17,8 @@ export function Logo() {
   );
 }
 
-export default function CourseInformation({ courseInformation }) {
-  const {
-    courseId,
-    number,
-    title,
-    description,
-    hours,
-    credit,
-    reference,
-    existingOutline,
-  } = courseInformation;
-
-  const [courseInfo, setCourseInfo] = useState({
-    number: number,
-    title: title,
-    description: description,
-    hours: hours,
-    credit: credit,
-    reference: reference,
-    existingOutline: existingOutline,
-  });
+export default function CourseInformation({ courseId, courseInformation }) {
+  const [courseInfo, setCourseInfo] = useState(courseInformation);
 
   function handleOnChange(event) {
     const value = event.target.value;

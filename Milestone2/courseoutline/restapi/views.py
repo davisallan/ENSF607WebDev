@@ -21,6 +21,8 @@ class LearningOutcomeViewSet(viewsets.ModelViewSet):
 
 class GraduateAttributeViewSet(viewsets.ModelViewSet):
     queryset = GraduateAttribute.objects.all().order_by('courseId')
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['courseId']
     serializer_class = GradAttributeSerializer
 
 

@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function CourseOutline() {
   var newOutline = false;
 
-  var courseId;
+  var courseId = "379aab3c-031c-4ad4-b319-3cfb0a1beea2";
 
   function NewCourseId() {
     courseId = uuidv4();
@@ -30,7 +30,103 @@ export default function CourseOutline() {
     existingOutline: false,
   };
 
-  function InformationRetrieval(courseId) {
+  var letterInfo = {
+    notes: "",
+    infoId: "",
+    ltExisting: false,
+  };
+
+  var outcomeInfo = [];
+  var gradAttrInfo = [];
+  var gradTableInfo = [];
+  var letterTableInfo = [
+    {
+      id: 1,
+      letter: "A+",
+      leftRange: "95.0",
+      comparison: "<= T <",
+      rightRange: "100.0",
+    },
+    {
+      id: 2,
+      letter: "A",
+      leftRange: "90.0",
+      comparison: "<= T <",
+      rightRange: "95.0",
+    },
+    {
+      id: 3,
+      letter: "A-",
+      leftRange: "85.0",
+      comparison: "<= T <",
+      rightRange: "90.0",
+    },
+    {
+      id: 4,
+      letter: "B+",
+      leftRange: "80.0",
+      comparison: "<= T <",
+      rightRange: "85.0",
+    },
+    {
+      id: 5,
+      letter: "B",
+      leftRange: "75.0",
+      comparison: "<= T <",
+      rightRange: "80.0",
+    },
+    {
+      id: 6,
+      letter: "B-",
+      leftRange: "70.0",
+      comparison: "<= T <",
+      rightRange: "75.0",
+    },
+    {
+      id: 7,
+      letter: "C+",
+      leftRange: "65.0",
+      comparison: "<= T <",
+      rightRange: "70.0",
+    },
+    {
+      id: 8,
+      letter: "C",
+      leftRange: "60.0",
+      comparison: "<= T <",
+      rightRange: "65.0",
+    },
+    {
+      id: 9,
+      letter: "C-",
+      leftRange: "56.0",
+      comparison: "<= T <",
+      rightRange: "60.0",
+    },
+    {
+      id: 10,
+      letter: "D+",
+      leftRange: "53.0",
+      comparison: "<= T <",
+      rightRange: "56.0",
+    },
+    {
+      id: 11,
+      letter: "D",
+      leftRange: "50.0",
+      comparison: "<= T <",
+      rightRange: "53.0",
+    },
+    {
+      id: 12,
+      letter: "F",
+      leftRange: "",
+      comparison: "T <",
+      rightRange: "50.0",
+    },
+  ];
+
+  function InformationRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/calendarInfo/${courseId}/`)
       .then(function (response) {
@@ -46,8 +142,7 @@ export default function CourseOutline() {
     return information;
   }
 
-  function learningOutcomeRetrieval(courseId) {
-    var outcomeInfo;
+  function learningOutcomeRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
       .then(function (response) {
@@ -66,18 +161,36 @@ export default function CourseOutline() {
     return outcomeInfo;
   }
 
-  function gradeTableRetrieval(courseId) {
-    var gradeTableInfo;
+  function graduateAttrRetrieval() {
+    axios
+      .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const gradAttr of response.data) {
+          gradAttrInfo.push({
+            gradId: gradAttr.gradId,
+            outcomeNumber: gradAttr.outcomeNumber,
+            graduateAttribute: gradAttr.graduateAttribute,
+            instructionLevel: gradAttr.instructionLevel,
+            attributeExisting: true,
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return gradAttrInfo;
+  }
+
+  function gradeTableRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/finalGradeTable/?courseId=${courseId}`)
       .then(function (response) {
-        gradeTableInfo = [];
-        for (const gradeRow of response.data) {
-          gradeTableInfo.push({
-            id: gradeRow.finalGradeId,
-            gradeComponent: gradeRow.component,
-            outcomes: gradeRow.outcomes,
-            weight: gradeRow.weight,
+        for (const component of response.data) {
+          gradTableInfo.push({
+            id: component.finalGradeId,
+            gradeComponent: component.component,
+            outcomes: component.outcomes,
+            weight: component.weight,
             fgExisting: true,
           });
         }
@@ -85,45 +198,39 @@ export default function CourseOutline() {
       .catch(function (error) {
         console.log(error);
       });
-    return gradeTableInfo;
+    return gradTableInfo;
   }
 
-  function gradeInfoRetrieval(courseId) {
-    var letterInfo = {
-      notes: "",
-      infoId: "",
-      letterAPlus: "",
-      letterA: "",
-      letterAMinus: "",
-      letterBPlus: "",
-      letterB: "",
-      letterBMinus: "",
-      letterCPlus: "",
-      letterC: "",
-      letterCMinus: "",
-      letterDPlus: "",
-      letterD: "",
-      letterF: "",
-      ltExisting: false,
-    };
+  function gradeInfoRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/finalGradeInfo/?courseId=${courseId}`)
       .then(function (response) {
-        letterInfo.notes = response.data.infoId;
-        letterInfo.infoId = response.data.notes;
-        letterInfo.letterAPlus = response.data.letterAPlus;
-        letterInfo.letterA = response.data.letterA;
-        letterInfo.letterAMinus = response.data.letterAMinus;
-        letterInfo.letterBPlus = response.data.letterBPlus;
-        letterInfo.letterB = response.data.letterB;
-        letterInfo.letterBMinus = response.data.letterBMinus;
-        letterInfo.letterCPlus = response.data.letterCPlus;
-        letterInfo.letterC = response.data.letterC;
-        letterInfo.letterCMinus = response.data.letterCMinus;
-        letterInfo.letterDPlus = response.data.letterDPlus;
-        letterInfo.letterD = response.data.letterD;
-        letterInfo.letterF = response.data.letterF;
+        letterInfo.notes = response.data[0].notes;
+        letterInfo.infoId = response.data[0].infoId;
         letterInfo.ltExisting = true;
+        letterTableInfo[0].leftRange = response.data[0].letterAPlus;
+        letterTableInfo[1].rightRange = response.data[0].letterAPlus;
+        letterTableInfo[1].leftRange = response.data[0].letterA;
+        letterTableInfo[2].rightRange = response.data[0].letterA;
+        letterTableInfo[2].leftRange = response.data[0].letterAMinus;
+        letterTableInfo[3].rightRange = response.data[0].letterAMinus;
+        letterTableInfo[3].leftRange = response.data[0].letterBPlus;
+        letterTableInfo[4].rightRange = response.data[0].letterBPlus;
+        letterTableInfo[4].leftRange = response.data[0].letterB;
+        letterTableInfo[5].rightRange = response.data[0].letterB;
+        letterTableInfo[5].leftRange = response.data[0].letterBMinus;
+        letterTableInfo[6].rightRange = response.data[0].letterBMinus;
+        letterTableInfo[6].leftRange = response.data[0].letterCPlus;
+        letterTableInfo[7].rightRange = response.data[0].letterCPlus;
+        letterTableInfo[7].leftRange = response.data[0].letterC;
+        letterTableInfo[8].rightRange = response.data[0].letterC;
+        letterTableInfo[8].leftRange = response.data[0].letterCMinus;
+        letterTableInfo[9].rightRange = response.data[0].letterCMinus;
+        letterTableInfo[9].leftRange = response.data[0].letterDPlus;
+        letterTableInfo[10].rightRange = response.data[0].letterDPlus;
+        letterTableInfo[10].leftRange = response.data[0].letterD;
+        letterTableInfo[11].rightRange = response.data[0].letterD;
+        letterTableInfo[11].leftRange = response.data[0].letterF;
       })
       .catch(function (error) {
         console.log(error);
@@ -144,7 +251,7 @@ export default function CourseOutline() {
         existingOutline: false,
       };
     } else {
-      return InformationRetrieval("379aab3c-031c-4ad4-b319-3cfb0a1beea2");
+      return InformationRetrieval();
     }
   }
 
@@ -152,7 +259,6 @@ export default function CourseOutline() {
     if (newOutline) {
       return [
         {
-          courseId: courseId,
           id: uuidv4(),
           gradeComponent: "",
           outcomes: "",
@@ -161,7 +267,7 @@ export default function CourseOutline() {
         },
       ];
     } else {
-      return gradeTableRetrieval(courseId);
+      return gradeTableRetrieval();
     }
   }
 
@@ -186,7 +292,7 @@ export default function CourseOutline() {
         ltExisting: false,
       };
     } else {
-      return gradeInfoRetrieval(courseId);
+      return gradeInfoRetrieval();
     }
   }
 
@@ -200,26 +306,24 @@ export default function CourseOutline() {
         },
       ];
     } else {
-      return learningOutcomeRetrieval("02b715dd-c7de-437c-863e-9d873a964484");
+      return learningOutcomeRetrieval();
     }
   }
 
   function GradAttributeInfo(newOutline) {
-    return newOutline
-      ? {
+    if (newOutline) {
+      return [
+        {
           gradId: uuidv4(),
           outcomeNumber: "",
           graduateAttribute: "",
           instructionLevel: "",
           attributeExisting: false,
-        }
-      : {
-          gradId: "",
-          outcomeNumber: "",
-          graduateAttribute: "",
-          instructionLevel: "",
-          attributeExisting: true,
-        };
+        },
+      ];
+    } else {
+      return graduateAttrRetrieval();
+    }
   }
 
   return (
@@ -237,7 +341,10 @@ export default function CourseOutline() {
         </Container>
       </header>
       <body className="App-body">
-        <CourseInformation courseInformation={CourseInfo(newOutline)} />
+        <CourseInformation
+          courseId={courseId}
+          courseInformation={CourseInfo(newOutline)}
+        />
         <LearningOutcome
           courseId={courseId}
           learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
@@ -247,6 +354,7 @@ export default function CourseOutline() {
           courseId={courseId}
           finalGradeInfo={FinalGradeInfo(newOutline)}
           letterGradeInfo={LetterGradeInfo(newOutline)}
+          letterTableInfo={letterTableInfo}
         />
       </body>
     </div>

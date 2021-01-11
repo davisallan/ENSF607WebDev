@@ -45,28 +45,11 @@ export default function LearningOutcome({
   learningOutcomeInfo,
   gradAttributeInfo,
 }) {
-  // const { courseId, id, description, outcomeExisting } = learningOutcomeInfo;
-  const {
-    gradId,
-    outcomeNumber,
-    graduateAttribute,
-    instructionLevel,
-    attributeExisting,
-  } = gradAttributeInfo;
-
   let outcomeNum = 1;
 
   const [learningOutcome, setLearningOutcome] = useState(learningOutcomeInfo);
 
-  const [attribute, setAttribute] = useState([
-    {
-      gradId: gradId,
-      outcomeNumber: outcomeNumber,
-      graduateAttribute: graduateAttribute,
-      instructionLevel: instructionLevel,
-      attributeExisting: attributeExisting,
-    },
-  ]);
+  const [attribute, setAttribute] = useState(gradAttributeInfo);
 
   function addNewOutcomeRow() {
     setLearningOutcome([

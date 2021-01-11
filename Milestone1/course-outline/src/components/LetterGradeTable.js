@@ -38,119 +38,13 @@ export default function FinalGradeComponent({
   courseId,
   finalGradeInfo,
   letterGradeInfo,
+  letterTableInfo,
 }) {
-  const {
-    notes,
-    infoId,
-    letterAPlus,
-    letterA,
-    letterAMinus,
-    letterBPlus,
-    letterB,
-    letterBMinus,
-    letterCPlus,
-    letterC,
-    letterCMinus,
-    letterDPlus,
-    letterD,
-    letterF,
-    ltExisting,
-  } = letterGradeInfo;
-
   const [gtbreakdown, setGTBreakdown] = useState(finalGradeInfo);
 
-  const [noteArea, setNoteArea] = useState({
-    notes: notes,
-    infoId: infoId,
-    ltExisting: ltExisting,
-  });
+  const [noteArea, setNoteArea] = useState(letterGradeInfo);
 
-  const [ltbreakdown, setLTBreakdown] = useState([
-    {
-      id: 1,
-      letter: "A+",
-      leftRange: letterAPlus,
-      comparison: "<= T <",
-      rightRange: "100.0",
-    },
-    {
-      id: 2,
-      letter: "A",
-      leftRange: letterA,
-      comparison: "<= T <",
-      rightRange: letterAPlus,
-    },
-    {
-      id: 3,
-      letter: "A-",
-      leftRange: letterAMinus,
-      comparison: "<= T <",
-      rightRange: letterA,
-    },
-    {
-      id: 4,
-      letter: "B+",
-      leftRange: letterBPlus,
-      comparison: "<= T <",
-      rightRange: letterAMinus,
-    },
-    {
-      id: 5,
-      letter: "B",
-      leftRange: letterB,
-      comparison: "<= T <",
-      rightRange: letterBPlus,
-    },
-    {
-      id: 6,
-      letter: "B-",
-      leftRange: letterBMinus,
-      comparison: "<= T <",
-      rightRange: letterB,
-    },
-    {
-      id: 7,
-      letter: "C+",
-      leftRange: letterCPlus,
-      comparison: "<= T <",
-      rightRange: letterBMinus,
-    },
-    {
-      id: 8,
-      letter: "C",
-      leftRange: letterC,
-      comparison: "<= T <",
-      rightRange: letterCPlus,
-    },
-    {
-      id: 9,
-      letter: "C-",
-      leftRange: letterCMinus,
-      comparison: "<= T <",
-      rightRange: letterC,
-    },
-    {
-      id: 10,
-      letter: "D+",
-      leftRange: letterDPlus,
-      comparison: "<= T <",
-      rightRange: letterCMinus,
-    },
-    {
-      id: 11,
-      letter: "D",
-      leftRange: letterD,
-      comparison: "<= T <",
-      rightRange: letterDPlus,
-    },
-    {
-      id: 12,
-      letter: "F",
-      leftRange: letterF,
-      comparison: "T <",
-      rightRange: letterD,
-    },
-  ]);
+  const [ltbreakdown, setLTBreakdown] = useState(letterTableInfo);
 
   function updateRightCol(e, i) {
     const onlyNums = e.target.value.replace(/[^0-9]\./g, "");
@@ -505,8 +399,7 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     Letter Grade
                   </TableCell>
                   <TableCell
@@ -519,8 +412,7 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     Total Mark (T)
                   </TableCell>
                 </TableRow>
@@ -576,8 +468,7 @@ export default function FinalGradeComponent({
           color="primary"
           size="large"
           startIcon={<SaveIcon />}
-          onClick={saveInfo}
-        >
+          onClick={saveInfo}>
           Save
         </Button>
       </Container>
