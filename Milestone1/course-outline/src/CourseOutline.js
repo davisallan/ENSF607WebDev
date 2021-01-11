@@ -146,7 +146,6 @@ export default function CourseOutline() {
     axios
       .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
       .then(function (response) {
-        outcomeInfo = [];
         for (const outcome of response.data) {
           outcomeInfo.push({
             id: outcome.outcomeId,
