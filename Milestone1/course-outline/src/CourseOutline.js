@@ -31,9 +31,10 @@ export default function CourseOutline() {
   };
 
   var outcomeInfo = [];
+  var gradAttrInfo = [];
   var gradTableInfo = [];
 
-  function InformationRetrieval(courseId) {
+  function InformationRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/calendarInfo/${courseId}/`)
       .then(function (response) {
@@ -49,7 +50,7 @@ export default function CourseOutline() {
     return information;
   }
 
-  function learningOutcomeRetrieval(courseId) {
+  function learningOutcomeRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
       .then(function (response) {
@@ -67,7 +68,27 @@ export default function CourseOutline() {
     return outcomeInfo;
   }
 
-  function gradeTableRetrieval(courseId) {
+  function graduateAttrRetrieval() {
+    axios
+      .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const gradAttr of response.data) {
+          gradAttrInfo.push({
+            gradId: gradAttr.gradId,
+            outcomeNumber: gradAttr.outcomeNumber,
+            graduateAttribute: gradAttr.graduateAttribute,
+            instructionLevel: gradAttr.instructionLevel,
+            attributeExisting: true,
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return gradAttrInfo;
+  }
+
+  function gradeTableRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/finalGradeTable/?courseId=${courseId}`)
       .then(function (response) {
@@ -100,7 +121,7 @@ export default function CourseOutline() {
         existingOutline: false,
       };
     } else {
-      return InformationRetrieval("379aab3c-031c-4ad4-b319-3cfb0a1beea2");
+      return InformationRetrieval();
     }
   }
 
@@ -116,7 +137,7 @@ export default function CourseOutline() {
         },
       ];
     } else {
-      return gradeTableRetrieval("379aab3c-031c-4ad4-b319-3cfb0a1beea2");
+      return gradeTableRetrieval();
     }
   }
 
@@ -170,26 +191,24 @@ export default function CourseOutline() {
         },
       ];
     } else {
-      return learningOutcomeRetrieval("02b715dd-c7de-437c-863e-9d873a964484");
+      return learningOutcomeRetrieval();
     }
   }
 
   function GradAttributeInfo(newOutline) {
-    return newOutline
-      ? {
+    if (newOutline) {
+      return [
+        {
           gradId: uuidv4(),
           outcomeNumber: "",
           graduateAttribute: "",
           instructionLevel: "",
           attributeExisting: false,
-        }
-      : {
-          gradId: "",
-          outcomeNumber: "",
-          graduateAttribute: "",
-          instructionLevel: "",
-          attributeExisting: true,
-        };
+        },
+      ];
+    } else {
+      return graduateAttrRetrieval();
+    }
   }
 
   return (
