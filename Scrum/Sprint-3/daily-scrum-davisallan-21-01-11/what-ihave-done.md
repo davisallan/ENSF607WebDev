@@ -1,0 +1,3 @@
+- fixed the app crashing issue
+- pair programmed the implementation of reading from the database for all components
+- refactored app to have the course outline as a separate page

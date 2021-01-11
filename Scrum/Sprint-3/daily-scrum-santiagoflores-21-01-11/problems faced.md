@@ -1,0 +1,1 @@
+Not being able to display the state after doing axios.get and passing the response to the component
