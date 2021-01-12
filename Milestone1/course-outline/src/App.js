@@ -3,12 +3,8 @@ import CourseOutline from "./CourseOutline";
 import Home from "./Home";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import Typography from "@material-ui/core/Typography";
 import { red, orange } from "@material-ui/core/colors";
-import { Logo } from "./components/CourseInformation";
-import Grid from "@material-ui/core/Grid";
 import "./App.css";
-import { Container } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
