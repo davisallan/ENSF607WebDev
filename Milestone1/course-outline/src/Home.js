@@ -58,7 +58,7 @@ export default function Home() {
               <Button
                 variant="contained"
                 color="primary"
-                size="large"
+                size="small"
                 style={{ marginTop: 50 }}
                 component={Link}
                 to={{
@@ -67,8 +67,7 @@ export default function Home() {
                     newOutline: true,
                     courseId: courseId,
                   },
-                }}
-              >
+                }}>
                 New Course Outline
               </Button>
             </Grid>
@@ -87,8 +86,7 @@ export default function Home() {
                         newOutline: false,
                         courseId: outline.courseId,
                       },
-                    }}
-                  >
+                    }}>
                     {outline.courseNumber}: {outline.courseTitle}
                   </Link>
                 </Typography>
