@@ -110,44 +110,6 @@ export default function CourseOutline({ location }) {
     },
   ];
 
-  function learningOutcomeRetrieval() {
-    axios
-      .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
-      .then(function (response) {
-        for (const outcome of response.data) {
-          outcomeInfo.push({
-            id: outcome.outcomeId,
-            description: outcome.outcomeDescription,
-            outcomeExisting: true,
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    return outcomeInfo;
-  }
-
-  function graduateAttrRetrieval() {
-    axios
-      .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
-      .then(function (response) {
-        for (const gradAttr of response.data) {
-          gradAttrInfo.push({
-            gradId: gradAttr.gradId,
-            outcomeNumber: gradAttr.outcomeNumber,
-            graduateAttribute: gradAttr.graduateAttribute,
-            instructionLevel: gradAttr.instructionLevel,
-            attributeExisting: true,
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    return gradAttrInfo;
-  }
-
   function gradeTableRetrieval() {
     axios
       .get(`http://127.0.0.1:8000/finalGradeTable/?courseId=${courseId}`)
@@ -246,36 +208,6 @@ export default function CourseOutline({ location }) {
     }
   }
 
-  function LearningOutcomeInfo(newOutline) {
-    if (newOutline) {
-      return [
-        {
-          id: uuidv4(),
-          description: "",
-          outcomeExisting: false,
-        },
-      ];
-    } else {
-      return learningOutcomeRetrieval();
-    }
-  }
-
-  function GradAttributeInfo(newOutline) {
-    if (newOutline) {
-      return [
-        {
-          gradId: uuidv4(),
-          outcomeNumber: "",
-          graduateAttribute: "",
-          instructionLevel: "",
-          attributeExisting: false,
-        },
-      ];
-    } else {
-      return graduateAttrRetrieval();
-    }
-  }
-
   return (
     <div>
       <header>
@@ -299,17 +231,12 @@ export default function CourseOutline({ location }) {
             component={Link}
             to={{
               pathname: `/`,
-            }}
-          >
+            }}>
             BACK
           </Button>
         </Container>
         <CourseInformation courseId={courseId} newOutline={newOutline} />
-        <LearningOutcome
-          courseId={courseId}
-          learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
-          gradAttributeInfo={GradAttributeInfo(newOutline)}
-        />
+        <LearningOutcome courseId={courseId} newOutline={newOutline} />
         <FinalGradeComponent
           courseId={courseId}
           finalGradeInfo={FinalGradeInfo(newOutline)}

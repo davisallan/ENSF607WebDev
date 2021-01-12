@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import {
   Table,
   Paper,
@@ -40,23 +40,79 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LearningOutcome({
-  courseId,
-  learningOutcomeInfo,
-  gradAttributeInfo,
-}) {
+export default function LearningOutcome({ courseId, newOutline }) {
   let outcomeNum = 1;
 
+  const [learningOutcome, setLearningOutcome] = useState([
+    {
+      id: uuidv4(),
+      description: "",
+      outcomeExisting: false,
+    },
+  ]);
+
+  const [attribute, setAttribute] = useState([]);
+
+  const learningOutcomeRetrieval = useCallback(async () => {
+    var outcomes = [];
+    await axios
+      .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const outcome of response.data) {
+          outcomes.push({
+            id: outcome.outcomeId,
+            description: outcome.outcomeDescription,
+            outcomeExisting: true,
+          });
+        }
+        setLearningOutcome(outcomes);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [courseId]);
+
   useEffect(() => {
-    console.log("Current State");
-    console.log("testing learning outcomes");
-    console.log(learningOutcomeInfo);
-    setLearningOutcome(learningOutcomeInfo);
-  }, [learningOutcomeInfo]);
+    if (!newOutline) {
+      learningOutcomeRetrieval();
+    }
+  }, [newOutline, learningOutcomeRetrieval]);
 
-  const [learningOutcome, setLearningOutcome] = useState([]);
+  // function graduateAttrRetrieval() {
+  //   axios
+  //     .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
+  //     .then(function (response) {
+  //       for (const gradAttr of response.data) {
+  //         gradAttrInfo.push({
+  //           gradId: gradAttr.gradId,
+  //           outcomeNumber: gradAttr.outcomeNumber,
+  //           graduateAttribute: gradAttr.graduateAttribute,
+  //           instructionLevel: gradAttr.instructionLevel,
+  //           attributeExisting: true,
+  //         });
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   return gradAttrInfo;
+  // }
 
-  const [attribute, setAttribute] = useState(gradAttributeInfo);
+  // function GradAttributeInfo(newOutline) {
+  //   if (newOutline) {
+  //     return [
+  //       {
+  //         gradId: uuidv4(),
+  //         outcomeNumber: "",
+  //         graduateAttribute: "",
+  //         instructionLevel: "",
+  //         attributeExisting: false,
+  //       },
+  //     ];
+  //   } else {
+  //     return graduateAttrRetrieval();
+  //   }
+  // }
 
   function addNewOutcomeRow() {
     setLearningOutcome([
@@ -315,8 +371,7 @@ export default function LearningOutcome({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -326,8 +381,7 @@ export default function LearningOutcome({
                       color="primary"
                       className={classes.fab}
                       onClick={addNewOutcomeRow}
-                      size="small"
-                    >
+                      size="small">
                       <AddIcon />
                     </Fab>
                   </Tooltip>
@@ -381,8 +435,7 @@ export default function LearningOutcome({
             color="primary"
             size="large"
             startIcon={<SaveIcon />}
-            onClick={saveInfo}
-          >
+            onClick={saveInfo}>
             Save
           </Button>
         </Container>
