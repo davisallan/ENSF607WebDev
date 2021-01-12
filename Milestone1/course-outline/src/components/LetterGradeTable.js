@@ -336,22 +336,9 @@ export default function FinalGradeComponent({
           })
           .then(function (response) {
             console.log(response);
-            if (response.status === 200) {
-              setMessageAlert({
-                severity: "success",
-                message: "Save successful",
-              });
-              setAlertOpen(true);
-            }
           })
           .catch(function (error) {
             console.log(error);
-            setMessageAlert({
-              severity: "error",
-              message:
-                "Save failed, please try again. Make sure the Course Number has been saved.",
-            });
-            setAlertOpen(true);
           });
       }
     }
@@ -399,22 +386,9 @@ export default function FinalGradeComponent({
           })
           .then(function (response) {
             console.log(response);
-            if (response.status === 201) {
-              setMessageAlert({
-                severity: "success",
-                message: "Save successful",
-              });
-              setAlertOpen(true);
-            }
           })
           .catch(function (error) {
             console.log(error);
-            setMessageAlert({
-              severity: "error",
-              message:
-                "Save failed, please try again. Make sure the Course Number has been saved.",
-            });
-            setAlertOpen(true);
           });
         return { ...gtbreakdown, fgExisting: true };
       } else {
