@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(7),
     width: "100%",
     justify: "center",
   },
@@ -57,39 +57,48 @@ export default function Home() {
       </header>
       <body>
         <Container>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            component={Link}
-            to={{
-              pathname: `/courseoutline/${courseId}`,
-              state: {
-                newOutline: true,
-                courseId: courseId,
-              },
-            }}
-          >
-            New Course Outline
-          </Button>
-          <Typography variant="h5" className={classes.root}>
-            Existing Course Outlines
-          </Typography>
-          {outlines.map((outline) => (
-            <Typography variant="subtitle1" key={outline.courseId}>
-              <Link
+          <Grid container direction="row">
+            <Grid item xs={5}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                style={{ marginTop: 50 }}
+                component={Link}
                 to={{
-                  pathname: `/courseoutline/${outline.courseId}`,
+                  pathname: `/courseoutline/${courseId}`,
                   state: {
-                    newOutline: false,
-                    courseId: outline.courseId,
+                    newOutline: true,
+                    courseId: courseId,
                   },
                 }}
               >
-                {outline.courseNumber}: {outline.courseTitle}
-              </Link>
-            </Typography>
-          ))}
+                New Course Outline
+              </Button>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5" className={classes.root}>
+                Existing Course Outlines
+              </Typography>
+
+              {outlines.map((outline) => (
+                <Typography variant="subtitle1" key={outline.courseId}>
+                  <Link
+                    style={{ color: "black" }}
+                    to={{
+                      pathname: `/courseoutline/${outline.courseId}`,
+                      state: {
+                        newOutline: false,
+                        courseId: outline.courseId,
+                      },
+                    }}
+                  >
+                    {outline.courseNumber}: {outline.courseTitle}
+                  </Link>
+                </Typography>
+              ))}
+            </Grid>
+          </Grid>
         </Container>
       </body>
     </div>
