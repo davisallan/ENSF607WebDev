@@ -114,7 +114,7 @@ export default function CourseInformation({
       .then(function (response) {
         if (response.status === 201) {
           setCourseInfo({ ...courseInfo, existingOutline: true });
-          setMessageAlert({ severity: "success", message: "Save successful" });
+          setMessageAlert({ severity: "success", message: "Save successful." });
           setAlertOpen(true);
         }
         console.log(response);
