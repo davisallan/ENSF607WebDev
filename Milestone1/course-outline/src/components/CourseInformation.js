@@ -17,7 +17,12 @@ export function Logo() {
   );
 }
 
-export default function CourseInformation({ courseId, newOutline }) {
+export default function CourseInformation({
+  courseId,
+  newOutline,
+  setMessageAlert,
+  setAlertOpen,
+}) {
   const [courseInfo, setCourseInfo] = useState({
     courseId: courseId,
     number: "",
@@ -79,13 +84,19 @@ export default function CourseInformation({ courseId, newOutline }) {
       })
       .then(function (response) {
         console.log(response);
-        response.status === 200
-          ? window.alert("Save Successful!")
-          : window.alert("Save failed, please try again.");
+        if (response.status === 200) {
+          setMessageAlert({ severity: "success", message: "Save successful" });
+          setAlertOpen(true);
+        }
       })
       .catch(function (error) {
         console.log(error);
-        window.alert("Save failed, please try again.");
+        setMessageAlert({
+          severity: "error",
+          message:
+            "Save failed, please try again. Confirm Course Number is less than 10 characters.",
+        });
+        setAlertOpen(true);
       });
   }
 
@@ -101,11 +112,21 @@ export default function CourseInformation({ courseId, newOutline }) {
         calendarReference: courseInfo.reference,
       })
       .then(function (response) {
-        setCourseInfo({ ...courseInfo, existingOutline: true });
+        if (response.status === 201) {
+          setCourseInfo({ ...courseInfo, existingOutline: true });
+          setMessageAlert({ severity: "success", message: "Save successful" });
+          setAlertOpen(true);
+        }
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
+        setMessageAlert({
+          severity: "error",
+          message:
+            "Save failed, please try again. Confirm Course Number is less than 10 characters.",
+        });
+        setAlertOpen(true);
       });
   }
 

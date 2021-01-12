@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Button,
   Table,
@@ -34,17 +34,194 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+var rowCounter = 1;
+
 export default function FinalGradeComponent({
   courseId,
-  finalGradeInfo,
-  letterGradeInfo,
-  letterTableInfo,
+  newOutline,
+  setMessageAlert,
+  setAlertOpen,
 }) {
-  const [gtbreakdown, setGTBreakdown] = useState(finalGradeInfo);
+  const [gtbreakdown, setGTBreakdown] = useState([
+    {
+      gtid: courseId + rowCounter,
+      gradeComponent: "",
+      outcomes: "",
+      weight: 0,
+      fgExisting: false,
+    },
+  ]);
 
-  const [noteArea, setNoteArea] = useState(letterGradeInfo);
+  const [noteArea, setNoteArea] = useState({
+    notes: "",
+    infoId: uuidv4(),
+    ltExisting: false,
+  });
+
+  const letterTableInfo = useCallback(() => {
+    return [
+      {
+        id: 1,
+        letter: "A+",
+        leftRange: "95.0",
+        comparison: "<= T <",
+        rightRange: "100.0",
+      },
+      {
+        id: 2,
+        letter: "A",
+        leftRange: "90.0",
+        comparison: "<= T <",
+        rightRange: "95.0",
+      },
+      {
+        id: 3,
+        letter: "A-",
+        leftRange: "85.0",
+        comparison: "<= T <",
+        rightRange: "90.0",
+      },
+      {
+        id: 4,
+        letter: "B+",
+        leftRange: "80.0",
+        comparison: "<= T <",
+        rightRange: "85.0",
+      },
+      {
+        id: 5,
+        letter: "B",
+        leftRange: "75.0",
+        comparison: "<= T <",
+        rightRange: "80.0",
+      },
+      {
+        id: 6,
+        letter: "B-",
+        leftRange: "70.0",
+        comparison: "<= T <",
+        rightRange: "75.0",
+      },
+      {
+        id: 7,
+        letter: "C+",
+        leftRange: "65.0",
+        comparison: "<= T <",
+        rightRange: "70.0",
+      },
+      {
+        id: 8,
+        letter: "C",
+        leftRange: "60.0",
+        comparison: "<= T <",
+        rightRange: "65.0",
+      },
+      {
+        id: 9,
+        letter: "C-",
+        leftRange: "56.0",
+        comparison: "<= T <",
+        rightRange: "60.0",
+      },
+      {
+        id: 10,
+        letter: "D+",
+        leftRange: "53.0",
+        comparison: "<= T <",
+        rightRange: "56.0",
+      },
+      {
+        id: 11,
+        letter: "D",
+        leftRange: "50.0",
+        comparison: "<= T <",
+        rightRange: "53.0",
+      },
+      {
+        id: 12,
+        letter: "F",
+        leftRange: "",
+        comparison: "T <",
+        rightRange: "50.0",
+      },
+    ];
+  }, []);
 
   const [ltbreakdown, setLTBreakdown] = useState(letterTableInfo);
+
+  const gradeTableRetrieval = useCallback(async () => {
+    var gradeTableInfo = [];
+    await axios
+      .get(`http://127.0.0.1:8000/finalGradeTable/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const component of response.data) {
+          gradeTableInfo.push({
+            gtid: component.finalGradeId,
+            gradeComponent: component.component,
+            outcomes: component.outcomes,
+            weight: component.weight,
+            fgExisting: true,
+          });
+        }
+        setGTBreakdown(gradeTableInfo);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [courseId]);
+
+  const gradeInfoRetrieval = useCallback(async () => {
+    var letterInfo = {
+      notes: "",
+      infoId: "",
+      ltExisting: false,
+    };
+    var letterTable = letterTableInfo();
+    await axios
+      .get(`http://127.0.0.1:8000/finalGradeInfo/?courseId=${courseId}`)
+      .then(function (response) {
+        letterInfo.notes = response.data[0].notes;
+        letterInfo.infoId = response.data[0].infoId;
+        letterInfo.ltExisting = true;
+        console.log(response.data[0].letterAPlus);
+        console.log(letterTable);
+        letterTable[0].leftRange = response.data[0].letterAPlus;
+        letterTable[1].rightRange = response.data[0].letterAPlus;
+        letterTable[1].leftRange = response.data[0].letterA;
+        letterTable[2].rightRange = response.data[0].letterA;
+        letterTable[2].leftRange = response.data[0].letterAMinus;
+        letterTable[3].rightRange = response.data[0].letterAMinus;
+        letterTable[3].leftRange = response.data[0].letterBPlus;
+        letterTable[4].rightRange = response.data[0].letterBPlus;
+        letterTable[4].leftRange = response.data[0].letterB;
+        letterTable[5].rightRange = response.data[0].letterB;
+        letterTable[5].leftRange = response.data[0].letterBMinus;
+        letterTable[6].rightRange = response.data[0].letterBMinus;
+        letterTable[6].leftRange = response.data[0].letterCPlus;
+        letterTable[7].rightRange = response.data[0].letterCPlus;
+        letterTable[7].leftRange = response.data[0].letterC;
+        letterTable[8].rightRange = response.data[0].letterC;
+        letterTable[8].leftRange = response.data[0].letterCMinus;
+        letterTable[9].rightRange = response.data[0].letterCMinus;
+        letterTable[9].leftRange = response.data[0].letterDPlus;
+        letterTable[10].rightRange = response.data[0].letterDPlus;
+        letterTable[10].leftRange = response.data[0].letterD;
+        letterTable[11].rightRange = response.data[0].letterD;
+        letterTable[11].leftRange = response.data[0].letterF;
+        setLTBreakdown(letterTable);
+        setNoteArea(letterInfo);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [courseId, letterTableInfo]);
+
+  useEffect(() => {
+    if (!newOutline) {
+      gradeTableRetrieval();
+      gradeInfoRetrieval();
+    }
+  }, [newOutline, gradeTableRetrieval, gradeInfoRetrieval]);
 
   function updateRightCol(e, i) {
     const onlyNums = e.target.value.replace(/[^0-9]\./g, "");
@@ -86,10 +263,11 @@ export default function FinalGradeComponent({
   }
 
   function addNewRow() {
+    rowCounter++;
     setGTBreakdown([
       ...gtbreakdown,
       {
-        gtid: uuidv4(),
+        gtid: courseId + rowCounter,
         gradeComponent: "",
         outcomes: "",
         weight: 0,
@@ -158,9 +336,22 @@ export default function FinalGradeComponent({
           })
           .then(function (response) {
             console.log(response);
+            if (response.status === 200) {
+              setMessageAlert({
+                severity: "success",
+                message: "Save successful",
+              });
+              setAlertOpen(true);
+            }
           })
           .catch(function (error) {
             console.log(error);
+            setMessageAlert({
+              severity: "error",
+              message:
+                "Save failed, please try again. Make sure the Course Number has been saved.",
+            });
+            setAlertOpen(true);
           });
       }
     }
@@ -174,9 +365,21 @@ export default function FinalGradeComponent({
             .delete(`http://127.0.0.1:8000/finalGradeTable/${grade.gtid}/`)
             .then(function (response) {
               console.log(response);
+              if (response.status === 204) {
+                setMessageAlert({
+                  severity: "success",
+                  message: "Row deleted.",
+                });
+                setAlertOpen(true);
+              }
             })
             .catch(function (error) {
               console.log(error);
+              setMessageAlert({
+                severity: "error",
+                message: "Delete failed. Please try again.",
+              });
+              setAlertOpen(true);
             });
         }
       }
@@ -196,9 +399,22 @@ export default function FinalGradeComponent({
           })
           .then(function (response) {
             console.log(response);
+            if (response.status === 201) {
+              setMessageAlert({
+                severity: "success",
+                message: "Save successful",
+              });
+              setAlertOpen(true);
+            }
           })
           .catch(function (error) {
             console.log(error);
+            setMessageAlert({
+              severity: "error",
+              message:
+                "Save failed, please try again. Make sure the Course Number has been saved.",
+            });
+            setAlertOpen(true);
           });
         return { ...gtbreakdown, fgExisting: true };
       } else {
@@ -290,9 +506,22 @@ export default function FinalGradeComponent({
       })
       .then(function (response) {
         console.log(response);
+        if (response.status === 200) {
+          setMessageAlert({
+            severity: "success",
+            message: "Save successful",
+          });
+          setAlertOpen(true);
+        }
       })
       .catch(function (error) {
         console.log(error);
+        setMessageAlert({
+          severity: "error",
+          message:
+            "Save failed, please try again. Make sure the Course Number has been saved.",
+        });
+        setAlertOpen(true);
       });
   }
 
@@ -319,9 +548,22 @@ export default function FinalGradeComponent({
       .then(function (response) {
         setNoteArea({ ...noteArea, ltExisting: true });
         console.log(response);
+        if (response.status === 201) {
+          setMessageAlert({
+            severity: "success",
+            message: "Save successful",
+          });
+          setAlertOpen(true);
+        }
       })
       .catch(function (error) {
         console.log(error);
+        setMessageAlert({
+          severity: "error",
+          message:
+            "Save failed, please try again. Make sure the Course Number has been saved.",
+        });
+        setAlertOpen(true);
       });
   }
 
@@ -400,7 +642,8 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}>
+                    }}
+                  >
                     Letter Grade
                   </TableCell>
                   <TableCell
@@ -413,7 +656,8 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}>
+                    }}
+                  >
                     Total Mark (T)
                   </TableCell>
                 </TableRow>
@@ -469,7 +713,8 @@ export default function FinalGradeComponent({
           color="primary"
           size="large"
           startIcon={<SaveIcon />}
-          onClick={saveInfo}>
+          onClick={saveInfo}
+        >
           Save
         </Button>
       </Container>

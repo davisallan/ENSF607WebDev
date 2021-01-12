@@ -35,10 +35,6 @@ export default function Home() {
 
   const courseId = uuidv4();
 
-  // function newCourseId() {
-  //   courseId = uuidv4();
-  // }
-
   const classes = useStyles();
 
   return (
