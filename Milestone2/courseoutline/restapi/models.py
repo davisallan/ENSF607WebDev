@@ -16,14 +16,14 @@ class CalenderInfo(models.Model):
 class LearningOutcome(models.Model):
     courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
     outcomeId = models.TextField(primary_key=True)
-    outcomeNumber = models.CharField(max_length=2, blank=True)
+    outcomeNumber = models.IntegerField(blank=True)
     outcomeDescription = models.TextField(blank=True)
 
 
 class GraduateAttribute(models.Model):
     courseId = models.ForeignKey(CalenderInfo, on_delete=models.CASCADE)
     gradId = models.TextField(primary_key=True)
-    outcomeNumber = models.CharField(max_length=2, blank=True)
+    outcomeNumber = models.IntegerField(blank=True)
     graduateAttribute = models.CharField(max_length=50, blank=True)
     instructionLevel = models.CharField(max_length=15, blank=True)
 
