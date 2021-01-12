@@ -681,7 +681,7 @@ export default function FinalGradeComponent({
         <Button
           variant="contained"
           color="primary"
-          size="large"
+          size="small"
           startIcon={<SaveIcon />}
           onClick={saveInfo}>
           Save

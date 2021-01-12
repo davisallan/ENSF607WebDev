@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import { Button, Container } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { red, orange } from "@material-ui/core/colors";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
@@ -55,16 +56,17 @@ export default function CourseOutline({ location }) {
           </Container>
         </header>
         <body>
-          <Container>
+          <Container align="left">
             <Button
               variant="contained"
               color="primary"
-              size="large"
+              size="small"
               component={Link}
+              startIcon={<KeyboardBackspaceIcon />}
               to={{
                 pathname: `/`,
               }}>
-              BACK
+              Back
             </Button>
           </Container>
           <CourseInformation

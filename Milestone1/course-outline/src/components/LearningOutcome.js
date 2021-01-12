@@ -508,7 +508,7 @@ export default function LearningOutcome({
           <Button
             variant="contained"
             color="primary"
-            size="large"
+            size="small"
             startIcon={<SaveIcon />}
             onClick={saveInfo}>
             Save

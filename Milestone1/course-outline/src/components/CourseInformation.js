@@ -222,10 +222,9 @@ export default function CourseInformation({
             <Button
               variant="contained"
               color="primary"
-              size="large"
+              size="small"
               startIcon={<SaveIcon />}
-              onClick={saveInfo}
-            >
+              onClick={saveInfo}>
               Save
             </Button>
           </Container>
