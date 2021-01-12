@@ -1,0 +1,1 @@
+Centering the list of created courses
