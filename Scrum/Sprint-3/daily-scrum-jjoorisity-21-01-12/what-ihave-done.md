@@ -1,0 +1,5 @@
+- Add in alert feature for save and error on LetterGradeTable, FinalGradeTable and CourseInfo
+- Add in rendering for existing course outline for LetterGradeTable
+- Change order id on FinalGradeTable components so they'd render in correct order.
+- Create rough outline of home page.
+- Build router and links for home page to outlines.
