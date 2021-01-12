@@ -51,7 +51,15 @@ export default function LearningOutcome({ courseId, newOutline }) {
     },
   ]);
 
-  const [attribute, setAttribute] = useState([]);
+  const [attribute, setAttribute] = useState([
+    {
+      gradId: uuidv4(),
+      outcomeNumber: "",
+      graduateAttribute: "",
+      instructionLevel: "",
+      attributeExisting: false,
+    },
+  ]);
 
   const learningOutcomeRetrieval = useCallback(async () => {
     var outcomes = [];
@@ -72,47 +80,33 @@ export default function LearningOutcome({ courseId, newOutline }) {
       });
   }, [courseId]);
 
+  const graduateAttrRetrieval = useCallback(async () => {
+    var attributes = [];
+    axios
+      .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const gradAttr of response.data) {
+          attributes.push({
+            gradId: gradAttr.gradId,
+            outcomeNumber: gradAttr.outcomeNumber,
+            graduateAttribute: gradAttr.graduateAttribute,
+            instructionLevel: gradAttr.instructionLevel,
+            attributeExisting: true,
+          });
+        }
+        setAttribute(attributes);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [courseId]);
+
   useEffect(() => {
     if (!newOutline) {
       learningOutcomeRetrieval();
+      graduateAttrRetrieval();
     }
-  }, [newOutline, learningOutcomeRetrieval]);
-
-  // function graduateAttrRetrieval() {
-  //   axios
-  //     .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
-  //     .then(function (response) {
-  //       for (const gradAttr of response.data) {
-  //         gradAttrInfo.push({
-  //           gradId: gradAttr.gradId,
-  //           outcomeNumber: gradAttr.outcomeNumber,
-  //           graduateAttribute: gradAttr.graduateAttribute,
-  //           instructionLevel: gradAttr.instructionLevel,
-  //           attributeExisting: true,
-  //         });
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  //   return gradAttrInfo;
-  // }
-
-  // function GradAttributeInfo(newOutline) {
-  //   if (newOutline) {
-  //     return [
-  //       {
-  //         gradId: uuidv4(),
-  //         outcomeNumber: "",
-  //         graduateAttribute: "",
-  //         instructionLevel: "",
-  //         attributeExisting: false,
-  //       },
-  //     ];
-  //   } else {
-  //     return graduateAttrRetrieval();
-  //   }
-  // }
+  }, [newOutline, learningOutcomeRetrieval, graduateAttrRetrieval]);
 
   function addNewOutcomeRow() {
     setLearningOutcome([

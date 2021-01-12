@@ -20,8 +20,6 @@ export default function CourseOutline({ location }) {
     ltExisting: false,
   };
 
-  var outcomeInfo = [];
-  var gradAttrInfo = [];
   var gradTableInfo = [];
   var letterTableInfo = [
     {
