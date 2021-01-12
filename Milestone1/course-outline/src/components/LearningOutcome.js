@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import {
   Table,
   Paper,
@@ -42,21 +42,76 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LearningOutcome({
   courseId,
-  learningOutcomeInfo,
-  gradAttributeInfo,
+  newOutline,
+  setMessageAlert,
+  setAlertOpen,
 }) {
   let outcomeNum = 1;
 
+  const [learningOutcome, setLearningOutcome] = useState([
+    {
+      id: uuidv4(),
+      description: "",
+      outcomeExisting: false,
+    },
+  ]);
+
+  const [attribute, setAttribute] = useState([
+    {
+      gradId: uuidv4(),
+      outcomeNumber: "",
+      graduateAttribute: "",
+      instructionLevel: "",
+      attributeExisting: false,
+    },
+  ]);
+
+  const learningOutcomeRetrieval = useCallback(async () => {
+    var outcomes = [];
+    await axios
+      .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const outcome of response.data) {
+          outcomes.push({
+            id: outcome.outcomeId,
+            description: outcome.outcomeDescription,
+            outcomeExisting: true,
+          });
+        }
+        setLearningOutcome(outcomes);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [courseId]);
+
+  const graduateAttrRetrieval = useCallback(async () => {
+    var attributes = [];
+    axios
+      .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
+      .then(function (response) {
+        for (const gradAttr of response.data) {
+          attributes.push({
+            gradId: gradAttr.gradId,
+            outcomeNumber: gradAttr.outcomeNumber,
+            graduateAttribute: gradAttr.graduateAttribute,
+            instructionLevel: gradAttr.instructionLevel,
+            attributeExisting: true,
+          });
+        }
+        setAttribute(attributes);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [courseId]);
+
   useEffect(() => {
-    console.log("Current State");
-    console.log("testing learning outcomes");
-    console.log(learningOutcomeInfo);
-    setLearningOutcome(learningOutcomeInfo);
-  }, [learningOutcomeInfo]);
-
-  const [learningOutcome, setLearningOutcome] = useState([]);
-
-  const [attribute, setAttribute] = useState(gradAttributeInfo);
+    if (!newOutline) {
+      learningOutcomeRetrieval();
+      graduateAttrRetrieval();
+    }
+  }, [newOutline, learningOutcomeRetrieval, graduateAttrRetrieval]);
 
   function addNewOutcomeRow() {
     setLearningOutcome([
@@ -137,10 +192,23 @@ export default function LearningOutcome({
             outcomeDescription: learningOutcome.description,
           })
           .then(function (response) {
+            if (response.status === 201) {
+              setMessageAlert({
+                severity: "success",
+                message: "Save successful.",
+              });
+              setAlertOpen(true);
+            }
             console.log(response);
           })
           .catch(function (error) {
             console.log(error);
+            setMessageAlert({
+              severity: "error",
+              message:
+                "Save failed, please try again. Make sure the Course Number has been saved.",
+            });
+            setAlertOpen(true);
           });
         return { ...learningOutcome, outcomeExisting: true };
       } else {
@@ -162,9 +230,22 @@ export default function LearningOutcome({
           })
           .then(function (response) {
             console.log(response);
+            if (response.status === 200) {
+              setMessageAlert({
+                severity: "success",
+                message: "Save successful.",
+              });
+              setAlertOpen(true);
+            }
           })
           .catch(function (error) {
             console.log(error);
+            setMessageAlert({
+              severity: "error",
+              message:
+                "Save failed, please try again. Make sure the Course Number has been saved.",
+            });
+            setAlertOpen(true);
           });
       }
     }
@@ -178,9 +259,21 @@ export default function LearningOutcome({
             .delete(`http://127.0.0.1:8000/learningOutcome/${outcome.id}/`, {})
             .then(function (response) {
               console.log(response);
+              if (response.status === 204) {
+                setMessageAlert({
+                  severity: "success",
+                  message: "Row deleted.",
+                });
+                setAlertOpen(true);
+              }
             })
             .catch(function (error) {
               console.log(error);
+              setMessageAlert({
+                severity: "error",
+                message: "Delete failed. Please try again.",
+              });
+              setAlertOpen(true);
             });
         }
       }
@@ -200,9 +293,22 @@ export default function LearningOutcome({
           })
           .then(function (response) {
             console.log(response);
+            if (response.status === 201) {
+              setMessageAlert({
+                severity: "success",
+                message: "Save successful.",
+              });
+              setAlertOpen(true);
+            }
           })
           .catch(function (error) {
             console.log(error);
+            setMessageAlert({
+              severity: "error",
+              message:
+                "Save failed, please try again. Make sure the Course Number has been saved.",
+            });
+            setAlertOpen(true);
           });
         return { ...attribute, attributeExisting: true };
       } else {
@@ -225,9 +331,22 @@ export default function LearningOutcome({
           })
           .then(function (response) {
             console.log(response);
+            if (response.status === 200) {
+              setMessageAlert({
+                severity: "success",
+                message: "Save successful.",
+              });
+              setAlertOpen(true);
+            }
           })
           .catch(function (error) {
             console.log(error);
+            setMessageAlert({
+              severity: "error",
+              message:
+                "Save failed, please try again. Make sure the Course Number has been saved.",
+            });
+            setAlertOpen(true);
           });
       }
     }
@@ -244,9 +363,21 @@ export default function LearningOutcome({
             )
             .then(function (response) {
               console.log(response);
+              if (response.status === 204) {
+                setMessageAlert({
+                  severity: "success",
+                  message: "Row deleted.",
+                });
+                setAlertOpen(true);
+              }
             })
             .catch(function (error) {
               console.log(error);
+              setMessageAlert({
+                severity: "error",
+                message: "Delete failed. Please try again.",
+              });
+              setAlertOpen(true);
             });
         }
       }
@@ -315,8 +446,7 @@ export default function LearningOutcome({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -326,8 +456,7 @@ export default function LearningOutcome({
                       color="primary"
                       className={classes.fab}
                       onClick={addNewOutcomeRow}
-                      size="small"
-                    >
+                      size="small">
                       <AddIcon />
                     </Fab>
                   </Tooltip>
@@ -381,8 +510,7 @@ export default function LearningOutcome({
             color="primary"
             size="large"
             startIcon={<SaveIcon />}
-            onClick={saveInfo}
-          >
+            onClick={saveInfo}>
             Save
           </Button>
         </Container>

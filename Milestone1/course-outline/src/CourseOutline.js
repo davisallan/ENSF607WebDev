@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import axios from "axios";
 import LearningOutcome from "./components/LearningOutcome";
 import FinalGradeComponent from "./components/LetterGradeTable";
 import CourseInformation from "./components/CourseInformation";
@@ -9,7 +8,6 @@ import Alert from "@material-ui/lab/Alert";
 import { Logo } from "./components/CourseInformation";
 import Grid from "@material-ui/core/Grid";
 import { Button, Container } from "@material-ui/core";
-import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 import { red, orange } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -35,77 +33,6 @@ export default function CourseOutline({ location }) {
     severity: "",
     message: "",
   });
-
-  var outcomeInfo = [];
-  var gradAttrInfo = [];
-
-  function learningOutcomeRetrieval() {
-    axios
-      .get(`http://127.0.0.1:8000/learningOutcome/?courseId=${courseId}`)
-      .then(function (response) {
-        for (const outcome of response.data) {
-          outcomeInfo.push({
-            id: outcome.outcomeId,
-            description: outcome.outcomeDescription,
-            outcomeExisting: true,
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    return outcomeInfo;
-  }
-
-  function graduateAttrRetrieval() {
-    axios
-      .get(`http://127.0.0.1:8000/graduateAttribute/?courseId=${courseId}`)
-      .then(function (response) {
-        for (const gradAttr of response.data) {
-          gradAttrInfo.push({
-            gradId: gradAttr.gradId,
-            outcomeNumber: gradAttr.outcomeNumber,
-            graduateAttribute: gradAttr.graduateAttribute,
-            instructionLevel: gradAttr.instructionLevel,
-            attributeExisting: true,
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    return gradAttrInfo;
-  }
-
-  function LearningOutcomeInfo(newOutline) {
-    if (newOutline) {
-      return [
-        {
-          id: uuidv4(),
-          description: "",
-          outcomeExisting: false,
-        },
-      ];
-    } else {
-      return learningOutcomeRetrieval();
-    }
-  }
-
-  function GradAttributeInfo(newOutline) {
-    if (newOutline) {
-      return [
-        {
-          gradId: uuidv4(),
-          outcomeNumber: "",
-          graduateAttribute: "",
-          instructionLevel: "",
-          attributeExisting: false,
-        },
-      ];
-    } else {
-      return graduateAttrRetrieval();
-    }
-  }
 
   const handleClose = () => {
     setAlertOpen(false);
@@ -136,8 +63,7 @@ export default function CourseOutline({ location }) {
               component={Link}
               to={{
                 pathname: `/`,
-              }}
-            >
+              }}>
               BACK
             </Button>
           </Container>
@@ -149,8 +75,9 @@ export default function CourseOutline({ location }) {
           />
           <LearningOutcome
             courseId={courseId}
-            learningOutcomeInfo={LearningOutcomeInfo(newOutline)}
-            gradAttributeInfo={GradAttributeInfo(newOutline)}
+            newOutline={newOutline}
+            setMessageAlert={setMessageAlert}
+            setAlertOpen={setAlertOpen}
           />
           <FinalGradeComponent
             courseId={courseId}
@@ -161,8 +88,7 @@ export default function CourseOutline({ location }) {
           <Snackbar
             open={alertOpen}
             autoHideDuration={6000}
-            onClose={handleClose}
-          >
+            onClose={handleClose}>
             <Alert onClose={handleClose} severity={messageAlert.severity}>
               {messageAlert.message}
             </Alert>
