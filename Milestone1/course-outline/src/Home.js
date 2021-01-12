@@ -58,6 +58,9 @@ export default function Home() {
       <body>
         <Container>
           <Button
+            variant="contained"
+            color="primary"
+            size="large"
             component={Link}
             to={{
               pathname: `/courseoutline/${courseId}`,
