@@ -183,8 +183,6 @@ export default function FinalGradeComponent({
         letterInfo.notes = response.data[0].notes;
         letterInfo.infoId = response.data[0].infoId;
         letterInfo.ltExisting = true;
-        console.log(response.data[0].letterAPlus);
-        console.log(letterTable);
         letterTable[0].leftRange = response.data[0].letterAPlus;
         letterTable[1].rightRange = response.data[0].letterAPlus;
         letterTable[1].leftRange = response.data[0].letterA;
@@ -616,8 +614,7 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     Letter Grade
                   </TableCell>
                   <TableCell
@@ -630,8 +627,7 @@ export default function FinalGradeComponent({
                       fontWeight: 600,
                       color: "black",
                       backgroundColor: "white",
-                    }}
-                  >
+                    }}>
                     Total Mark (T)
                   </TableCell>
                 </TableRow>
@@ -687,8 +683,7 @@ export default function FinalGradeComponent({
           color="primary"
           size="large"
           startIcon={<SaveIcon />}
-          onClick={saveInfo}
-        >
+          onClick={saveInfo}>
           Save
         </Button>
       </Container>

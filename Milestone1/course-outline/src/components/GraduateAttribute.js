@@ -46,12 +46,12 @@ export default function GraduateAttribute({
     {
       id: "learningOutcome",
       label: "Learning Outcome",
-      minWidth: 300,
+      minWidth: 0,
     },
     {
       id: "graduateAttribute",
       label: "Graduate Attribute",
-      minWidth: 300,
+      minWidth: 500,
     },
     {
       id: "instructionLevel",
@@ -111,7 +111,7 @@ export default function GraduateAttribute({
                     name="outcomeNumber"
                     placeholder="#"
                     value={attribute.outcomeNumber}
-                    style={{ width: "10rem" }}
+                    style={{ width: "3rem" }}
                     onChange={(e) => handleAttributeChange(e, attribute.gradId)}
                   />
                 </TableCell>
@@ -119,7 +119,7 @@ export default function GraduateAttribute({
                   <Select
                     name="graduateAttribute"
                     value={attribute.graduateAttribute}
-                    style={{ width: "27rem" }}
+                    style={{ width: "32rem" }}
                     onChange={(e) =>
                       handleAttributeChange(e, attribute.gradId)
                     }>

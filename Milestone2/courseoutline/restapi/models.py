@@ -6,7 +6,7 @@ from django.db import models
 class CalenderInfo(models.Model):
     courseId = models.TextField(primary_key=True)
     courseNumber = models.CharField(max_length=10, blank=True)
-    courseTitle = models.CharField(max_length=50, blank=True)
+    courseTitle = models.CharField(max_length=100, blank=True)
     courseDescription = models.TextField(blank=True)
     courseHours = models.CharField(max_length=25, blank=True)
     academicCredit = models.CharField(max_length=10, blank=True)

@@ -419,7 +419,7 @@ export default function LearningOutcome({
     {
       id: "description",
       label: "Description",
-      minWidth: 300,
+      minWidth: 700,
     },
   ];
 
