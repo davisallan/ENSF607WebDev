@@ -5,3 +5,22 @@ React and Django based web application for building a section of a course outlin
 
 # App Demo
 ![](page_demo.gif)
+
+
+# Dependencies
+1. React.js
+2. Node.js
+3. Django
+
+# Installing the app
+## Front End
+1. Clone repository
+2. Navigate to "Milestone1/course-outline/"
+3. Run `npm install`
+4. Run `npm start`
+
+## Back End
+1. Navigate to "Milestone2/courseoutline/
+2. Run `python manage.py runserver`
+2. Open another terminal, Run `python manage.py makemigrations`
+3. Run `python manage.py migrate`
